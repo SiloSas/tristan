@@ -2,65 +2,33 @@ package Projects
 
 
 import java.util.UUID
-import Shared.Project
+import ClientClass.Project
 import com.greencatsoft.angularjs.core.Timeout
 import com.greencatsoft.angularjs.{Filter, Angular, AbstractController, injectable}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import org.scalajs.dom._
 import scala.scalajs.js.Date
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
+import scala.util.{Failure, Success}
 
 @JSExportAll
 @injectable("projectController")
-class ProjectController(projectScope: ProjectScope, timeout: Timeout) extends AbstractController[ProjectScope](projectScope) {
-  val project1 = Project(
-    id = UUID.randomUUID().toString,
-    name = "last night",
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/lastNight.jpg",
-    tags = js.Array("environement"),
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    date = new Date(), isLandscape = true, maxHeight = 403, maxWidth = 716, column = 0)
-  val project = Project(id = UUID.randomUUID().toString, name = "sous l'objectif",
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/sousObjectif.png",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-  tags = js.Array("characters"), date = new Date(), isLandscape = true, maxHeight = 449, maxWidth = 798, column = 0)
-  val project4 = Project(id = UUID.randomUUID().toString, name = "Portrait",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/portrait.png",
-    tags = js.Array("characters"), date = new Date(), isLandscape = false, maxHeight = 769, maxWidth = 476, column = 0)
-  val project3 = Project(id = UUID.randomUUID().toString, name = "avalon",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/avalon.jpg",
-  tags = js.Array("environement"), date = new Date(), isLandscape = true, maxHeight = 449, maxWidth = 798, column = 0)
-  val project2 = Project(id = UUID.randomUUID().toString, name = "chameleon",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/chameleon.jpg",
-  tags = js.Array("characters"), date = new Date(), isLandscape = false, maxHeight = 403, maxWidth = 537, column = 0 )
-  val project5 = Project(id = UUID.randomUUID().toString, name = "Landscape",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/landscape.png",
-    tags = js.Array("characters"), date = new Date(), isLandscape = true, maxHeight = 624, maxWidth = 1680, column = 0)
-  val project6 = Project(id = UUID.randomUUID().toString, name = "Ant",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/ant.jpg",
-    tags = js.Array("characters"), date = new Date(), isLandscape = false, maxHeight = 769, maxWidth = 1025, column = 0)
-  val project7 = Project(id = UUID.randomUUID().toString, name = "Head",
-    technologies = js.Array("assets/images/3dsmax.svg", "assets/images/zbrush.svg", "assets/images/maya.svg", "assets/images/photoshop.svg"),
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image = "assets/images/head.jpg",
-    tags = js.Array("characters"), date = new Date(), isLandscape = false, maxHeight = 769, maxWidth = 1025, column = 0)
+class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectService: ProjectService) extends AbstractController[ProjectScope](projectScope) {
 
-  var projects = Seq(project, project1, project2, project3, project4, project5, project6, project7)
 
+  var projects: Seq[Project] = Seq.empty
+
+  projectService.findAll().onComplete  {
+    case Success(projectsFound) =>
+      timeout( () => {
+        projects = projectsFound
+        projectScope.projects = setColumn(projects).toJSArray
+      }, 0, true)
+    case Failure(t: Throwable) =>
+      console.log(throw t)
+  }
   projectScope.index = 0
   var heightcol1 = 0
   var heightcol2 = 0
@@ -74,16 +42,16 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout) extends Ab
         if (heightcol1 <= heightcol2 && heightcol1 <= heightcol3) {
           console.log(heightcol1)
           heightcol1 = (heightcol1 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(column = 1)
+          project.copy(columnNumber = 1)
         }
         else if (heightcol2 <= heightcol3) {
           console.log("yo")
           heightcol2 = (heightcol2 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(column = 2)
+          project.copy(columnNumber = 2)
         }
         else {
           heightcol3 = (heightcol3 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(column = 3)
+          project.copy(columnNumber = 3)
         }
       }
     }

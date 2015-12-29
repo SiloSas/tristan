@@ -1,4 +1,4 @@
-import Projects.{ProjectMinDirective, SliderDirective, ProjectController}
+import Projects.{ProjectServiceFactory, ProjectMinDirective, SliderDirective, ProjectController}
 import Room.{RoomController, RoomMinDirective}
 import com.greencatsoft.angularjs._
 import example.RoomServiceFactory
@@ -14,6 +14,7 @@ object App extends JSApp {
 
     module
     .factory[RoomServiceFactory]
+    .factory[ProjectServiceFactory]
     .controller[RoomController]
     .controller[ProjectController]
     .directive[RoomMinDirective]
