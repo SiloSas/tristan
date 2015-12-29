@@ -1,0 +1,13 @@
+<figure class="effect-zoe"
+        ng-click="controller.setIndexById(project.id); $root.slider = true;">
+    <img ng-src="{{project.image}}" />
+    <figcaption>
+        <h2 class="textLeft column small-6">{{project.name}}</h2>
+        <p class="icon-links">
+            <md-button href="#" class="md-fab md-mini md-icon-button md-primary"  ng-repeat="technologie in project.technologies">
+                <md-icon md-svg-src="{{technologie}}"></md-icon>
+            </md-button>
+        </p>
+        <p class="description">{{project.description}}</p>
+    </figcaption>
+</figure>

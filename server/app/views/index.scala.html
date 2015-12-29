@@ -1,0 +1,37 @@
+@(message: String)
+
+@main("Portfolio Tristan Delgado") {
+<div ng-controller="projectController" class="height100p" ng-cloak>
+  <md-toolbar md-scroll-shrink ng-if="true">
+    <div class="md-toolbar-tools">
+      <md-button class="md-fab md-mini md-primary"
+      ng-click="$root.slider = false"><i class="fa fa-th"></i>
+      </md-button>
+      <md-button class="md-fab md-mini md-primary"
+      ng-click="$root.slider = true; controller.setIndex(0)">
+        <i class="fa fa-expand"></i>
+      </md-button>
+      <md-input-container>
+        <label>Filters</label>
+        <md-select ng-model="filter">
+          <md-option ng-repeat="tag in tags" value="{{tag}}" ng-click="controller.filter(tag)">
+            {{tag}}
+          </md-option>
+          <md-option  value="NoFilter" ng-click="controller.removeFilter()">
+            NoFilter
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <span flex></span>
+        <span ng-click="$root.slider = false" ng-if="$root.slider" class="pointer">
+          <b class="textColorWhite">{{projects[index].name}}</b>
+          <md-button class="md-fab md-mini md-primary" >
+            <i class="fa fa-times" ></i>
+          </md-button>
+          <span>Close slider</span>
+        </span>
+    </div>
+  </md-toolbar>
+  <md-content class="height100p" style="height: 100%" data-ng-view=""></md-content>
+</div>
+}
