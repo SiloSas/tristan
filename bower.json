@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "version": "0.1",
+  "dependencies": {
+    "angular": "~1.4.8",
+    "foundation": "~5.4.6",
+    "foundation-datepicker": "~1.5.0",
+    "angular-foundation": "~0.8.0",
+    "angular-material": "~0.11.4",
+    "angular-route": "~1.4.8",
+    "ngmap": "~1.15.3"
+  }
+}
