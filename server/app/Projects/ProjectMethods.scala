@@ -14,6 +14,11 @@ class ProjectMethods @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   extends HasDatabaseConfigProvider[MyPostgresDriver]
   with MyDBTableDefinitions {
 
-  def findAll: Future[Seq[Project]] = db.run(projects.result) map (_.toSeq)
+  def findAll: Future[Seq[Project]] = db.run(projects.sortBy(_.date.desc).result) map (_.toSeq)
 
+  def update(project: Project): Future[Int] = db.run(projects.filter(_.id === project.id).update(project))
+
+  def add(project: Project): Future[Int] = db.run(projects += project)
+
+  def delete(id: String): Future[Int] = db.run(projects.filter(_.id === id).delete)
 }
