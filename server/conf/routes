@@ -4,8 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /admin                      controllers.Application.admin
 GET	    /rooms						@Room.RoomController.findAll
-GET	    /projects						@Projects.ProjectsController.findAll
+GET	    /projects					@Projects.ProjectsController.findAll
+PUT     /projects/:id				@Projects.ProjectsController.update(id: String)
+POST    /projects				    @Projects.ProjectsController.add
+POST    /upload                     @Projects.ProjectsController.uploadImage
+DELETE  /projects/:id				@Projects.ProjectsController.delete(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,3 +1,4 @@
+import Admin.{FileReaderDirective, AdminController}
 import Projects.{ProjectServiceFactory, ProjectMinDirective, SliderDirective, ProjectController}
 import Room.{RoomController, RoomMinDirective}
 import com.greencatsoft.angularjs._
@@ -10,14 +11,16 @@ import scala.scalajs.js.annotation.JSExport
 object App extends JSApp {
 
   override def main() {
-    val module = Angular.module("app", Seq("ngAnimate", "ngAria", "ngMaterial", "mm.foundation", "ngRoute", "ngMap"))
+    val module = Angular.module("app", Seq("ngAnimate", "ngAria", "ngMaterial", "mm.foundation", "ngRoute", "ngMap", "uploader"))
 
     module
     .factory[RoomServiceFactory]
     .factory[ProjectServiceFactory]
     .controller[RoomController]
     .controller[ProjectController]
+    .controller[AdminController]
     .directive[RoomMinDirective]
+    .directive[FileReaderDirective]
     .directive[ProjectMinDirective]
     .directive[SliderDirective]
     .config(RoutingConfig)

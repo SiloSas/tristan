@@ -19,20 +19,31 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 
 
   var projects: Seq[Project] = Seq.empty
+  projectScope.tags = Seq.empty[String].toJSArray
+  projectScope.index = 0
+  var heightcol1 = 0
+  var heightcol2 = 0
+  var heightcol3 = 0
 
   projectService.findAll().onComplete  {
     case Success(projectsFound) =>
       timeout( () => {
         projects = projectsFound
         projectScope.projects = setColumn(projects).toJSArray
+        setTagsScope
       }, 0, true)
     case Failure(t: Throwable) =>
       console.log(throw t)
   }
-  projectScope.index = 0
-  var heightcol1 = 0
-  var heightcol2 = 0
-  var heightcol3 = 0
+
+  def setTagsScope: Unit = {
+    projects.foreach { project =>
+      project.tags foreach { tag =>
+        if (projectScope.tags.indexOf(tag) == -1) projectScope.tags = projectScope.tags :+ tag
+      }
+    }
+  }
+
 
   def setColumn(projects: Seq[Project]): Seq[Project] = {
     projects.map { project =>
@@ -57,18 +68,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     }
   }
 
-  projectScope.projects = setColumn(projects).toJSArray
-
-  projectScope.tags = Seq.empty[String].toJSArray
-
-  projectScope.projects.map { project =>
-    project.tags foreach { tag =>
-      if (projectScope.tags.indexOf(tag) == -1)  projectScope.tags = projectScope.tags :+ tag
-    }
-    println(projectScope.tags)
-    project
-  }
-
   @JSExport
   def prevIndex(): Unit = {
     timeout(() => {
@@ -76,6 +75,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       else projectScope.index = projectScope.projects.length -1
     }, 0, true)
   }
+
   @JSExport
   def nextIndex(): Unit = {
     timeout(() => {
@@ -83,6 +83,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       else projectScope.index = 0
     }, 0, true)
   }
+
   @JSExport
   def setIndex(index: Int): Unit = {
     timeout(() => {

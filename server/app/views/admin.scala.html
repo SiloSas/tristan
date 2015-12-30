@@ -1,0 +1,118 @@
+@(message: String)
+@main("Portfolio Tristan Delgado") {
+    <section layout="row" flex class="height100p" ng-cloak data-ng-controller="adminController" ng-cloak>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+            <md-toolbar class="md-theme-indigo" style="background: #B4D5B8;">
+                <h1 class="md-toolbar-tools">Admin</h1>
+            </md-toolbar>
+            <md-content layout-padding >
+                <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                    Close Sidenav Left
+                </md-button>
+                <div>
+                    <div class="column md-whiteframe-z1" ng-repeat="project in projects">
+                        <h5>{{project.name}}</h5>
+                        <md-button class="md-fab md-mini float-right md-primary" ng-click="controller.setProject(project)"><i class="fa fa-pencil"></i></md-button>
+                        <md-button class="md-fab md-mini float-right md-warn" ng-click="controller.delete(project.id)"><i class="fa fa-trash"></i></md-button>
+                    </div>
+                    <md-button ng-click="controller.setNewProject()" class="md-primary md-raised">Ajouter un projet</md-button>
+                </div>
+            </md-content>
+        </md-sidenav>
+        <md-content style="overflow: hidden; height: inherit" flex>
+            <md-toolbar  style="background: #B4D5B8;">
+                <div class="md-toolbar-tools" >
+                    <md-button aria-label="menu" class="md-fab md-primary md-mini" ng-click="directive.toggleLeft()" hide-gt-md>
+                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-content layout="column" layout-fill layout-align="top center">
+                <form class="column" ng-if="newProject" ng-submit="controller.updateProjects()">
+                    <md-input-container class="column large-12">
+                        <label>Name</label>
+                        <input ng-model="newProject.name"/>
+                    </md-input-container>
+                    <md-input-container class="column large-12">
+                        <label>Description</label>
+                        <textarea ng-model="newProject.description"></textarea>
+                    </md-input-container>
+                    <div class="column large-12">
+                        <img ng-src="{{newProject.image}}" id="projectImage" class="column large-6"/>
+                        <md-input-container>
+                            <label></label>
+                            <input type="file"
+                            value="Charger une image"
+                            ng-init="controller.setSize()"
+                            app-filereader="newProject.image">
+                        </md-input-container>
+                    </div>
+                    <h3>Tags</h3>
+                    <md-chips ng-model="newProject.tags" readonly="false"></md-chips>
+                    <h3>technologies</h3>
+                    <div class="column paddingBottom10">
+                        <span ng-repeat="technologie in newProject.technologies" class="float-left ">
+                            <i class="fa fa-times float-right top pointer" ng-click="newProject.technologies.splice($index, 1)"></i>
+                            <md-button href="#" class="md-fab md-mini md-icon-button md-primary">
+                                <md-icon md-svg-src="{{technologie}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                    <md-divider class="column"></md-divider>
+                    <h4 class="column">add technologie</h4>
+                    <md-fab-speed-dial md-open="controller.isOpen" md-direction="down"
+                    class="md-fling float-left">
+                        <md-fab-trigger>
+                            <md-button aria-label="menu" class="md-fab md-primary">
+                                <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                            </md-button>
+                        </md-fab-trigger>
+                        <md-fab-actions>
+                            <div ng-repeat="technologie in technologies">
+                                <md-button  class="md-fab md-raised md-mini md-primary" ng-click="controller.addTechnologie(technologie)">
+                                    <md-icon md-svg-src="{{technologie}}"></md-icon>
+                                </md-button>
+                            </div>
+                        </md-fab-actions>
+                    </md-fab-speed-dial>
+                    <md-input-container>
+                        <label></label>
+                        <input type="file"
+                        value="Charger une image"
+                        app-filereader="newTechnologie">
+                    </md-input-container>
+                    <md-button ng-click="newProject.technologies.push(newTechnologie); newTechnologie = ''">Ajouter la nouvelle techno(! .svg 25*25px)</md-button>
+                    <md-divider class="column"></md-divider>
+                    <md-input-container class="column large-12">
+                        <label>Date</label>
+                        <input ng-model="newProject.date" type="date" />
+                    </md-input-container>
+                    <md-checkbox ng-model="newProject.isLandscape" class="column md-primary">
+                        isLandScape: {{newProject.isLandscape}}
+                    </md-checkbox>
+                    <md-input-container class="column large-12">
+                        <label>maxWidth</label>
+                        <input ng-model="newProject.maxWidth" type="number" />
+                    </md-input-container>
+                    <md-input-container class="column large-12">
+                        <label>maxHeight</label>
+                        <input ng-model="newProject.maxHeight" type="number" />
+                    </md-input-container>
+                    <md-divider class="column"></md-divider>
+                    <div class="column">
+                        <md-button type="submit" class="md-primary md-raised float-left">Submit</md-button>
+                        <div class="float-left">
+                            {{status}}
+                            <md-progress-circular md-mode="indeterminate" ng-show="status == 'inProgress'"></md-progress-circular>
+                            <i class="fa fa-check" ng-show="status == 'validate'"></i>
+                            <i class="fa fa-times" ng-show="status == 'error'"></i>
+                        </div>
+                    </div>
+                </form>
+                <div class="column large-12 paddingBottom50 marginBottom30"></div>
+            </md-content>
+        </md-content>
+    </section>
+}
+
+
