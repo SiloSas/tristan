@@ -27,6 +27,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   var heightcol2 = 0
   var heightcol3 = 0
 
+  var inProgress = true
   var showCv = false
   var slider = false
 
@@ -35,6 +36,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       timeout( () => {
         projects = projectsFound
         projectScope.projects = setColumn(projects.map(setMaxSize)).toJSArray
+        inProgress = false
         setTagsScope
       }, 0, true)
     case Failure(t: Throwable) =>

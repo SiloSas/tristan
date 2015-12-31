@@ -24,7 +24,7 @@ object Authenticated extends ActionBuilder[AuthenticatedRequest] {
         block(new AuthenticatedRequest(request))
       case None =>
         //        block(new AuthenticatedRequest(request = Request[Result](UNAUTHORIZED)))
-        Future.successful(Results.Unauthorized("DTC"))
+        Future.successful(Results.Ok(views.html.connection("Identifiants incorrect")))
     }
   }
 }

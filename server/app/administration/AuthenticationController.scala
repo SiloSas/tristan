@@ -26,11 +26,19 @@ class AuthenticationController @Inject()(protected val dbConfigProvider: Databas
 
   def authenticate(login: String, password: String) = Action.async {
     (userActor ? AuthenticationRequest(login, password)).mapTo[Future[AuthenticationResponse]] flatMap { resp =>
+      println(resp)
       resp map {
-        case AuthenticationResponse(true) => Ok(views.html.admin("")).withSession("connected" -> "true")
-        case AuthenticationResponse(false) => Ok(views.html.connection("Identifiants incorrect"))
+        case AuthenticationResponse(true) =>  {
+          Redirect("/authenticate").withSession("connected" -> "true")
+        }
+        case AuthenticationResponse(false) => Redirect("/authenticate")
       }
     }
+  }
+
+  def redirectAdmin = Authenticated {
+    println("yoyo")
+        Ok(views.html.admin(""))
   }
 
   def logout = Action { Ok("Correctly logged out").withNewSession }

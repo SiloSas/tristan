@@ -23,7 +23,7 @@
       <span ng-if="controller.slider" hide-sm>
         <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
         <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
-          <md-button href="#" class="md-fab md-mini md-icon-button md-primary "
+          <md-button class="md-fab md-mini md-icon-button md-primary "
           aria-label="{{controller.refactorTech(technologie)}}">
             <md-icon md-svg-src="{{technologie}}"></md-icon>
           </md-button>
@@ -54,7 +54,7 @@
   <span ng-if="controller.slider" hide-gt-sm>
     <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
     <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
-      <md-button href="#" class="md-fab md-mini md-icon-button md-primary "
+      <md-button class="md-fab md-mini md-icon-button md-primary "
       aria-label="{{controller.refactorTech(technologie)}}">
         <md-icon md-svg-src="{{technologie}}"></md-icon>
       </md-button>
