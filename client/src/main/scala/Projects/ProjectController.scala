@@ -132,14 +132,18 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     heightcol1 = 0
     heightcol2 = 0
     heightcol3 = 0
-    projectScope.projects = setColumn(projects.filter(_.tags.indexOf(tag) > -1).toSeq).toJSArray
+    timeout( () => {
+      projectScope.projects = setColumn(projects.filter(_.tags.indexOf(tag) > -1).toSeq).toJSArray
+    })
   }
   @JSExport
   def removeFilter(): Unit = {
     heightcol1 = 0
     heightcol2 = 0
     heightcol3 = 0
-    projectScope.projects = setColumn(projects).toJSArray
+    timeout( () => {
+      projectScope.projects = setColumn(projects).toJSArray
+    })
   }
 
   window.onkeydown =  (event: KeyboardEvent) => {

@@ -14,6 +14,16 @@ room-min {
   position: absolute;
 }
 
+project-min.ng-enter {
+  animation: fadeIn 0.7s ;
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+}
+project-min.ng-leave-active {
+  animation: fadeOut 1s ;
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+}
 /*
 @font-face {
   font-weight: normal;

@@ -1,5 +1,6 @@
 <span class="tooltip-trigger">
         <md-button class="md-fab md-mini md-primary"
+                   ng-class="{'md-hue-2': !controller.slider}"
                    ng-click="controller.slider = false" aria-label="Gallery">
             <i class="fa fa-th"></i>
         </md-button>
@@ -9,6 +10,7 @@
       </span>
 <span class="tooltip-trigger">
         <md-button class="md-fab md-mini md-primary"
+                   ng-class="{'md-hue-2': controller.slider}"
                    ng-click="controller.slider = true; controller.setIndex(0)">
             <i class="fa fa-expand"></i>
         </md-button>
@@ -17,7 +19,9 @@
         </i>
       </span>
 <span class="tooltip-trigger">
-        <a class="md-fab md-mini md-primary md-button" ng-click="controller.showCv = !controller.showCv">
+        <a class="md-fab md-mini md-primary md-button"
+           ng-class="{'md-hue-2': controller.showCv}"
+           ng-click="controller.showCv = !controller.showCv">
             <b>C.V</b>
         </a>
         <i class="tooltip-custom animated">
@@ -25,7 +29,8 @@
         </i>
       </span>
 <span class="tooltip-trigger" hide-sm>
-    <a class="md-fab md-mini md-primary md-button" ng-click="showMail = !showMail">
+    <a class="md-fab md-mini md-primary md-button"
+       ng-click="showMail = !showMail">
         <i class="fa fa-envelope"></i>
     </a>
     <b class="tooltip-custom animated block" ng-show="showMail">tristan-delgado&#64;hotmail.fr</b>

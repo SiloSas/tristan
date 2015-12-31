@@ -4,7 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /admin                      controllers.Application.admin
 GET	    /rooms						@Room.RoomController.findAll
 GET     /technologies               @Projects.ProjectsController.findTechnologies
 GET	    /projects					@Projects.ProjectsController.findAll
@@ -15,7 +14,7 @@ DELETE  /projects/:id				@Projects.ProjectsController.delete(id: String)
 
 # Connection
 #authenticate(login: String, password: String)
-GET     /authenticate               @administration.AuthenticationController.authenticate(login: String, password: String)
+GET     /authenticate               @administration.AuthenticationController.authenticate(login: String?= "null", password: String?= "null")
 GET     /logout                     @administration.AuthenticationController.logout
 
 # Map static resources from the /public folder to the /assets URL path
