@@ -133,7 +133,8 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     heightcol2 = 0
     heightcol3 = 0
     timeout( () => {
-      projectScope.projects = setColumn(projects.filter(_.tags.indexOf(tag) > -1).toSeq).toJSArray
+      projectScope.projects = setColumn(projects.filter(_.tags.indexOf(tag) > -1).map(setMaxSize)).toJSArray
+      projectScope.index = 0
     })
   }
   @JSExport
@@ -142,7 +143,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     heightcol2 = 0
     heightcol3 = 0
     timeout( () => {
-      projectScope.projects = setColumn(projects).toJSArray
+      projectScope.projects = setColumn(projects.map(setMaxSize)).toJSArray
     })
   }
 
@@ -152,8 +153,11 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     if (event.keyCode == 39) nextIndex()
     if (event.keyCode == 27) {
       timeout( () => {
-        showCv = false
-        slider = false
+        if (showCv) {
+          showCv = false
+        } else {
+          slider = false
+        }
       }, 0, true)
     }
 

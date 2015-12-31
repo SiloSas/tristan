@@ -2,7 +2,7 @@
 @main("Portfolio Tristan Delgado") {
     <section layout="row" flex class="height100p" ng-cloak data-ng-controller="adminController" ng-cloak>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-            <md-toolbar class="md-theme-indigo" style="background: #B4D5B8;">
+            <md-toolbar>
                 <h1 class="md-toolbar-tools">Admin</h1>
             </md-toolbar>
             <md-content layout-padding >
@@ -20,7 +20,7 @@
             </md-content>
         </md-sidenav>
         <md-content style="overflow: hidden; height: inherit" flex>
-            <md-toolbar  style="background: #B4D5B8;">
+            <md-toolbar>
                 <div class="md-toolbar-tools" >
                     <md-button aria-label="menu" class="md-fab md-primary md-mini" ng-click="directive.toggleLeft()" hide-gt-md>
                         <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
