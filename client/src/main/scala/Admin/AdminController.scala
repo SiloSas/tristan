@@ -115,6 +115,9 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
         projectService.update(adminScope.newProject) onComplete {
           case Success(uploaded) =>
             timeout( () => {
+              adminScope.newProject.tags foreach { tag =>
+                if (adminScope.tags.indexOf(tag) == -1)  adminScope.tags = adminScope.tags :+ tag
+              }
               adminScope.status = "validate"
             },0, true)
           case Failure(t: Throwable) =>
@@ -126,6 +129,9 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       else projectService.add(adminScope.newProject)onComplete {
         case Success(uploaded) =>
           timeout( () => {
+            adminScope.newProject.tags foreach { tag =>
+              if (adminScope.tags.indexOf(tag) == -1)  adminScope.tags = adminScope.tags :+ tag
+            }
             adminScope.status = "validate"
           },0, true)
         case Failure(t: Throwable) =>

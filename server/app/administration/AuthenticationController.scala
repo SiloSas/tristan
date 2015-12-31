@@ -37,7 +37,6 @@ class AuthenticationController @Inject()(protected val dbConfigProvider: Databas
   }
 
   def redirectAdmin = Authenticated {
-    println("yoyo")
         Ok(views.html.admin(""))
   }
 
