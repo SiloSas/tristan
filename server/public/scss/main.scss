@@ -4,18 +4,21 @@
 
 
 body, html {
-  background-color: white;
   background-size: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
   width: 100%;
+  background: #E8DDCB;
 }
-
+.mainContainer {
+  background: #E8DDCB;
+}
 .chevron::before {
   vertical-align: middle;
   border-style: solid;
-  border-width: 0.10em 0.10em 0 0;
+  border-color: #031634;
+  border-width: 0.15em 0.15em 0 0;
   content: '';
   display: inline-block;
   height: 4.5em;
@@ -27,11 +30,21 @@ body, html {
 }
 
 .slider {
-  background: rgb(121, 141, 158);
+  background: #E8DDCB;
+  text-align: center;
 }
 
+.tag {
+  font-size: 12px;
+  border-radius: 10px;
+  background: rgba(3, 54, 73, 0.75);
+  padding: 5px;
+  color: white;
+  margin: 2px;
+  font-weight: bold;
+}
 .chevron.right:before {
-  left: 0;
+  left: -1.9em;
   transform: rotate(45deg);
 }
 
@@ -41,8 +54,34 @@ body, html {
 }
 
 .chevron.left:before {
-  left: 0.25em;
+  left: 0.95em;
   transform: rotate(-135deg);
 }
+.tooltip-custom {
+  display: none;
+  animation: fadeIn 1s ;
+  -webkit-animation-name: fadeIn;
+  -moz-animation-name: fadeIn;
+  position: absolute;
+  font-weight: bold;
+  top: 55px;
+  margin-left: -20px;
+  font-size: 13px;
+  left: auto;
+  right: auto;
+  background: rgba(3, 54, 73, 0.75);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;}
+.tooltip-trigger:hover >.tooltip-custom {
+  display: block;
+}
 
-
+@media only screen and (max-width: 750px) {
+  .tooltip-trigger:hover >.tooltip-custom {
+    display: none;
+  }
+  .imageSlider {
+    vertical-align: top!important;
+  }
+}

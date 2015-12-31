@@ -77,7 +77,27 @@ INSERT INTO projects(id, name, description, image, tags, technologies, date, isL
   'assets/images/head.jpg', 'characters', 'assets/images/3dsmax.svg, assets/images/zbrush.svg, assets/images/maya.svg, assets/images/photoshop.svg',
   date '2012-10-19 14:00:00', FALSE , 1025, 769, 0);
 
+CREATE TABLE technologies (
+  technologies                        VARCHAR PRIMARY KEY
+);
+INSERT INTO technologies(technologies) VALUES
+ ('assets/images/zbrush.svg');
+INSERT INTO technologies(technologies) VALUES
+ ('assets/images/maya.svg');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/photoshop.svg');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/3dsmax.svg');
+
+CREATE TABLE users (
+  id                        SERIAL PRIMARY KEY,
+  login                     VARCHAR(50),
+  password                  VARCHAR(100)
+);
+INSERT INTO users(login, password) VALUES('admin', '$2a$07$8SJ.wfjn2IaidQVHfcmrHuWzrknBqJE8f.8BO7fu.W.d5u0W5r3t.');
 
 # --- !Downs
 DROP TABLE IF EXISTS rooms;
 DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS technologies;
+DROP TABLE IF EXISTS users;

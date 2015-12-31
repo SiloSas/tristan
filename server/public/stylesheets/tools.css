@@ -8,7 +8,9 @@
 .relative {
     position: relative !important;
 }
-
+.block {
+    display: block!important;
+}
 /* line 6, ../scss/tools.scss */
 .absolute {
     position: absolute !important;
@@ -59,7 +61,7 @@
 /*Colors*/
 /* line 16, ../scss/tools.scss */
 .primCol {
-    background-color: #581030 !important;
+    background-color: #036564 !important;
     color: #ffffff !important;
 }
 
@@ -164,7 +166,7 @@
 
 /* line 39, ../scss/tools.scss */
 .textPrimColor {
-    color: #581030;
+    color: #036564;
 }
 
 /*effects*/

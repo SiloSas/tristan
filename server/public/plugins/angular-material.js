@@ -35,7 +35,7 @@ function MdCoreConfigure($provide, $mdThemingProvider) {
   $provide.decorator('$$rAF', ["$delegate", rAFDecorator]);
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('indigo')
+    .primaryPalette('custom')
     .accentPalette('pink')
     .warnPalette('red')
     .backgroundPalette('grey');
@@ -3921,6 +3921,25 @@ angular.module('material.core.theming.palette', [])
     '700': '#303f9f',
     '800': '#283593',
     '900': '#1a237e',
+    'A100': '#8c9eff',
+    'A200': '#536dfe',
+    'A400': '#3d5afe',
+    'A700': '#304ffe',
+    'contrastDefaultColor': 'light',
+    'contrastDarkColors': '50 100 200 A100',
+    'contrastStrongLightColors': '300 400 A200 A400'
+  },
+  'custom': {
+    '50': '#e8eaf6',
+    '100': '#c5cae9',
+    '200': '#E8DDCB',
+    '300': '#CDB380',
+    '400': '#5c6bc0',
+    '500': '#036564',
+    '600': '#033649',
+    '700': '#031634',
+    '800': '#031634',
+    '900': '#031634',
     'A100': '#8c9eff',
     'A200': '#536dfe',
     'A400': '#3d5afe',

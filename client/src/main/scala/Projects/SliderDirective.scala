@@ -16,8 +16,8 @@ class SliderDirective(window: Window, timeout: Timeout) extends ClassDirective {
   override def link(scope: ScopeType, elements: Seq[Element], attrs: Attributes): Unit = {
     elements.headOption.map(_.asInstanceOf[Html]) foreach { element =>
       def setNewLineHeight(): Unit = {
-         element.style.lineHeight = element.getBoundingClientRect().height.toString + "px"
-       }
+        element.style.lineHeight = element.getBoundingClientRect().height.toString + "px"
+      }
 
       timeout (fn = () => {
         setNewLineHeight()

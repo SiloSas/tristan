@@ -3,7 +3,8 @@ package database
 import java.sql.Date
 import java.text.{DateFormat, SimpleDateFormat}
 
-import Shared.Project
+import Shared.{Technology, Project}
+import administration.UserActor.User
 import shared.Room
 import MyPostgresDriver.api._
 
@@ -55,5 +56,21 @@ trait MyDBTableDefinitions {
   }
 
   lazy val projects = TableQuery[Projects]
+
+  class Technologies(tag: Tag) extends Table[Technology](tag, "technologies") {
+    def technologies = column[String]("technologies")
+
+    def * = technologies <> (Technology.apply, Technology.unapply)
+  }
+  lazy val technologies = TableQuery[Technologies]
+
+  class Users(tag: Tag) extends Table[User](tag, "users") {
+    def id = column[Int]("userid", O.PrimaryKey)
+    def login = column[String]("login")
+    def password = column[String]("password")
+
+    def * = login <> (User, User.unapply)
+  }
+  lazy val users = TableQuery[Users]
 
 }

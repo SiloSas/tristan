@@ -9,3 +9,6 @@ case class Project(id: String, name: String, description: String, image: String,
 @JSExportAll
 case class ProjectToPost(id: String, name: String, description: String, image: String, tags: Array[String], technologies: Array[String], date: String,
                    isLandscape: Boolean, maxWidth: Int, maxHeight: Int, columnNumber: Int)
+
+@JSExportAll
+case class Technology(technologies: String)

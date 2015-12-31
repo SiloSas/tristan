@@ -4,13 +4,10 @@
 <div ng-controller="projectController" class="height100p" ng-cloak>
   <md-toolbar md-scroll-shrink ng-if="true">
     <div class="md-toolbar-tools">
-      <md-button class="md-fab md-mini md-primary"
-      ng-click="$root.slider = false"><i class="fa fa-th"></i>
-      </md-button>
-      <md-button class="md-fab md-mini md-primary"
-      ng-click="$root.slider = true; controller.setIndex(0)">
-        <i class="fa fa-expand"></i>
-      </md-button>
+      <ng-include src="'/assets/templates/mainMenu.html'" class="hidden-for-small" style="display: flex" hide-sm></ng-include>
+        <a aria-label="menu" ng-click="$root.showMenu = !$root.showMenu" class=" md-button md-fab md-mini md-primary" hide-gt-sm>
+          <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+        </a>
       <md-input-container>
         <label>Filters</label>
         <md-select ng-model="filter">
@@ -23,15 +20,62 @@
         </md-select>
       </md-input-container>
       <span flex></span>
-        <span ng-click="$root.slider = false" ng-if="$root.slider" class="pointer">
-          <b class="textColorWhite">{{projects[index].name}}</b>
-          <md-button class="md-fab md-mini md-primary" >
-            <i class="fa fa-times" ></i>
+      <span ng-if="controller.slider" hide-sm>
+        <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
+        <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
+          <md-button href="#" class="md-fab md-mini md-icon-button md-primary "
+          aria-label="{{controller.refactorTech(technologie)}}">
+            <md-icon md-svg-src="{{technologie}}"></md-icon>
           </md-button>
-          <span>Close slider</span>
+          <i class="tooltip-custom animated ">
+            {{controller.refactorTech(technologie)}}
+          </i>
         </span>
+      </span>
+      <span ng-click="controller.slider = false" ng-if="controller.slider" class="pointer tooltip-trigger">
+        <md-button class="md-fab md-mini md-primary float-right" >
+          <i class="fa fa-times" ></i>
+        </md-button>
+        <i class="tooltip-custom animated ">
+          Close slider
+        </i>
+      </span>
+      <span ng-click="controller.showCv = false" ng-if="controller.showCv" class="pointer tooltip-trigger">
+        <md-button class="md-fab md-mini md-primary float-right" >
+          <i class="fa fa-times" ></i>
+        </md-button>
+        <i class="tooltip-custom animated ">
+          Close C.V
+        </i>
+      </span>
     </div>
   </md-toolbar>
-  <md-content class="height100p" style="height: 100%" data-ng-view=""></md-content>
+  <ng-include src="'/assets/templates/mainMenu.html'" class="width100p" ng-if="$root.showMenu" hide-gt-sm></ng-include>
+  <span ng-if="controller.slider" hide-gt-sm>
+    <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
+    <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
+      <md-button href="#" class="md-fab md-mini md-icon-button md-primary "
+      aria-label="{{controller.refactorTech(technologie)}}">
+        <md-icon md-svg-src="{{technologie}}"></md-icon>
+      </md-button>
+      <i class="tooltip-custom animated ">
+        {{controller.refactorTech(technologie)}}
+      </i>
+    </span>
+  </span>
+  <div class="absolute column large-12 paddingTop50 md-whiteframe-z5 zIndex6 text-center left0 height100p"
+  style=" background: rgba(82, 96, 171, 0.38);  overflow: auto"  ng-if="controller.showCv">
+    <img src="assets/images/cv.png" />
+    <span  class="column large-12 text-center">
+      <a href="assets/images/cv.png" download="cv.png" target="_blank" aria-label="Download" class="md-button md-primary md-fab" >
+        <i class="fa fa-download"></i>
+      </a>
+      <b><a href="assets/images/cv.png" download="cv.png" target="_blank" >
+        Download
+      </a></b>
+    </span>
+    <div class="paddingBottom50 marginBottom50 column"></div>
+  </div>
+  <md-content class="height100p zIndex1 mainContainer width100p" style="height: 100%" data-ng-view=""></md-content>
 </div>
 }

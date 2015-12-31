@@ -21,6 +21,12 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
+  def findTechnologies() = Action.async {
+    projectMethods.findTechnologies.map { technologies =>
+      println(technologies)
+      Ok(write(technologies))
+    }
+  }
   def update(id: String) = process(projectMethods.update)
   def add() = process(projectMethods.add)
   def delete(id: String) = Action.async {
@@ -32,9 +38,7 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
   def uploadImage = Action(parse.multipartFormData) { request =>
     request.body.file("picture").map { image =>
       image.contentType match {
-        case Some(fileExtension) if fileExtension == "image/tiff" || fileExtension == "image/jpg" ||
-          fileExtension == "image/jpeg" || fileExtension == "image/png" || fileExtension == "image/svg" ||
-          fileExtension == "application/pdf" =>
+        case Some(fileExtension)  =>
 
           println(image)
           val filename = image.filename

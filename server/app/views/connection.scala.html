@@ -1,0 +1,14 @@
+@(message: String)
+@main("Portfolio Tristan Delgado") {
+    <form action="/authenticate">
+        <md-input-container>
+            <label>Username</label>
+            <input name="login" type="text" ng-model="username" />
+        </md-input-container>
+        <md-input-container>
+            <label>Password</label>
+            <input type="password" name="password" ng-model="password" />
+        </md-input-container>
+        <input type="submit">
+    </form>
+}

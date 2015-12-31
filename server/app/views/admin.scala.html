@@ -47,7 +47,11 @@
                             app-filereader="newProject.image">
                         </md-input-container>
                     </div>
-                    <h3>Tags</h3>
+                    <h3>Tags <span
+                    class="pointer tag"
+                    ng-repeat="tag in tags"
+                    ng-if="newProject.tags.indexOf(tag) == -1"
+                    ng-click="newProject.tags.push(tag)">{{tag}} +</span></h3>
                     <md-chips ng-model="newProject.tags" readonly="false"></md-chips>
                     <h3>technologies</h3>
                     <div class="column paddingBottom10">
@@ -59,29 +63,38 @@
                         </span>
                     </div>
                     <md-divider class="column"></md-divider>
-                    <h4 class="column">add technologie</h4>
+                    <h4 class="column">add technology</h4>
                     <md-fab-speed-dial md-open="controller.isOpen" md-direction="down"
                     class="md-fling float-left">
                         <md-fab-trigger>
-                            <md-button aria-label="menu" class="md-fab md-primary">
+                            <a aria-label="menu" class=" md-button md-fab md-primary">
                                 <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                            </md-button>
+                            </a>
                         </md-fab-trigger>
                         <md-fab-actions>
-                            <div ng-repeat="technologie in technologies">
-                                <md-button  class="md-fab md-raised md-mini md-primary" ng-click="controller.addTechnologie(technologie)">
+                            <div ng-repeat="technologie in technologies" class="tooltip-trigger relative " ng-show="controller.isOpen">
+                                <a  class="md-button md-fab md-raised md-mini md-primary" ng-click="controller.addTechnologie(technologie)">
                                     <md-icon md-svg-src="{{technologie}}"></md-icon>
-                                </md-button>
+                                </a>
+                                <i class="tooltip-custom animated marginLeft50 top0">
+                                    {{controller.refactorTech(technologie)}}
+                                </i>
                             </div>
                         </md-fab-actions>
                     </md-fab-speed-dial>
-                    <md-input-container>
-                        <label></label>
-                        <input type="file"
-                        value="Charger une image"
-                        app-filereader="newTechnologie">
-                    </md-input-container>
-                    <md-button ng-click="newProject.technologies.push(newTechnologie); newTechnologie = ''">Ajouter la nouvelle techno(! .svg 25*25px)</md-button>
+                    <div class="column medium-8 md-whiteframe-z1" flex>
+                        <b class="column">Add new technology</b>
+                        <md-input-container class="column">
+                            <label class="float-right text-center width100p">New technologie icon (.svg 25*25)</label>
+                            <input type="file"
+                            value="Charger une image"
+                            app-filereader="newTechnologie">
+                        </md-input-container>
+                        <a ng-click="newProject.technologies.push(newTechnologie); newTechnologie = ''"
+                        class="md-button md-raised md-primary" ng-show="newTechnologie">Ajouter la nouvelle techno(! .svg 25*25px)</a>
+                        <a class="md-button md-raised md-primary"
+                        ng-show="!newTechnologie" ng-disabled="!newTechnologie">Ajoutez un fichier nommé du nom de la technologie .svg 25*25px puis validez ici</a>
+                    </div>
                     <md-divider class="column"></md-divider>
                     <md-input-container class="column large-12">
                         <label>Date</label>
@@ -102,7 +115,7 @@
                     <div class="column">
                         <md-button type="submit" class="md-primary md-raised float-left">Submit</md-button>
                         <div class="float-left">
-                            {{status}}
+                            <b ng-if="status != 'false'">{{status}}</b>
                             <md-progress-circular md-mode="indeterminate" ng-show="status == 'inProgress'"></md-progress-circular>
                             <i class="fa fa-check" ng-show="status == 'validate'"></i>
                             <i class="fa fa-times" ng-show="status == 'error'"></i>

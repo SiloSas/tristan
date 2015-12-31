@@ -1,5 +1,6 @@
-<div ng-if="!$root.slider"
-    class="column large-12 paddingTop10 paddingBottom50 marginBottom50" layout="row" layout-wrap layout-align="center start" layout-xs="column">
+<div ng-if="!controller.slider"
+    class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
+     layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div  flex="100" class="grid">
         <project-min ng-repeat="project in projects | filter: {'columnNumber': 0}">
             </project-min>
@@ -17,19 +18,24 @@
         </project-min>
     </div>
 </div>
-<div ng-if="$root.slider" class="height100p width100p float-left slider">
-   <div class="column small-1 height100p" ng-click="controller.prevIndex()">
-       <i class="chevron left float-right height100p"></i>
-   </div>
-   <div ng-repeat="project in projects | orderBy: 'position'"
-        class="height100p column small-10 text-center"
-        ng-if="$parent.index == $index">
-       <img ng-src="{{project.image}}"
-            style="max-height: {{project.maxHeight}}px; max-width: {{project.maxWidth}}px;"
-            class="animated fadeIn"
-            ng-class="{'height100p': !project.isLandscape, 'width100p': project.isLandscape}"/>
-   </div>
-   <div class="column small-1 height100p" ng-click="controller.nextIndex()">
-       <i class="chevron right float-left"></i>
+<div ng-if="controller.slider" class="height100p width100p float-left">
+    <b class="column"><i class="text-center column textPrimColor" >{{projects[index].description}}</i></b>
+   <div class="height100p width100p float-left slider">
+       <div class="column small-1 height100p " ng-click="controller.prevIndex()" hide-sm>
+           <i class="chevron left float-right height100p"></i>
+       </div>
+       <div ng-repeat="project in projects"
+            class="height100p column medium-10 padding0 text-center"
+            ng-if="$parent.index == $index"
+            md-swipe-right="controller.prevIndex()"
+            md-swipe-left="controller.nextIndex()">
+           <img ng-src="{{project.image}}"
+                style="max-height: {{project.maxHeight}}px; max-width: {{project.maxWidth}}px; "
+                class="animated fadeIn imageSlider"
+                ng-class="{'height100p': !project.isLandscape, 'width100p': project.isLandscape}"/>
+       </div>
+       <div class=" column small-1 height100p" ng-click="controller.nextIndex()" hide-sm>
+           <i class="chevron right float-left"></i>
+       </div>
    </div>
 </div>

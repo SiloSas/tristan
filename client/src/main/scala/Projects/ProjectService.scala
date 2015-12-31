@@ -3,7 +3,7 @@ package Projects
 import java.util.{Dictionary, UUID}
 
 import Admin.MutableProject
-import ClientClass.{ProjectToPost, Project}
+import ClientClass.{Technology, ProjectToPost, Project}
 import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
 import com.greencatsoft.angularjs._
 import com.sun.xml.internal.ws.server.sei.EndpointArgumentsBuilder.Header
@@ -65,6 +65,17 @@ class ProjectService(http: HttpService) extends Service {
     http.delete[js.Any](s"/projects/$id")
     .map { resp =>
       JSON.stringify(resp)
+    }
+  }
+
+  @JSExport
+  def findTechnologies(): Future[Seq[Technology]] = {
+    http.get[js.Any]("/technologies")
+    .map { resp =>
+      console.log(resp)
+      JSON.stringify(resp)
+    } map {
+      read[Seq[Technology]]
     }
   }
 

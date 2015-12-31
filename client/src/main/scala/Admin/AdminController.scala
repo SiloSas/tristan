@@ -56,6 +56,17 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       console.log(throw t)
   }
 
+  projectService.findTechnologies().onComplete {
+    case Success(technologies) =>
+      console.log(technologies)
+      timeout( () => {
+        technologies.map { technology =>
+          if (adminScope.technologies.indexOf(technology.technologies) == -1) adminScope.technologies.push(technology.technologies)
+        }
+      }, 0, true)
+    case Failure(t: Throwable) =>
+      console.log(throw t)
+  }
   def setProject(project: MutableProject): Unit = {
     timeout( () => {
       adminScope.status = "false"
@@ -142,6 +153,12 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       case Success(image) =>
         adminScope.newProject.image = image
     }
+  }
+
+  def refactorTech(technology: String): String = {
+    val a = technology.substring(technology.lastIndexOf("/") + 1).replace(".svg", "")
+    console.log(a)
+    a
   }
 
 

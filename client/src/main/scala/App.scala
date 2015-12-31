@@ -3,7 +3,6 @@ import Projects.{ProjectServiceFactory, ProjectMinDirective, SliderDirective, Pr
 import Room.{RoomController, RoomMinDirective}
 import com.greencatsoft.angularjs._
 import example.RoomServiceFactory
-
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.JSExport
 
