@@ -1,22 +1,20 @@
 package Projects
 
-import java.util.{Dictionary, UUID}
+import java.util.UUID
 
 import Admin.MutableProject
-import ClientClass.Technology
-import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
 import com.greencatsoft.angularjs._
-import com.sun.xml.internal.ws.server.sei.EndpointArgumentsBuilder.Header
-import org.scalajs.dom.raw.{File, FormData, ImageData}
-import upickle.default._
+import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
 import org.scalajs.dom.console
-import scala.scalajs.js
-import scala.scalajs.js.{Dictionary, Object, JSON}
-import scala.scalajs.js.annotation.JSExport
+import org.scalajs.dom.raw.{File, FormData}
+import upickle.default._
+
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.js
+import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.{JSON, Object}
 import scala.util.{Failure, Success, Try}
-import shared._
 
 @injectable("projectService")
 class ProjectService(http: HttpService) extends Service {
