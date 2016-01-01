@@ -20,6 +20,12 @@
                         <md-button class="md-fab md-mini float-right md-warn" ng-click="controller.delete(project.id)"><i class="fa fa-trash"></i></md-button>
                     </div>
                     <md-button ng-click="controller.setNewProject()" class="md-primary md-raised">Ajouter un projet</md-button>
+                    <md-input-container class="column">
+                        <label class="float-right text-center width100p">Change C.V (name the file cv.png)</label>
+                        <input type="file"
+                        value="Charger une image"
+                        app-filereader="CV">
+                    </md-input-container>
                 </div>
             </md-content>
         </md-sidenav>
