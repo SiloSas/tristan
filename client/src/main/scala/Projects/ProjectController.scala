@@ -2,7 +2,7 @@ package Projects
 
 
 import java.util.UUID
-import ClientClass.Project
+import Project
 import com.greencatsoft.angularjs.core.{RootScope, Timeout, Window}
 import com.greencatsoft.angularjs.{Filter, Angular, AbstractController, injectable}
 import scala.concurrent.ExecutionContext.Implicits.global

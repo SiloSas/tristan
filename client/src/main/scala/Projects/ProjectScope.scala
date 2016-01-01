@@ -1,6 +1,6 @@
 package Projects
 
-import ClientClass.Project
+import Project
 import com.greencatsoft.angularjs.core.Scope
 
 import scala.scalajs.js

@@ -1,4 +1,4 @@
-package ClientClass
+package Projects
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll

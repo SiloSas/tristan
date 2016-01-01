@@ -1,6 +1,6 @@
 package Admin
 
-import ClientClass.Project
+import Projects.Project
 import com.greencatsoft.angularjs.core.Scope
 import org.scalajs.dom.raw.{File, ImageData}
 

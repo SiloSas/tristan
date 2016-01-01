@@ -1,8 +1,7 @@
 package Admin
 
 import java.util.UUID
-import ClientClass.Project
-import Projects.ProjectService
+import Projects.{Project, ProjectService}
 import com.greencatsoft.angularjs.core.Timeout
 import com.greencatsoft.angularjs.{Filter, Angular, AbstractController, injectable}
 import org.scalajs.dom.html.Image

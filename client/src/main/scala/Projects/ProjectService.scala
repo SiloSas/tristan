@@ -3,7 +3,7 @@ package Projects
 import java.util.{Dictionary, UUID}
 
 import Admin.MutableProject
-import ClientClass.{Technology, ProjectToPost, Project}
+import ClientClass.Technology
 import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
 import com.greencatsoft.angularjs._
 import com.sun.xml.internal.ws.server.sei.EndpointArgumentsBuilder.Header
