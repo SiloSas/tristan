@@ -33,7 +33,7 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
   def update(id: String) = process(projectMethods.update)
 
   def add() = process(projectMethods.add)
-  
+
   def delete(id: String) = Authenticated.async {
     projectMethods.delete(id).map { result =>
       Ok(write(result))

@@ -3,12 +3,16 @@
     <section layout="row" flex class="height100p" ng-cloak data-ng-controller="adminController" ng-cloak>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
             <md-toolbar>
-                <h1 class="md-toolbar-tools">Admin</h1>
+                <h1 class="md-toolbar-tools">
+                    Admin
+                    <div flex></div>
+                    <md-button ng-click="directive.close()"
+                    class="md-primary toggle-button md-fab md-mini" hide-gt-md>
+                        <i class="fa fa-times"></i>
+                    </md-button>
+                </h1>
             </md-toolbar>
             <md-content layout-padding >
-                <md-button ng-click="close()" class="md-primary" hide-gt-md>
-                    Close Sidenav Left
-                </md-button>
                 <div>
                     <div class="column md-whiteframe-z1" ng-repeat="project in projects">
                         <h5>{{project.name}}</h5>
@@ -22,8 +26,11 @@
         <md-content style="overflow: hidden; height: inherit" flex>
             <md-toolbar>
                 <div class="md-toolbar-tools" >
-                    <md-button aria-label="menu" class="md-fab md-primary md-mini" ng-click="directive.toggleLeft()" hide-gt-md>
+                    <md-button aria-label="menu" class="md-fab md-primary md-mini toggle-button" ng-click="directive.toggleLeft()" hide-gt-md>
                         <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                    </md-button>
+                    <md-button href="./" aria-label="home" class="md-fab md-primary md-mini">
+                        <i class="fa fa-home"></i>
                     </md-button>
                 </div>
             </md-toolbar>
