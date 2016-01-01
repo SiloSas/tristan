@@ -1,16 +1,13 @@
 package Projects
 
 
-import java.util.UUID
-import Project
 import com.greencatsoft.angularjs.core.{RootScope, Timeout, Window}
-import com.greencatsoft.angularjs.{Filter, Angular, AbstractController, injectable}
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs.js
+import com.greencatsoft.angularjs.{AbstractController, injectable}
 import org.scalajs.dom._
-import scala.scalajs.js.Date
-import scala.scalajs.js.annotation.{JSExport, JSExportAll}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
+import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 import scala.util.{Failure, Success}
 
 @JSExportAll
