@@ -5,6 +5,7 @@ import java.io.File
 import javax.inject.Inject
 
 import administration.Authenticated
+import play.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.JsObject
 import play.api.mvc.{Action, _}
@@ -46,7 +47,7 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
           println(image)
           val filename = image.filename
-          image.ref.moveTo(new File("../server/public/images/" + filename), replace = true)
+          image.ref.moveTo(new File(Play.application().path().getPath + "/public/images/" + filename), replace = true)
 
           Ok("assets/images/" +filename)
 
