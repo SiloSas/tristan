@@ -12,7 +12,6 @@ import upickle.default._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfigProvider, val projectMethods: ProjectMethods)
   extends Controller {
@@ -47,7 +46,7 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
           println(image)
           val filename = image.filename
-          image.ref.moveTo(new File("server/public/images/" + filename), replace = true)
+          image.ref.moveTo(new File("../server/public/images/" + filename), replace = true)
 
           Ok("assets/images/" +filename)
 
