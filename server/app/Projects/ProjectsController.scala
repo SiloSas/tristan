@@ -1,14 +1,15 @@
 package Projects
 
 
-import java.io.File
+import java.io.{ByteArrayOutputStream, File}
+import javax.imageio.ImageIO
 import javax.inject.Inject
 
 import administration.Authenticated
 import play.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.JsObject
-import play.api.mvc.{Action, _}
+import play.api.mvc._
 import upickle.default._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,14 +48,30 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
 
           println(image)
           val filename = image.filename
-          image.ref.moveTo(new File(Play.application().path().getPath + "/public/images/" + filename), replace = true)
+          image.ref.moveTo(new File(Play.application().path().getPath + "/../../../public/images/" + filename), replace = true)
 
-          Ok("assets/images/" +filename)
+          Ok("images/" +filename)
 
         case _ =>
           Unauthorized("Wrong content type")
       }
     }.getOrElse { BadRequest }
+  }
+
+  def getImage(fileName: String) = Action {
+    val imageFile = new File(Play.application().path().getPath + "/../../../public/images/" + fileName)
+    val image = ImageIO.read(imageFile)
+    if (imageFile.length > 0) {
+
+      val resourceType = fileName.substring(fileName.length()-3)
+      val baos = new ByteArrayOutputStream()
+      ImageIO.write(image, resourceType, baos)
+
+      Ok(baos.toByteArray).as("image/" + resourceType)
+      //resource type such as image+png, image+jpg
+    } else {
+      NotFound(fileName)
+    }
   }
 
   def process(updater: Shared.Project => Future[Int]) = Authenticated.async(parse.json) { request =>
