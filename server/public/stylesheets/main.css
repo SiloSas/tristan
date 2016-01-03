@@ -23901,13 +23901,12 @@ project-min.ng-leave-active {
 .grid {
   position: relative;
   margin: 0 auto;
-  width: 100%;
   list-style: none;
   text-align: center;
 }
 
 /* Common style */
-/* line 49, ../../../client/src/main/scala/Projects/project.scss */
+/* line 48, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure {
   position: relative;
   float: left;
@@ -23919,7 +23918,7 @@ project-min.ng-leave-active {
   width: 100%;
 }
 
-/* line 60, ../../../client/src/main/scala/Projects/project.scss */
+/* line 59, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure img {
   position: relative;
   display: block;
@@ -23927,7 +23926,7 @@ project-min.ng-leave-active {
   opacity: 1;
 }
 
-/* line 68, ../../../client/src/main/scala/Projects/project.scss */
+/* line 67, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure figcaption {
   padding: 2em;
   color: #fff;
@@ -23937,13 +23936,13 @@ project-min.ng-leave-active {
   backface-visibility: hidden;
 }
 
-/* line 77, ../../../client/src/main/scala/Projects/project.scss */
+/* line 76, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure figcaption::before,
 .grid figure figcaption::after {
   pointer-events: none;
 }
 
-/* line 82, ../../../client/src/main/scala/Projects/project.scss */
+/* line 81, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure figcaption,
 .grid figure figcaption > a {
   position: absolute;
@@ -23955,7 +23954,7 @@ project-min.ng-leave-active {
 
 /* Anchor will cover the whole item by default */
 /* For some effects it will show as a button */
-/* line 93, ../../../client/src/main/scala/Projects/project.scss */
+/* line 92, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure figcaption > a {
   z-index: 1000;
   text-indent: 200%;
@@ -23964,24 +23963,24 @@ project-min.ng-leave-active {
   opacity: 0;
 }
 
-/* line 101, ../../../client/src/main/scala/Projects/project.scss */
+/* line 100, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure h2 {
   word-spacing: -0.15em;
   font-weight: 300;
 }
 
-/* line 106, ../../../client/src/main/scala/Projects/project.scss */
+/* line 105, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure h2 span {
   font-weight: 800;
 }
 
-/* line 110, ../../../client/src/main/scala/Projects/project.scss */
+/* line 109, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure h2,
 .grid figure p {
   margin: 0;
 }
 
-/* line 115, ../../../client/src/main/scala/Projects/project.scss */
+/* line 114, ../../../client/src/main/scala/Projects/project.scss */
 .grid figure p {
   letter-spacing: 1px;
   font-size: 68.5%;
@@ -23990,23 +23989,23 @@ project-min.ng-leave-active {
 /*---------------*/
 /***** Layla *****/
 /*---------------*/
-/* line 124, ../../../client/src/main/scala/Projects/project.scss */
+/* line 123, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla {
   background: #18a367;
 }
 
-/* line 128, ../../../client/src/main/scala/Projects/project.scss */
+/* line 127, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla img {
   min-height: 110%;
   min-width: 100%;
 }
 
-/* line 133, ../../../client/src/main/scala/Projects/project.scss */
+/* line 132, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla figcaption {
   padding: 3em;
 }
 
-/* line 137, ../../../client/src/main/scala/Projects/project.scss */
+/* line 136, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla figcaption::before,
 figure.effect-layla figcaption::after {
   position: absolute;
@@ -24014,7 +24013,7 @@ figure.effect-layla figcaption::after {
   opacity: 0;
 }
 
-/* line 144, ../../../client/src/main/scala/Projects/project.scss */
+/* line 143, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla figcaption::before {
   top: 50px;
   right: 30px;
@@ -24028,7 +24027,7 @@ figure.effect-layla figcaption::before {
   transform-origin: 0 0;
 }
 
-/* line 157, ../../../client/src/main/scala/Projects/project.scss */
+/* line 156, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla figcaption::after {
   top: 30px;
   right: 50px;
@@ -24042,14 +24041,14 @@ figure.effect-layla figcaption::after {
   transform-origin: 100% 0;
 }
 
-/* line 170, ../../../client/src/main/scala/Projects/project.scss */
+/* line 169, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla h2 {
   padding-top: 26%;
   -webkit-transition: -webkit-transform 0.35s;
   transition: transform 0.35s;
 }
 
-/* line 176, ../../../client/src/main/scala/Projects/project.scss */
+/* line 175, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla p {
   padding: 0.5em 2em;
   text-transform: none;
@@ -24058,14 +24057,14 @@ figure.effect-layla p {
   transform: translate3d(0, -10px, 0);
 }
 
-/* line 184, ../../../client/src/main/scala/Projects/project.scss */
+/* line 183, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla img,
 figure.effect-layla h2 {
   -webkit-transform: translate3d(0, -30px, 0);
   transform: translate3d(0, -30px, 0);
 }
 
-/* line 190, ../../../client/src/main/scala/Projects/project.scss */
+/* line 189, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla img,
 figure.effect-layla figcaption::before,
 figure.effect-layla figcaption::after,
@@ -24074,14 +24073,14 @@ figure.effect-layla p {
   transition: opacity 0.35s, transform 0.35s;
 }
 
-/* line 198, ../../../client/src/main/scala/Projects/project.scss */
+/* line 197, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla:hover img {
   opacity: 0.7;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-/* line 204, ../../../client/src/main/scala/Projects/project.scss */
+/* line 203, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla:hover figcaption::before,
 figure.effect-layla:hover figcaption::after {
   opacity: 1;
@@ -24089,7 +24088,7 @@ figure.effect-layla:hover figcaption::after {
   transform: scale(1);
 }
 
-/* line 211, ../../../client/src/main/scala/Projects/project.scss */
+/* line 210, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla:hover h2,
 figure.effect-layla:hover p {
   opacity: 1;
@@ -24097,7 +24096,7 @@ figure.effect-layla:hover p {
   transform: translate3d(0, 0, 0);
 }
 
-/* line 218, ../../../client/src/main/scala/Projects/project.scss */
+/* line 217, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-layla:hover figcaption::after,
 figure.effect-layla:hover h2,
 figure.effect-layla:hover p,
@@ -24109,7 +24108,7 @@ figure.effect-layla:hover img {
 /*---------------*/
 /***** Zoe *****/
 /*---------------*/
-/* line 230, ../../../client/src/main/scala/Projects/project.scss */
+/* line 229, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe figcaption {
   top: auto;
   bottom: 0;
@@ -24123,7 +24122,7 @@ figure.effect-zoe figcaption {
   transform: translate3d(0, 100%, 0);
 }
 
-/* line 243, ../../../client/src/main/scala/Projects/project.scss */
+/* line 242, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe h2 {
   position: absolute;
   color: white;
@@ -24135,7 +24134,7 @@ figure.effect-zoe h2 {
   transform: translate3d(0, 0, 0);
 }
 
-/* line 253, ../../../client/src/main/scala/Projects/project.scss */
+/* line 252, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe h3 {
   float: left;
   padding-top: 26%;
@@ -24147,14 +24146,14 @@ figure.effect-zoe h3 {
   top: 0;
 }
 
-/* line 264, ../../../client/src/main/scala/Projects/project.scss */
+/* line 263, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe p.icon-links a {
   float: right;
   color: #3c4a50;
   font-size: 1.4em;
 }
 
-/* line 269, ../../../client/src/main/scala/Projects/project.scss */
+/* line 268, ../../../client/src/main/scala/Projects/project.scss */
 .minRoomInfo {
   float: left;
   position: relative;
@@ -24166,13 +24165,13 @@ figure.effect-zoe p.icon-links a {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 280, ../../../client/src/main/scala/Projects/project.scss */
+/* line 279, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover p.icon-links a:hover,
 figure.effect-zoe:hover p.icon-links a:focus {
   color: #252d31;
 }
 
-/* line 285, ../../../client/src/main/scala/Projects/project.scss */
+/* line 284, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe p.description {
   position: absolute;
   bottom: 8em;
@@ -24187,7 +24186,7 @@ figure.effect-zoe p.description {
   /* Fix for Chrome 37.0.2062.120 (Mac) */
 }
 
-/* line 298, ../../../client/src/main/scala/Projects/project.scss */
+/* line 297, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe h3,
 figure.effect-zoe p.icon-links a {
   -webkit-transition: -webkit-transform 0.35s;
@@ -24196,7 +24195,7 @@ figure.effect-zoe p.icon-links a {
   transform: translate3d(0, 200%, 0);
 }
 
-/* line 306, ../../../client/src/main/scala/Projects/project.scss */
+/* line 305, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe p.icon-links a span::before {
   display: inline-block;
   padding: 8px 10px;
@@ -24206,27 +24205,27 @@ figure.effect-zoe p.icon-links a span::before {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 315, ../../../client/src/main/scala/Projects/project.scss */
+/* line 314, ../../../client/src/main/scala/Projects/project.scss */
 .icon-eye::before {
   content: '\e000';
 }
 
-/* line 319, ../../../client/src/main/scala/Projects/project.scss */
+/* line 318, ../../../client/src/main/scala/Projects/project.scss */
 .icon-paper-clip::before {
   content: '\e001';
 }
 
-/* line 323, ../../../client/src/main/scala/Projects/project.scss */
+/* line 322, ../../../client/src/main/scala/Projects/project.scss */
 .icon-heart::before {
   content: '\e024';
 }
 
-/* line 327, ../../../client/src/main/scala/Projects/project.scss */
+/* line 326, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover p.description {
   opacity: 1;
 }
 
-/* line 331, ../../../client/src/main/scala/Projects/project.scss */
+/* line 330, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover figcaption,
 figure.effect-zoe:hover h3,
 figure.effect-zoe:hover p.icon-links a {
@@ -24234,25 +24233,25 @@ figure.effect-zoe:hover p.icon-links a {
   transform: translate3d(0, 0, 0);
 }
 
-/* line 338, ../../../client/src/main/scala/Projects/project.scss */
+/* line 337, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover h3 {
   -webkit-transition-delay: 0.05s;
   transition-delay: 0.05s;
 }
 
-/* line 343, ../../../client/src/main/scala/Projects/project.scss */
+/* line 342, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover p.icon-links a:nth-child(3) {
   -webkit-transition-delay: 0.1s;
   transition-delay: 0.1s;
 }
 
-/* line 348, ../../../client/src/main/scala/Projects/project.scss */
+/* line 347, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover p.icon-links a:nth-child(2) {
   -webkit-transition-delay: 0.15s;
   transition-delay: 0.15s;
 }
 
-/* line 353, ../../../client/src/main/scala/Projects/project.scss */
+/* line 352, ../../../client/src/main/scala/Projects/project.scss */
 figure.effect-zoe:hover p.icon-links a:first-child {
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;

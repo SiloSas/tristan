@@ -21,6 +21,21 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
   var projects: Seq[Project] = Seq.empty
   adminScope.tags = Seq.empty[String].toJSArray
   adminScope.technologies = Seq.empty[String].toJSArray
+  var galleryColumns = Seq.empty[GalleryColumn].toJSArray
+  setNewColumn
+
+  def setNewColumn: Unit = {
+    val newColumn = new Object().asInstanceOf[GalleryColumn]
+    newColumn.number = galleryColumns.length
+    var totalWidth = 0
+    galleryColumns.foreach { column =>
+      totalWidth = totalWidth + column.size
+    }
+    if (totalWidth%100 != 0) {
+      newColumn.size = 100 - totalWidth%100
+    } else newColumn.size = 100
+    if (galleryColumns.indexOf(newColumn) == -1) galleryColumns.push(newColumn)
+  }
 
   projectService.findAll().onComplete  {
     case Success(projectsFound) =>
@@ -38,7 +53,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
           adminProject.maxWidth = project.maxWidth
           adminProject.tags = project.tags
           adminProject.technologies = project.technologies
-          adminProject.column = 0
+          adminProject.columnNumber = 0
           adminProject
         }.toJSArray
         adminScope.projects.map { project =>
@@ -72,6 +87,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       adminScope.newProject = project
     })
   }
+  
 
   def setSize(): Unit = {
     document.getElementById("projectImage").asInstanceOf[Image].addEventListener("load", (event: Event) => {
@@ -93,7 +109,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       adminScope.status = "false"
       val project = new Object().asInstanceOf[MutableProject]
       project.id = "new"
-      project.column = 0
+      project.columnNumber = 0
       project.date = new Date()
       project.tags = Seq.empty[String].toJSArray
       project.technologies = Seq.empty[String].toJSArray

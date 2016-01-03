@@ -42,7 +42,41 @@
                     </md-button>
                 </div>
             </md-toolbar>
-            <md-content layout="column" layout-fill layout-align="top center">
+            <md-content layout-fill >
+                <div
+                class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
+                layout="row" layout-wrap layout-align="center start" layout-xs="column">
+                    <div  class="float-left" style="width:{{column.size}}%" class="grid" ng-repeat="column in controller.galleryColumns">
+                        <span><input flex min="1" max="100" type="number"
+                        ng-model="column.size" aria-label="size" id="column.number"/></span>
+                        <div  ng-repeat="project in filteredProjects =(projects | filter: {'columnNumber': column.number})"
+                        class="grid float-left padding0  " style="width: {{projectSize}}%">
+                            <project-min class="width100p float-left"></project-min>
+                            <span class="absolute left0">
+                                <input flex min="1" max="100" ng-init="projectSize = 50" type="number"
+                                ng-model="projectSize" aria-label="size" id="projectSize"/>
+                                <input flex ng-init="project.position = $index" type="number"
+                                ng-model="$index"
+                                ng-change="filteredProjects[$index] = project"
+                                aria-label="position" id="projectPosition"/>
+                                <span class="md-button md-primary md-fab md-mini"
+                                ng-click="project.columnNumber = project.columnNumber + 1" ng-show="project.columnNumber != controller.galleryColumns.length -1">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                <span class="md-button md-primary md-fab md-mini"
+                                ng-click="controller.setNewColumn(); project.columnNumber = project.columnNumber + 1"
+                                ng-show="project.columnNumber == controller.galleryColumns.length -1">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                                <span class="md-button md-primary md-fab md-mini" ng-show="project.columnNumber != 0"
+                                ng-click="project.columnNumber = project.columnNumber - 1">
+                                    <i class="fa fa-minus"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <form class="column" ng-if="newProject" ng-submit="controller.updateProjects()">
                     <md-input-container class="column large-12">
                         <label>Name</label>

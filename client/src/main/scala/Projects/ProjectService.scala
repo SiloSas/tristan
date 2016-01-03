@@ -37,7 +37,7 @@ class ProjectService(http: HttpService) extends Service {
     val projectToPost: ProjectToPost = ProjectToPost(id = project.id, name = project.name, description = project.description,
       image = project.image, tags = project.tags.toArray, technologies = project.technologies.toArray,
       date = project.date.getFullYear().toString + "-" + project.date.getMonth().toString + "-" + project.date.getDay().toString,
-      isLandscape = project.isLandscape, maxWidth = project.maxWidth, maxHeight = project.maxHeight, columnNumber = project.column)
+      isLandscape = project.isLandscape, maxWidth = project.maxWidth, maxHeight = project.maxHeight, columnNumber = project.columnNumber)
     http.put[js.Any](s"/projects/${project.id}", write(projectToPost))
       .map { p =>
         console.log(p)
@@ -50,7 +50,7 @@ class ProjectService(http: HttpService) extends Service {
     val projectToPost: ProjectToPost = ProjectToPost(id = UUID.randomUUID().toString, name = project.name, description = project.description,
       image = project.image, tags = project.tags.toArray, technologies = project.technologies.toArray,
       date = project.date.getFullYear().toString + "-" + project.date.getMonth().toString + "-" + project.date.getDay().toString,
-      isLandscape = project.isLandscape, maxWidth = project.maxWidth, maxHeight = project.maxHeight, columnNumber = project.column)
+      isLandscape = project.isLandscape, maxWidth = project.maxWidth, maxHeight = project.maxHeight, columnNumber = project.columnNumber)
     http.post[js.Any](s"/projects", write(projectToPost))
       .map { p =>
         console.log(p)

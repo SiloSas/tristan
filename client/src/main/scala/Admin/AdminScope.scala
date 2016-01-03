@@ -15,6 +15,11 @@ trait AdminScope extends Scope {
   var status: String = js.native
 }
 
+trait GalleryColumn extends js.Object {
+  var number: Int = js.native
+  var size: Int = js.native
+}
+
 trait MutableProject extends js.Object {
   var id: String = js.native
   var name: String = js.native
@@ -26,5 +31,5 @@ trait MutableProject extends js.Object {
   var isLandscape: Boolean= js.native
   var maxWidth: Int= js.native
   var maxHeight: Int= js.native
-  var column: Int= js.native
+  var columnNumber: Int= js.native
 }
