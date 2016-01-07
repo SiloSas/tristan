@@ -49,18 +49,29 @@
                     <div  class="float-left" style="width:{{column.size}}%" class="grid" ng-repeat="column in controller.galleryColumns">
                         <span><input flex min="1" max="100" type="number"
                         ng-model="column.size" aria-label="size" id="column.number"/></span>
-                        <div  ng-repeat="project in filteredProjects =(projects | filter: {'columnNumber': column.number})"
+                        <div  ng-repeat="project in filteredProjects =(projects | filter: {'columnNumber': column.number} | orderBy: 'position')"
                         class="grid float-left padding0  " style="width: {{projectSize}}%">
                             <project-min class="width100p float-left"></project-min>
                             <span class="absolute left0">
                                 <input flex min="1" max="100" ng-init="projectSize = 50" type="number"
                                 ng-model="projectSize" aria-label="size" id="projectSize"/>
-                                <input flex ng-init="project.position = $index" type="number"
-                                ng-model="$index"
-                                ng-change="filteredProjects[$index] = project"
-                                aria-label="position" id="projectPosition"/>
+                                <md-button flex
+                                    class="md-primary md-fab md-mini"
+                                ng-init="project.position = $index"
+                                ng-show="$index != 0"
+                                ng-click="$parent.filteredProjects[$index - 1].position = $parent.filteredProjects[$index - 1].position + 1;
+                                project.position = project.position -1"
+                                aria-label="position" id="projectPosition"><i class="fa fa-minus"></i>{{$index}}</md-button>
+                                <md-button flex
+                                    class="md-primary md-fab md-mini"
+                                ng-show="$index != filteredProjects.length -1"
+                                ng-init="project.position = $index"
+                                ng-click="$parent.filteredProjects[$index + 1].position = $parent.filteredProjects[$index + 1].position - 1;
+                                project.position = project.position +1"
+                                aria-label="position" id="projectPosition"><i class="fa fa-plus"></i>{{$index}}</md-button>
                                 <span class="md-button md-primary md-fab md-mini"
-                                ng-click="project.columnNumber = project.columnNumber + 1" ng-show="project.columnNumber != controller.galleryColumns.length -1">
+                                ng-click="project.columnNumber = project.columnNumber + 1"
+                                ng-show="project.columnNumber != controller.galleryColumns.length -1">
                                     <i class="fa fa-plus"></i>
                                 </span>
                                 <span class="md-button md-primary md-fab md-mini"
