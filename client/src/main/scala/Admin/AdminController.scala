@@ -21,26 +21,38 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
   var projects: Seq[Project] = Seq.empty
   adminScope.tags = Seq.empty[String].toJSArray
   adminScope.technologies = Seq.empty[String].toJSArray
-  var galleryColumns = Seq.empty[GalleryColumn].toJSArray
-  setNewColumn
+  val newColumn0 = new Object().asInstanceOf[GalleryColumn]
+  newColumn0.number = 0
+  newColumn0.size = 100
+  val newColumn1 = new Object().asInstanceOf[GalleryColumn]
+  newColumn1.number = 1
+  newColumn1.size = 33.33
+  val newColumn2 = new Object().asInstanceOf[GalleryColumn]
+  newColumn2.number = 2
+  newColumn2.size = 33.33
+  val newColumn3 = new Object().asInstanceOf[GalleryColumn]
+  newColumn3.number = 3
+  newColumn3.size = 33.33
+  var galleryColumns = Seq(newColumn0, newColumn1, newColumn2, newColumn3).toJSArray
 
   def setNewColumn: Unit = {
     val newColumn = new Object().asInstanceOf[GalleryColumn]
     newColumn.number = galleryColumns.length
-    var totalWidth = 0
+    var totalWidth: Double = 0
     galleryColumns.foreach { column =>
       totalWidth = totalWidth + column.size
     }
-    if (totalWidth%100 != 0) {
+    if (totalWidth%100 < 95) {
       newColumn.size = 100 - totalWidth%100
     } else newColumn.size = 100
+    console.log(adminScope.projects)
     if (galleryColumns.indexOf(newColumn) == -1) galleryColumns.push(newColumn)
   }
 
   projectService.findAll().onComplete  {
     case Success(projectsFound) =>
       timeout( () => {
-        projects = projectsFound
+        projects = setColumn(projectsFound)
         adminScope.projects = projects.map { project =>
           val adminProject = new Object().asInstanceOf[MutableProject]
           adminProject.id = project.id
@@ -53,7 +65,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
           adminProject.maxWidth = project.maxWidth
           adminProject.tags = project.tags
           adminProject.technologies = project.technologies
-          adminProject.columnNumber = 0
+          adminProject.columnNumber = project.columnNumber
           adminProject
         }.toJSArray
         adminScope.projects.map { project =>
@@ -87,7 +99,30 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       adminScope.newProject = project
     })
   }
-  
+
+  var heightcol1 = 0
+  var heightcol2 = 0
+  var heightcol3 = 0
+  def setColumn(projects: Seq[Project]): Seq[Project] = {
+    projects.map { project =>
+      if (project.maxHeight.toDouble / project.maxWidth.toDouble < 0.4) {
+        project
+      } else {
+        if (heightcol1 <= heightcol2 && heightcol1 <= heightcol3) {
+          heightcol1 = (heightcol1 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
+          project.copy(columnNumber = 1)
+        }
+        else if (heightcol2 <= heightcol3) {
+          heightcol2 = (heightcol2 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
+          project.copy(columnNumber = 2)
+        }
+        else {
+          heightcol3 = (heightcol3 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
+          project.copy(columnNumber = 3)
+        }
+      }
+    }
+  }
 
   def setSize(): Unit = {
     document.getElementById("projectImage").asInstanceOf[Image].addEventListener("load", (event: Event) => {

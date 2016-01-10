@@ -39,6 +39,10 @@ function MdCoreConfigure($provide, $mdThemingProvider) {
     .accentPalette('pink')
     .warnPalette('red')
     .backgroundPalette('grey');
+
+  $mdThemingProvider.theme('docs-dark', 'default')
+      .primaryPalette('custom')
+      .dark();
 }
 MdCoreConfigure.$inject = ["$provide", "$mdThemingProvider"];
 

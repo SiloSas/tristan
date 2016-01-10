@@ -17,7 +17,7 @@ trait AdminScope extends Scope {
 
 trait GalleryColumn extends js.Object {
   var number: Int = js.native
-  var size: Int = js.native
+  var size: Double = js.native
 }
 
 trait MutableProject extends js.Object {
