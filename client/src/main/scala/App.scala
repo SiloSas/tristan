@@ -1,4 +1,4 @@
-import Admin.{FileReaderDirective, AdminController}
+import Admin.{ImageProjectDirective, FileReaderDirective, AdminController}
 import Projects.{ProjectServiceFactory, ProjectMinDirective, SliderDirective, ProjectController}
 import Room.{RoomController, RoomMinDirective}
 import com.greencatsoft.angularjs._
@@ -24,6 +24,7 @@ object App extends JSApp {
     .directive[ProjectMinDirective]
     .directive[SliderDirective]
     .directive[ToggleButtonDirective]
+    .directive[ImageProjectDirective]
     .config(RoutingConfig)
   }
 }
