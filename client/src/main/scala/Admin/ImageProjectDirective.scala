@@ -162,6 +162,11 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
         timeout(() => {
           parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
           images = elem.getElementsByTagName("img")
+          images.asInstanceOf[Seq[Image]].foreach{img =>
+            if(!img.complete || img.src.length == 0) {
+              resize()
+            }
+          }
           if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
         }, 1000, true)
