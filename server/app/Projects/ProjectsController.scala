@@ -6,6 +6,7 @@ import javax.imageio.ImageIO
 import javax.inject.Inject
 
 import administration.Authenticated
+import database.Height
 import play.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.JsObject
@@ -24,6 +25,16 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
+  def findBaseHeight() = Action.async {
+    projectMethods.findBaseHeight.map { baseHeight =>
+      Ok(write(baseHeight))
+    }
+  }
+  def updateBaseHeight(newHeight: Double) = Authenticated.async {
+    projectMethods.updateBaseHeight(Height(newHeight)).map { baseHeight =>
+      Ok(write(baseHeight))
+    }
+  }
   def findTechnologies() = Action.async {
     projectMethods.findTechnologies.map { technologies =>
       println(technologies)

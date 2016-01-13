@@ -3,21 +3,27 @@ package Admin
 
 import com.greencatsoft.angularjs._
 import com.greencatsoft.angularjs.core.Timeout
-import org.scalajs.dom._
-import org.scalajs.dom.html.Html
+import org.scalajs.dom.console
+import org.scalajs.dom.document
+import org.scalajs.dom.window
+import org.scalajs.dom.Element
+import org.scalajs.dom.html.{Image, Html}
+import org.scalajs.dom.raw.Event
 
 import scala.scalajs.js
 import scala.scalajs.js.Array
 import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.timers._
 
 @injectable("imageProject")
 class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
   var parentWidth = 0.0
   var elementsWidth = 0.0
-  var height = 400.0
-  val baseHeight = 400.0
+  var height = 450.0
+  var baseHeight = 450.0
   var rowElements = new Array[Html]()
   var images = document.getElementsByTagName("img")
+
 
   def calculeHeight(): Unit = {
     var i = 0
@@ -29,46 +35,88 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
       elem.style.height = baseHeight + "px"
       val totalWidth = elem.getBoundingClientRect().width + elementsWidth
       totalWidth match {
-        case under if under <= parentWidth - (parentWidth * 10 / 100) =>
-          console.log(1)
+        case under if under <= parentWidth - (parentWidth * 20 / 100) =>
           elementsWidth = totalWidth
           rowElements.push(elem)
           if(i == length -1) {
             height = elem.getBoundingClientRect().height * (parentWidth  / elementsWidth)
-            rowElements.foreach(_.style.height = height + "px")
+            var checkWidth = 0.0
+            rowElements.foreach{ rowElem =>
+              rowElem.style.height = height + "px"
+              checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+            }
+            if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
+              resize(0.2, checkWidth)
+            }
             rowElements = new js.Array[Html]()
-            elementsWidth = 0
+            elementsWidth = 0.0
           }
-        case complete if complete >= parentWidth - (parentWidth * 10 / 100) && complete <= parentWidth + (parentWidth * 20 / 100) =>
+        case complete if complete >= parentWidth - (parentWidth * 20 / 100) && complete <= parentWidth + (parentWidth * 20 / 100) =>
           elementsWidth = totalWidth
           rowElements.push(elem)
-          console.log(2)
-          console.log(rowElements)
-          height = baseHeight.toDouble * ((parentWidth - 5) / elementsWidth)
-          console.log(parentWidth)
-          console.log(parentWidth / elementsWidth)
-          console.log(height)
-          rowElements.foreach(_.style.height = height + "px")
-          elementsWidth = 0
+          height = baseHeight * (parentWidth / elementsWidth)
+          var checkWidth = 0.0
+          rowElements.foreach{ rowElem =>
+            rowElem.style.height = height + "px"
+            checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+          }
+          if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
+           resize(0.2, checkWidth)
+          }
+
+          elementsWidth = 0.0
           rowElements = new js.Array[Html]()
-          console.log(3)
         case _ =>
-          height = baseHeight.toDouble * ((parentWidth - 5) / elementsWidth)
+          height = baseHeight * (parentWidth / elementsWidth)
           rowElements.foreach(_.style.height = height + "px")
           if(i == length -1) {
-            height = baseHeight.toDouble * ((parentWidth - 5) / elementsWidth)
-            rowElements.foreach(_.style.height = height + "px")
+            height = baseHeight * (parentWidth / elementsWidth)
+            var checkWidth = 0.0
+            rowElements.foreach{ rowElem =>
+              rowElem.style.height = height + "px"
+              checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+            }
+            if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
+              resize(0.2, checkWidth)
+            }
             rowElements = new js.Array[Html]()
-            elementsWidth = 0
+            elementsWidth = 0.0
           } else {
             rowElements = new js.Array[Html]()
             rowElements.push(elem)
-            elementsWidth = elem.clientWidth
-            console.log(4)
+            elementsWidth = elem.getBoundingClientRect().width
           }
       }
     }
   }
+
+  def getParentWidth: Double = {
+    val newParentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    val windowWidth = window.innerWidth
+    if (newParentWidth <= windowWidth) newParentWidth
+    else windowWidth
+  }
+
+  def resize(i:Double, checkWidthBase: Double): Unit = {
+    var checkWidth = checkWidthBase
+    parentWidth = getParentWidth
+    //console.log(checkWidth)
+    console.log(parentWidth)
+    //console.log(height)
+    height = height * ((parentWidth - i) / checkWidth)
+//    console.log(height)
+//    console.log(height * parentWidth / checkWidth)
+    checkWidth = 0.0
+    rowElements.foreach{ rowElem =>
+      rowElem.style.height = height + "px"
+      checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+    }
+    console.log(checkWidth)
+    if(checkWidth > parentWidth) {
+      resize(i + 0.2, checkWidth)
+    }
+  }
+
 
   @JSExport
   def recalculHeight(): Unit = {
@@ -77,13 +125,39 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
     }, 10)
   }
 
+  var timer1 = setTimeout(600)(calculeHeight())
+  @JSExport
+  def setBaseHeight(double: Double): Unit = {
+    parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    baseHeight = double
+    height = double
+    timer1 = setTimeout(600)(calculeHeight())
+  }
+  var timer = setTimeout(600)(calculeHeight())
+  val changeHeight = (event: Event) => {
+    if (window.innerWidth > 960) {
+      timeout( () => {
+        parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+        timer = setTimeout(600)(calculeHeight())
+      }, 50)
+
+    }
+  }
+
+  window.addEventListener("resize", changeHeight)
+//  document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].addEventListener("resize", changeHeight)
+
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-      timeout( () => {
-        parentWidth = elem.parentNode.asInstanceOf[Html].clientWidth
-        images = elem.getElementsByTagName("img")
-        calculeHeight()
-      }, 1000, true)
+      def resize(): Unit = {
+        timeout(() => {
+          parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+          images = elem.getElementsByTagName("img")
+          if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
+          else resize()
+        }, 500, true)
+      }
+      resize()
     }
   }
 }

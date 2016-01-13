@@ -353,3 +353,10 @@ figure.effect-zoe:hover p.icon-links a:first-child {
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
 }
+
+@media (max-width: 960px)  {
+  project-min, project-min > img {
+    width: 100%;
+    height: auto!important;
+  }
+}

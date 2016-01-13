@@ -8,6 +8,7 @@ import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
 import scala.language.postfixOps
+import database.Height
 
 
 class ProjectMethods @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
@@ -33,4 +34,7 @@ class ProjectMethods @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   def findTechnologies: Future[Seq[Technology]] = db.run(technologies.result) map (_.toSeq)
 
   def delete(id: String): Future[Int] = db.run(projects.filter(_.id === id).delete)
+
+  def findBaseHeight: Future[Seq[Height]] = db.run(baseheight.result) map (_.toSeq)
+  def updateBaseHeight(height: Height): Future[Int] = db.run(baseheight.update(height))
 }

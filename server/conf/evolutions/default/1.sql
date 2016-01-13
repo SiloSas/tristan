@@ -89,6 +89,12 @@ INSERT INTO technologies(technologies) VALUES
 INSERT INTO technologies(technologies) VALUES
 ('assets/images/3dsmax.svg');
 
+CREATE TABLE baseheight (
+  height                        NUMERIC
+);
+INSERT INTO baseheight(height) VALUES
+ (400.0);
+
 CREATE TABLE users (
   id                        SERIAL PRIMARY KEY,
   login                     VARCHAR(50),
@@ -100,4 +106,5 @@ INSERT INTO users(login, password) VALUES('admin', '$2a$07$8SJ.wfjn2IaidQVHfcmrH
 DROP TABLE IF EXISTS rooms;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS technologies;
+DROP TABLE IF EXISTS baseheight;
 DROP TABLE IF EXISTS users;

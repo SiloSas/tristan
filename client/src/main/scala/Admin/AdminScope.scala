@@ -15,11 +15,6 @@ trait AdminScope extends Scope {
   var status: String = js.native
 }
 
-trait GalleryColumn extends js.Object {
-  var number: Int = js.native
-  var size: Double = js.native
-}
-
 trait MutableProject extends js.Object {
   var id: String = js.native
   var name: String = js.native

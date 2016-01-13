@@ -21,66 +21,61 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
   var projects: Seq[Project] = Seq.empty
   adminScope.tags = Seq.empty[String].toJSArray
   adminScope.technologies = Seq.empty[String].toJSArray
-  val newColumn0 = new Object().asInstanceOf[GalleryColumn]
-  newColumn0.number = 0
-  newColumn0.size = 100
-  val newColumn1 = new Object().asInstanceOf[GalleryColumn]
-  newColumn1.number = 1
-  newColumn1.size = 33.33
-  val newColumn2 = new Object().asInstanceOf[GalleryColumn]
-  newColumn2.number = 2
-  newColumn2.size = 33.33
-  val newColumn3 = new Object().asInstanceOf[GalleryColumn]
-  newColumn3.number = 3
-  newColumn3.size = 33.33
-  var galleryColumns = Seq(newColumn0, newColumn1, newColumn2, newColumn3).toJSArray
+  var maxWidth = 0.0
+  var maxHeight = 0.0
 
-  def setNewColumn: Unit = {
-    val newColumn = new Object().asInstanceOf[GalleryColumn]
-    newColumn.number = galleryColumns.length
-    var totalWidth: Double = 0
-    galleryColumns.foreach { column =>
-      totalWidth = totalWidth + column.size
+  var baseHeight = 300.0
+  projectService.findBaseHeight().onComplete {
+    case Success(heightSeq) =>
+      baseHeight = heightSeq.headOption match {
+        case Some(height) =>
+          height.height
+        case _ =>
+          300.0
+      }
+      getProjects
+    case _ =>
+      getProjects
+      console.log("error get height")
+  }
+
+  def getProjects: Unit = {
+    projectService.findAll().onComplete  {
+      case Success(projectsFound) =>
+        timeout( () => {
+          projects = projectsFound
+          adminScope.projects = projects.map { project =>
+            val adminProject = new Object().asInstanceOf[MutableProject]
+            adminProject.id = project.id
+            adminProject.name = project.name
+            adminProject.date = new Date(project.date)
+            adminProject.description = project.description
+            adminProject.image = project.image
+            adminProject.isLandscape = project.isLandscape
+            adminProject.maxHeight = project.maxHeight
+            adminProject.maxWidth = project.maxWidth
+            adminProject.tags = project.tags
+            adminProject.technologies = project.technologies
+            adminProject.columnNumber = if (project.columnNumber == 0) {
+              projects.indexOf(project)
+            } else project.columnNumber
+            adminProject
+          }.toJSArray
+          adminScope.projects.map { project =>
+            project.tags foreach { tag =>
+              if (adminScope.tags.indexOf(tag) == -1)  adminScope.tags = adminScope.tags :+ tag
+            }
+            project.technologies foreach { technologie =>
+              if (adminScope.technologies.indexOf(technologie) == -1)  adminScope.technologies = adminScope.technologies :+ technologie
+            }
+            project
+          }
+        }, 0, true)
+      case Failure(t: Throwable) =>
+        console.log(throw t)
     }
-    if (totalWidth%100 < 95) {
-      newColumn.size = 100 - totalWidth%100
-    } else newColumn.size = 100
-    console.log(adminScope.projects)
-    if (galleryColumns.indexOf(newColumn) == -1) galleryColumns.push(newColumn)
   }
 
-  projectService.findAll().onComplete  {
-    case Success(projectsFound) =>
-      timeout( () => {
-        projects = setColumn(projectsFound)
-        adminScope.projects = projects.map { project =>
-          val adminProject = new Object().asInstanceOf[MutableProject]
-          adminProject.id = project.id
-          adminProject.name = project.name
-          adminProject.date = new Date(project.date)
-          adminProject.description = project.description
-          adminProject.image = project.image
-          adminProject.isLandscape = project.isLandscape
-          adminProject.maxHeight = project.maxHeight
-          adminProject.maxWidth = project.maxWidth
-          adminProject.tags = project.tags
-          adminProject.technologies = project.technologies
-          adminProject.columnNumber = project.columnNumber
-          adminProject
-        }.toJSArray
-        adminScope.projects.map { project =>
-          project.tags foreach { tag =>
-            if (adminScope.tags.indexOf(tag) == -1)  adminScope.tags = adminScope.tags :+ tag
-          }
-          project.technologies foreach { technologie =>
-            if (adminScope.technologies.indexOf(technologie) == -1)  adminScope.technologies = adminScope.technologies :+ technologie
-          }
-          project
-        }
-      }, 0, true)
-    case Failure(t: Throwable) =>
-      console.log(throw t)
-  }
 
   projectService.findTechnologies().onComplete {
     case Success(technologies) =>
@@ -97,32 +92,11 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
     timeout( () => {
       adminScope.status = "false"
       adminScope.newProject = project
+      maxHeight = project.maxHeight
+      maxWidth = project.maxWidth
     })
   }
 
-  var heightcol1 = 0
-  var heightcol2 = 0
-  var heightcol3 = 0
-  def setColumn(projects: Seq[Project]): Seq[Project] = {
-    projects.map { project =>
-      if (project.maxHeight.toDouble / project.maxWidth.toDouble < 0.4) {
-        project
-      } else {
-        if (heightcol1 <= heightcol2 && heightcol1 <= heightcol3) {
-          heightcol1 = (heightcol1 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 1)
-        }
-        else if (heightcol2 <= heightcol3) {
-          heightcol2 = (heightcol2 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 2)
-        }
-        else {
-          heightcol3 = (heightcol3 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 3)
-        }
-      }
-    }
-  }
 
   def setSize(): Unit = {
     document.getElementById("projectImage").asInstanceOf[Image].addEventListener("load", (event: Event) => {
@@ -133,6 +107,8 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
         adminScope.newProject.maxHeight = height
         if (width > height) adminScope.newProject.isLandscape = true
         else adminScope.newProject.isLandscape = false
+        maxHeight = height
+        maxWidth = width
         console.log(document.getElementById("projectImage").asInstanceOf[Image].naturalWidth)
         console.log(document.getElementById("projectImage").asInstanceOf[Image].naturalHeight)
       }, 10)
@@ -149,6 +125,8 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       project.tags = Seq.empty[String].toJSArray
       project.technologies = Seq.empty[String].toJSArray
       adminScope.newProject = project
+      maxHeight = project.maxHeight
+      maxWidth = project.maxWidth
     })
   }
   def addTechnologie(technologie: String): Unit = {
@@ -162,6 +140,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
     timeout( () => {
       adminScope.status = "inProgress"
       if (adminScope.newProject.id != "new")  {
+
         projectService.update(adminScope.newProject) onComplete {
           case Success(uploaded) =>
             timeout( () => {
@@ -192,6 +171,29 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
     },0 ,true)
   }
 
+
+  def updateAllProjects(): Unit = {
+    projectService.updateBaseHeight(baseHeight).onComplete {
+      case Success(int) =>
+        adminScope.projects.foreach { project =>
+          projectService.update(project) onComplete {
+            case Success(uploaded) =>
+              timeout(() => {
+                adminScope.status = "validate"
+              }, 0, true)
+            case Failure(t: Throwable) =>
+              timeout(() => {
+                adminScope.status = "error"
+              }, 0, true)
+          }
+        }
+      case Failure(t: Throwable) =>
+        timeout( () => {
+          adminScope.status = "error"
+        },0, true)
+    }
+  }
+
   def delete(id: String): Unit = {
       projectService.delete(id) onComplete {
         case Success(resp) =>
@@ -213,8 +215,16 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
 
   def refactorTech(technology: String): String = {
     val a = technology.substring(technology.lastIndexOf("/") + 1).replace(".svg", "")
-    console.log(a)
     a
+  }
+  
+  def changeSize(isWidth: Boolean, isLocked: Boolean): Unit = {
+    if (isLocked) {
+      if (isWidth) {
+        console.log(maxHeight)
+        adminScope.newProject.maxHeight = (adminScope.newProject.maxWidth * (maxHeight/maxWidth)).toInt
+      } else adminScope.newProject.maxWidth = (adminScope.newProject.maxHeight * (maxWidth/maxHeight)).toInt
+    }
   }
 
 

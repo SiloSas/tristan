@@ -3,40 +3,50 @@
 <div ng-if="!controller.slider"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
-    <div  flex="100" class="grid">
-        <project-min  ng-repeat="project in projects | filter: {'columnNumber': 0}">
-            </project-min>
-    </div>
-    <div flex-gt-lg="33" flex-gt-md="50" flex-xs="100" flex-gt-sm="100" class="grid">
-        <project-min ng-repeat="project in projects | filter: {'columnNumber': 1}">
-            </project-min>
-    </div>
-    <div flex-gt-lg="33" flex-gt-md="50" flex-gt-md="33" flex-xs="100" flex-gt-sm="100" class="grid">
-        <project-min class="width100p float-left" ng-repeat="project in projects | filter: {'columnNumber': 2}">
-        </project-min>
-    </div>
-    <div  flex-gt-lg="33"flex-xs="100" flex-gt-sm="100" class="grid">
-        <project-min ng-repeat="project in projects | filter: {'columnNumber': 3}">
-        </project-min>
-    </div>
+    <image-project class="float-left text-center width100p" >
+       <project-min ng-init="directive.setBaseHeight(controller.baseHeight)" ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')" class="float-left relative">
+       </project-min>
+    </image-project>
 </div>
 <div ng-if="controller.slider" class="height100p width100p float-left">
-    <b class="column"><i class="text-center column textPrimColor" >{{projects[index].description}}</i></b>
-   <div class="height100p width100p float-left slider">
-       <div class="column small-1 height100p " ng-click="controller.prevIndex()" hide-sm>
+    <div class="absolute width100p">
+        <span ng-click="controller.slider = false; $root.full = false" ng-show="$root.full" class="pointer tooltip-trigger">
+        <md-button class="md-fab md-mini md-primary float-right" >
+            <i class="fa fa-times" ></i>
+        </md-button>
+        </span>
+        <span ng-click="$root.full = false" ng-if="$root.full" class="pointer tooltip-trigger">
+            <md-button class="md-fab md-mini md-primary float-right" >
+                <i class="fa fa-minus" ></i>
+            </md-button>
+        </span>
+    </div>
+   <div class="height100p width100p float-left slider" style="display: flex">
+       <div class="float-left marginLeft10 height100p pointer" ng-click="controller.prevIndex()" hide-sm hide-md>
            <i class="chevron left float-right height100p"></i>
        </div>
        <div ng-repeat="project in projects"
-            class="height100p column medium-10 padding0 text-center"
+            class="height100p flex padding0 text-center"
             ng-if="$parent.index == $index"
             md-swipe-right="controller.prevIndex()"
             md-swipe-left="controller.nextIndex()">
+            <span class="text-center paddingTop10 width100p float-left" style="line-height: normal" ng-show="!$root.full">
+                <b class="textColorWhite width100p float-left">{{projects[index].name}}</b>
+                <span ng-repeat="technologie in projects[index].technologies" class="tooltip-trigger animated fadeIn" style="cursor: auto!important;">
+                    <md-button class="md-fab md-mini md-icon-button md-primary "
+                         aria-label="{{controller.refactorTech(technologie)}}">
+                    <md-icon md-svg-src="{{technologie}}"></md-icon>
+                    </md-button>
+                    <a>{{controller.refactorTech(technologie)}}</a>
+                </span>
+                <b class="column"><i class="text-center column textPrimColor" >{{projects[index].description}}</i></b>
+            </span>
            <img ng-src="{{project.image}}"
                 style="max-height: {{project.maxHeight}}px; max-width: {{project.maxWidth}}px; "
                 class="animated fadeIn imageSlider"
                 ng-class="{'height100p': !project.isLandscape, 'width100p': project.isLandscape}"/>
        </div>
-       <div class=" column small-1 height100p" ng-click="controller.nextIndex()" hide-sm>
+       <div class=" float-right marginRight10 height100p pointer" ng-click="controller.nextIndex()" hide-sm hide-md>
            <i class="chevron right float-left"></i>
        </div>
    </div>

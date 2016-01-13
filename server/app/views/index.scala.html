@@ -2,10 +2,11 @@
 
 @main("Portfolio Tristan Delgado") {
 <div ng-controller="projectController" class="height100p" ng-cloak>
-  <md-toolbar md-scroll-shrink ng-if="true">
+  <md-toolbar md-scroll-shrink ng-if="true && !$root.full">
     <div class="md-toolbar-tools">
+      <h1 class="textColorWhite">Tristan Delgado</h1>
       <ng-include src="'/assets/templates/mainMenu.html'" class="hidden-for-small" style="display: flex" hide-sm></ng-include>
-        <a aria-label="menu" ng-click="$root.showMenu = !$root.showMenu" class=" md-button md-fab md-mini md-primary" hide-gt-sm>
+      <a aria-label="menu" ng-click="$root.showMenu = !$root.showMenu" class=" md-button md-fab md-mini md-primary" hide-gt-sm>
           <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
         </a>
       <md-input-container>
@@ -20,17 +21,13 @@
         </md-select>
       </md-input-container>
       <span flex></span>
-      <span ng-if="controller.slider" hide-sm>
-        <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
-        <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
-          <md-button class="md-fab md-mini md-icon-button md-primary "
-          aria-label="{{controller.refactorTech(technologie)}}">
-            <md-icon md-svg-src="{{technologie}}"></md-icon>
-          </md-button>
-          <i class="tooltip-custom animated ">
-            {{controller.refactorTech(technologie)}}
-          </i>
-        </span>
+      <span ng-click="$root.full = true" ng-if="controller.slider && !controller.showCv" class="pointer tooltip-trigger">
+        <md-button class="md-fab md-mini md-primary float-right" >
+          <i class="fa fa-arrows-alt" ></i>
+        </md-button>
+        <i class="tooltip-custom animated ">
+          Full slider
+        </i>
       </span>
       <span ng-click="controller.slider = false" ng-if="controller.slider && !controller.showCv" class="pointer tooltip-trigger">
         <md-button class="md-fab md-mini md-primary float-right" >
@@ -51,18 +48,6 @@
     </div>
   </md-toolbar>
   <ng-include src="'/assets/templates/mainMenu.html'" class="width100p" ng-if="$root.showMenu" hide-gt-sm></ng-include>
-  <span ng-if="controller.slider" hide-gt-sm>
-    <md-button><b class="textColorWhite">{{projects[index].name}}</b></md-button>
-    <span ng-repeat="technologie in projects[index].technologies" class="float-right tooltip-trigger animated fadeIn">
-      <md-button class="md-fab md-mini md-icon-button md-primary "
-      aria-label="{{controller.refactorTech(technologie)}}">
-        <md-icon md-svg-src="{{technologie}}"></md-icon>
-      </md-button>
-      <i class="tooltip-custom animated ">
-        {{controller.refactorTech(technologie)}}
-      </i>
-    </span>
-  </span>
   <div class="absolute column large-12 paddingTop50 md-whiteframe-z5 zIndex6 text-center left0 height100p"
   style=" background: rgba(82, 96, 171, 0.38);  overflow: auto"  ng-if="controller.showCv">
     <img src="assets/images/cv.png" />

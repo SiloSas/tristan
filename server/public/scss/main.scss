@@ -13,6 +13,8 @@ body, html {
 }
 .mainContainer {
   background: #E8DDCB;
+
+  overflow-x: visible!important;
 }
 .chevron::before {
   vertical-align: middle;

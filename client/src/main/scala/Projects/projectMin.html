@@ -1,11 +1,13 @@
-<figure class="effect-zoe"
+<img ng-src="{{project.image}}" ng-init="$parent.directive.recalculHeight()" style="height: 400px"/>
+<figure
+        class="height100p width100p margin0 top0 left0 absolute effect-zoe pointer"
+        style="overflow: hidden"
         ng-click="controller.setIndexById(project.id); controller.slider = true;">
-    <img ng-src="{{project.image}}" />
-    <figcaption>
+    <figcaption class="width100p absolute">
         <h2 class="textLeft column small-6">{{project.name}}</h2>
         <p class="icon-links">
-            <a ng-repeat="technologie in project.technologies" class="float-right tooltip-trigger">
-                <md-button class="md-fab md-mini md-icon-button md-primary "
+            <a ng-repeat="technologie in project.technologies" class="float-right tooltip-trigger ">
+                <md-button style="cursor: auto!important;" class="md-fab md-mini md-icon-button md-primary "
                            aria-label="{{controller.refactorTech(technologie)}}">
                     <md-icon md-svg-src="{{technologie}}"></md-icon>
                 </md-button>

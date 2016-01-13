@@ -16,6 +16,8 @@ import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.{JSON, Object}
 import scala.util.{Failure, Success, Try}
 
+case class Height(height: Double)
+
 @injectable("projectService")
 class ProjectService(http: HttpService) extends Service {
   require(http != null, "Missing argument 'http'.")
@@ -74,6 +76,25 @@ class ProjectService(http: HttpService) extends Service {
       JSON.stringify(resp)
     } map {
       read[Seq[Technology]]
+    }
+  }
+
+  @JSExport
+  def findBaseHeight(): Future[Seq[Height]] = {
+    http.get[js.Any]("/baseHeight")
+    .map { resp =>
+      console.log(resp)
+      JSON.stringify(resp)
+    } map {
+      read[Seq[Height]]
+    }
+  }
+  @JSExport
+  def updateBaseHeight(newHeight: Double): Future[String] = {
+    http.put[js.Any]("/baseHeight/" + newHeight)
+    .map { resp =>
+      console.log(resp)
+      JSON.stringify(resp)
     }
   }
 

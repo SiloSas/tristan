@@ -20,24 +20,38 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   var projects: Seq[Project] = Seq.empty
   projectScope.tags = Seq.empty[String].toJSArray
   projectScope.index = 0
-  var heightcol1 = 0
-  var heightcol2 = 0
-  var heightcol3 = 0
 
   var inProgress = true
   var showCv = false
   var slider = false
 
-  projectService.findAll().onComplete  {
-    case Success(projectsFound) =>
-      timeout( () => {
-        projects = projectsFound
-        projectScope.projects = setColumn(projects.map(setMaxSize)).toJSArray
-        inProgress = false
-        setTagsScope
-      }, 0, true)
-    case Failure(t: Throwable) =>
-      console.log(throw t)
+  var baseHeight = 300.0
+  projectService.findBaseHeight().onComplete {
+    case Success(heightSeq) =>
+      baseHeight = heightSeq.headOption match {
+        case Some(height) =>
+          height.height
+        case _ =>
+          300.0
+      }
+      getProjects
+    case _ =>
+      getProjects
+      console.log("error get height")
+  }
+
+  def getProjects: Unit = {
+    projectService.findAll().onComplete {
+      case Success(projectsFound) =>
+        timeout(() => {
+          projects = projectsFound
+          projectScope.projects = projects.map(setMaxSize).toJSArray
+          inProgress = false
+          setTagsScope
+        }, 0, true)
+      case Failure(t: Throwable) =>
+        console.log(throw t)
+    }
   }
 
   def setTagsScope: Unit = {
@@ -49,26 +63,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   }
 
 
-  def setColumn(projects: Seq[Project]): Seq[Project] = {
-    projects.map { project =>
-      if (project.maxHeight.toDouble / project.maxWidth.toDouble < 0.4) {
-        project
-      } else {
-        if (heightcol1 <= heightcol2 && heightcol1 <= heightcol3) {
-          heightcol1 = (heightcol1 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 1)
-        }
-        else if (heightcol2 <= heightcol3) {
-          heightcol2 = (heightcol2 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 2)
-        }
-        else {
-          heightcol3 = (heightcol3 + (project.maxHeight * (100 / project.maxWidth.toDouble))).toInt
-          project.copy(columnNumber = 3)
-        }
-      }
-    }
-  }
 
   def setMaxSize(project: Project): Project = {
     val windowMaxwidth = window.innerWidth
@@ -128,21 +122,15 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 
   @JSExport
   def filter(tag: String): Unit = {
-    heightcol1 = 0
-    heightcol2 = 0
-    heightcol3 = 0
     timeout( () => {
-      projectScope.projects = setColumn(projects.filter(_.tags.indexOf(tag) > -1).map(setMaxSize)).toJSArray
+      projectScope.projects = projects.filter(_.tags.indexOf(tag) > -1).map(setMaxSize).toJSArray
       projectScope.index = 0
     })
   }
   @JSExport
   def removeFilter(): Unit = {
-    heightcol1 = 0
-    heightcol2 = 0
-    heightcol3 = 0
     timeout( () => {
-      projectScope.projects = setColumn(projects.map(setMaxSize)).toJSArray
+      projectScope.projects = projects.map(setMaxSize).toJSArray
     })
   }
 
@@ -164,7 +152,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 
   def refactorTech(technology: String): String = {
     val a = technology.substring(technology.lastIndexOf("/") + 1).replace(".svg", "")
-    console.log(a)
     a
   }
 

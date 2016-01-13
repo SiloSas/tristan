@@ -24257,6 +24257,13 @@ figure.effect-zoe:hover p.icon-links a:first-child {
   transition-delay: 0.2s;
 }
 
+@media (max-width: 960px) {
+  /* line 358, ../../../client/src/main/scala/Projects/project.scss */
+  project-min, project-min > img {
+    width: 100%;
+    height: auto !important;
+  }
+}
 /* line 6, ../scss/main.scss */
 body, html {
   background-size: 100%;
@@ -24270,9 +24277,10 @@ body, html {
 /* line 14, ../scss/main.scss */
 .mainContainer {
   background: #E8DDCB;
+  overflow-x: visible !important;
 }
 
-/* line 17, ../scss/main.scss */
+/* line 19, ../scss/main.scss */
 .chevron::before {
   vertical-align: middle;
   border-style: solid;
@@ -24288,13 +24296,13 @@ body, html {
   width: 4.5em;
 }
 
-/* line 32, ../scss/main.scss */
+/* line 34, ../scss/main.scss */
 .slider {
   background: #E8DDCB;
   text-align: center;
 }
 
-/* line 37, ../scss/main.scss */
+/* line 39, ../scss/main.scss */
 .tag {
   font-size: 12px;
   border-radius: 10px;
@@ -24305,25 +24313,25 @@ body, html {
   font-weight: bold;
 }
 
-/* line 46, ../scss/main.scss */
+/* line 48, ../scss/main.scss */
 .chevron.right:before {
   left: -1.9em;
   transform: rotate(45deg);
 }
 
-/* line 51, ../scss/main.scss */
+/* line 53, ../scss/main.scss */
 .chevron.bottom:before {
   top: 0;
   transform: rotate(135deg);
 }
 
-/* line 56, ../scss/main.scss */
+/* line 58, ../scss/main.scss */
 .chevron.left:before {
   left: 0.95em;
   transform: rotate(-135deg);
 }
 
-/* line 60, ../scss/main.scss */
+/* line 62, ../scss/main.scss */
 .tooltip-custom {
   display: none;
   animation: fadeIn 1s;
@@ -24342,18 +24350,18 @@ body, html {
   color: white;
 }
 
-/* line 76, ../scss/main.scss */
+/* line 78, ../scss/main.scss */
 .tooltip-trigger:hover > .tooltip-custom {
   display: block;
 }
 
 @media only screen and (max-width: 750px) {
-  /* line 81, ../scss/main.scss */
+  /* line 83, ../scss/main.scss */
   .tooltip-trigger:hover > .tooltip-custom {
     display: none;
   }
 
-  /* line 84, ../scss/main.scss */
+  /* line 86, ../scss/main.scss */
   .imageSlider {
     vertical-align: top !important;
   }

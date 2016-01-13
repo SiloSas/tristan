@@ -1,20 +1,19 @@
 @(message: String)
 @main("Portfolio Tristan Delgado") {
     <section layout="row" flex class="height100p" ng-cloak data-ng-controller="adminController" ng-cloak>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" >
             <md-toolbar>
                 <h1 class="md-toolbar-tools">
                     Admin
                     <div flex></div>
                     <md-button ng-click="directive.close()"
-                    class="md-primary toggle-button md-fab md-mini" hide-gt-md>
+                    class="md-primary toggle-button md-fab md-mini">
                         <i class="fa fa-times"></i>
                     </md-button>
-                    <a ng-click="solution = 1">Solution 1</a>
-                    <a ng-click="solution = 2">Solution 2</a>
                 </h1>
             </md-toolbar>
             <md-content layout-padding >
+                <md-button class="md-primary md-raised" ng-click="newProject = false"><i class="fa fa-th"></i>Galery</md-button>
                 <div>
                     <div class="column md-whiteframe-z1" ng-repeat="project in projects">
                         <h5>{{project.name}}</h5>
@@ -36,7 +35,7 @@
         <md-content style="overflow: hidden; height: inherit" flex>
             <md-toolbar>
                 <div class="md-toolbar-tools" >
-                    <md-button aria-label="menu" class="md-fab md-primary md-mini toggle-button" ng-click="directive.toggleLeft()" hide-gt-md>
+                    <md-button aria-label="menu" class="md-fab md-primary md-mini toggle-button" ng-click="directive.toggleLeft()">
                         <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
                     </md-button>
                     <md-button href="./" aria-label="home" class="md-fab md-primary md-mini">
@@ -44,85 +43,45 @@
                     </md-button>
                 </div>
             </md-toolbar>
-            <md-content layout-fill >
+            <md-content layout-fill class="mainContainer">
                 <div
-                    ng-if="solution == 2"
-                class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
+                    ng-if="!newProject"
+                class="column large-12 paddingTop0 paddingLeft0 paddingRight0 marginBottom50" style="min-height: 100%"
                 layout="row" layout-wrap layout-align="center start" layout-xs="column">
-                    <div  class="float-left grid width100p">
-                            <image-project class="float-left" >
-                               <span ng-repeat="project in orderedProjects = (projects | orderBy: 'position')" class="float-left relative">
-                                   <img class="float-left"
-                                    style="height: 400px"
-                                src="{{project.image}}" />
-                                <span class="absolute left0" ng-hide="$index == 0 && $index == filteredProjects.length -1"><b class="textColorWhite float-left">Change position in column</b>
-                                    <md-button flex
-                                    class="md-primary md-fab md-mini"
-                                    ng-init="project.position = $index"
-                                    ng-show="$index != 0"
-                                    ng-click="$parent.orderedProjects[$index - 1].position = $parent.orderedProjects[$index - 1].position + 1;
-                                project.position = project.position -1; directive.recalculHeight()"
-                                    aria-label="position" id="projectPosition"><i class="fa fa-minus"></i></md-button>
-                                    <md-button flex
-                                    class="md-primary md-fab md-mini"
-                                    ng-show="$index != filteredProjects.length -1"
-                                    ng-init="project.position = $index"
-                                    ng-click="$parent.orderedProjects[$index + 1].position = $parent.orderedProjects[$index + 1].position - 1;
-                                    project.position = project.position +1; directive.recalculHeight()"
-                                    aria-label="position" id="projectPosition"><i class="fa fa-plus"></i></md-button></span></span>
-                            </image-project>
+                    <md-input-container class="column large-10 float-left">
+                        <label>Change base height of rows (init {{controller.baseHeight}}px)</label>
+                        <input ng-change="directive.setBaseHeight(controller.baseHeight)"  ng-model="controller.baseHeight" type="number" />
+                    </md-input-container>
+                    <md-button ng-click="controller.updateAllProjects()">Save</md-button>
+                    <div class="float-left">
+                        <b ng-if="status != 'false'">{{status}}</b>
+                        <md-progress-circular md-mode="indeterminate" ng-show="status == 'inProgress'"></md-progress-circular>
+                        <i class="fa fa-check" ng-show="status == 'validate'"></i>
+                        <i class="fa fa-times" ng-show="status == 'error'"></i>
                     </div>
-                </div>
-                <div  ng-if="solution == 1"  class="float-left grid"
-                style="width:{{column.size}}%; border: solid 2px #036564"
-                ng-repeat="column in controller.galleryColumns">
-                    <span class="column large-12">
-                        <b class="float-left">Column n°{{column.number}}</b>
-                        <md-input-container class="column large-6">
-                            <label>Column width</label>
-                            <input flex min="1" max="100" type="number"
-                            ng-model="column.size" aria-label="size" id="column.number"/>
-                        </md-input-container>
-                    </span>
-                    <div  ng-repeat="project in filteredProjects =(projects | filter: {'columnNumber': column.number} | orderBy: 'position')"
-                    class="grid float-left padding0  " style="width: {{projectSize}}%">
-                        <project-min class="width100p float-left"></project-min>
-                        <span class="absolute left0 BlackTrans right0" md-theme="docs-dark">
-                            <md-input-container class="column large-6">
-                                <label>Project width</label>
-                                <input flex  min="1" max="100" ng-init="projectSize = 100" type="number"
-                                ng-model="projectSize" aria-label="size" id="projectSize"/>
-                            </md-input-container>
-                            <md-input-container class="column large-6 textColorWhite">
-                                <label class="textColorWhite">Column number</label>
-                                <md-select ng-model="project.columnNumber">
-                                    <md-option ng-repeat="column in controller.galleryColumns" value="{{column.number}}">
-                                        {{column.number}}
-                                    </md-option>
-                                    <md-option value="{{controller.galleryColumns.length}}" ng-click="controller.setNewColumn();">
-                                        {{controller.galleryColumns.length}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <span class="column" ng-hide="$index == 0 && $index == filteredProjects.length -1"><b class="textColorWhite float-left">Change position in column</b>
+                    <div  class="float-left grid width100p">
+                        <image-project class="float-left width100p" >
+                           <span ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')"
+                           class="text-center float-left relative">
+                               <project-min class="float-left relative">
+                               </project-min>
+                            <span class="absolute left0" ng-hide="$index == 0 && $index == filteredProjects.length -1">
+                                <b class="textColorWhite float-left">Change position</b>
                                 <md-button flex
                                 class="md-primary md-fab md-mini"
-                                ng-init="project.position = $index"
                                 ng-show="$index != 0"
-                                ng-click="$parent.filteredProjects[$index - 1].position = $parent.filteredProjects[$index - 1].position + 1;
-                                project.position = project.position -1"
+                                ng-click="$parent.orderedProjects[$index - 1].columnNumber = $parent.orderedProjects[$index - 1].columnNumber + 1;
+                            project.columnNumber = project.columnNumber -1; $parent.directive.recalculHeight()"
                                 aria-label="position" id="projectPosition"><i class="fa fa-minus"></i></md-button>
                                 <md-button flex
                                 class="md-primary md-fab md-mini"
                                 ng-show="$index != filteredProjects.length -1"
-                                ng-init="project.position = $index"
-                                ng-click="$parent.filteredProjects[$index + 1].position = $parent.filteredProjects[$index + 1].position - 1;
-                                project.position = project.position +1"
-                                aria-label="position" id="projectPosition"><i class="fa fa-plus"></i></md-button></span>
-                        </span>
+                                ng-click="$parent.orderedProjects[$index + 1].columnNumber = $parent.orderedProjects[$index + 1].columnNumber - 1;
+                                project.columnNumber = project.columnNumber +1; $parent.directive.recalculHeight()"
+                                aria-label="position" id="projectPosition"><i class="fa fa-plus"></i></md-button></span></span>
+                        </image-project>
                     </div>
                 </div>
-
                 <form class="column" ng-if="newProject" ng-submit="controller.updateProjects()">
                     <md-input-container class="column large-12">
                         <label>Name</label>
@@ -198,14 +157,18 @@
                     <md-checkbox ng-model="newProject.isLandscape" class="column md-primary">
                         isLandScape: {{newProject.isLandscape}}
                     </md-checkbox>
+                    <md-divider class="column"></md-divider>
                     <md-input-container class="column large-12">
                         <label>maxWidth</label>
-                        <input ng-model="newProject.maxWidth" type="number" />
+                        <input ng-model="newProject.maxWidth" ng-change="controller.changeSize(true, isLocked)" type="number" />
                     </md-input-container>
                     <md-input-container class="column large-12">
                         <label>maxHeight</label>
-                        <input ng-model="newProject.maxHeight" type="number" />
+                        <input ng-model="newProject.maxHeight" ng-change="controller.changeSize(false, isLocked)" type="number" />
                     </md-input-container>
+                    <md-checkbox ng-model="isLocked" ng-init="isLocked = true" aria-label="isLocked" class="column md-primary">
+                        <i class="fa " ng-class="{'fa-chain': isLocked, 'fa-chain-broken': !isLocked}"></i>
+                    </md-checkbox>
                     <md-divider class="column"></md-divider>
                     <div class="column">
                         <md-button type="submit" class="md-primary md-raised float-left">Submit</md-button>

@@ -6,9 +6,11 @@
 GET     /                           controllers.Application.index
 GET	    /rooms						@Room.RoomController.findAll
 GET     /technologies               @Projects.ProjectsController.findTechnologies
+GET     /baseHeight                 @Projects.ProjectsController.findBaseHeight
 GET	    /projects					@Projects.ProjectsController.findAll
 GET     /images/:fileName           @Projects.ProjectsController.getImage(fileName: String)
 PUT     /projects/:id				@Projects.ProjectsController.update(id: String)
+PUT     /baseHeight/:newHeight		@Projects.ProjectsController.updateBaseHeight(newHeight: Double)
 POST    /projects				    @Projects.ProjectsController.add
 POST    /upload                     @Projects.ProjectsController.uploadImage
 DELETE  /projects/:id				@Projects.ProjectsController.delete(id: String)
