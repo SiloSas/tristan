@@ -135,6 +135,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
   }
   var timer = setTimeout(600)(calculeHeight())
   val changeHeight = (event: Event) => {
+    clearTimeout(timer)
     if (window.innerWidth > 960) {
       timeout( () => {
         parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
@@ -145,7 +146,15 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
   }
 
   window.addEventListener("resize", changeHeight)
-//  document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].addEventListener("resize", changeHeight)
+  var timer2 = setTimeout(600)(calculeHeight())
+  var maybeChangeHeight = (event: Event) => {
+    clearTimeout(timer2)
+    val elemWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    if(elemWidth != parentWidth) {
+      parentWidth = elemWidth
+      timer2 = setTimeout(600)(calculeHeight())
+    }
+  }
 
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
@@ -158,6 +167,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
         }, 500, true)
       }
       resize()
+      elem.addEventListener("resize", maybeChangeHeight)
     }
   }
 }

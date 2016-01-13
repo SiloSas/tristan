@@ -50,8 +50,9 @@
   <ng-include src="'/assets/templates/mainMenu.html'" class="width100p" ng-if="$root.showMenu" hide-gt-sm></ng-include>
   <div class="absolute column large-12 paddingTop50 md-whiteframe-z5 zIndex6 text-center left0 height100p"
   style=" background: rgba(82, 96, 171, 0.38);  overflow: auto"  ng-if="controller.showCv">
-    <img src="assets/images/cv.png" />
-    <span  class="column large-12 text-center paddingBottom50 marginBottom50" >
+    <div class="absolute top0 left0 right0 bottom0 zIndex1" ng-click="controller.showCv = false"></div>
+    <img src="assets/images/cv.png" class="zIndex2"/>
+    <span  class="column large-12 text-center paddingBottom50 marginBottom50 zIndex2" >
       <a href="assets/images/cv.png" download="cv.png" target="_blank" aria-label="Download" class="md-button md-primary md-fab" >
         <i class="fa fa-download"></i>
       </a>
