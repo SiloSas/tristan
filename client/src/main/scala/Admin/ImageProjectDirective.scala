@@ -77,7 +77,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
               checkWidth = checkWidth + rowElem.getBoundingClientRect().width
             }
             if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-              resize(0.2, checkWidth)
+              resize(0.4, checkWidth)
             }
             rowElements = new js.Array[Html]()
             elementsWidth = 0.0
@@ -113,7 +113,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
     }
     console.log(checkWidth)
     if(checkWidth > parentWidth) {
-      resize(i + 0.2, checkWidth)
+      resize(i + 0.4, checkWidth)
     }
   }
 
@@ -158,20 +158,20 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
 
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-      def resize(): Unit = {
+      def waitForResize(): Unit = {
         timeout(() => {
           parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
           images = elem.getElementsByTagName("img")
           images.asInstanceOf[Seq[Image]].foreach{img =>
             if(!img.complete || img.src.length == 0) {
-              resize()
+              waitForResize()
             }
           }
           if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
-          else resize()
+          else waitForResize()
         }, 1000, true)
       }
-      resize()
+      waitForResize()
       elem.addEventListener("resize", maybeChangeHeight)
     }
   }
