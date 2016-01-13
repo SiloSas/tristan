@@ -164,7 +164,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
           images = elem.getElementsByTagName("img")
           if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
-        }, 500, true)
+        }, 1000, true)
       }
       resize()
       elem.addEventListener("resize", maybeChangeHeight)
