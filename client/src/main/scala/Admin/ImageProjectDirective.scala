@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.timers._
 
 @injectable("imageProject")
-class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
+class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   var parentWidth = 0.0
   var elementsWidth = 0.0
   var height = 450.0
@@ -91,7 +91,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
   }
 
   def getParentWidth: Double = {
-    val newParentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = window.innerWidth
     if (newParentWidth <= windowWidth) newParentWidth
     else windowWidth
@@ -128,7 +128,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
   var timer1 = setTimeout(600)(calculeHeight())
   @JSExport
   def setBaseHeight(double: Double): Unit = {
-    parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    parentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     baseHeight = double
     height = double
     timer1 = setTimeout(600)(calculeHeight())
@@ -138,7 +138,7 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
     clearTimeout(timer)
     if (window.innerWidth > 960) {
       timeout( () => {
-        parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+        parentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
         timer = setTimeout(600)(calculeHeight())
       }, 50)
 
@@ -160,8 +160,9 @@ class ImageProjectDirective(timeout: Timeout) extends ElementDirective {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
       def resize(): Unit = {
         timeout(() => {
-          parentWidth = document.getElementsByTagName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width - 5
-          images = elem.getElementsByTagName("img")
+          val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
+          parentWidth = element.getBoundingClientRect().width - 5
+          images = element.getElementsByTagName("img")
           if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
         }, 1000, true)
