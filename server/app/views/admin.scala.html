@@ -60,10 +60,10 @@
                         <i class="fa fa-times" ng-show="status == 'error'"></i>
                     </div>
                     <div  class="float-left grid width100p">
-                        <image-project class="float-left width100p" >
+                        <div class="image-project float-left width100p" >
                            <span ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')"
                            class="text-center float-left relative">
-                               <project-min class="float-left relative">
+                               <project-min class="float-left relative image-project">
                                </project-min>
                             <span class="absolute left0" ng-hide="$index == 0 && $index == filteredProjects.length -1">
                                 <b class="textColorWhite float-left">Change position</b>
@@ -79,7 +79,7 @@
                                 ng-click="$parent.orderedProjects[$index + 1].columnNumber = $parent.orderedProjects[$index + 1].columnNumber - 1;
                                 project.columnNumber = project.columnNumber +1; $parent.directive.recalculHeight()"
                                 aria-label="position" id="projectPosition"><i class="fa fa-plus"></i></md-button></span></span>
-                        </image-project>
+                        </div>
                     </div>
                 </div>
                 <form class="column" ng-if="newProject" ng-submit="controller.updateProjects()">

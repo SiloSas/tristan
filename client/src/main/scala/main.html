@@ -4,7 +4,8 @@
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div class="image-project float-left text-center width100p" >
-       <project-min ng-init="directive.setBaseHeight(controller.baseHeight)" ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')" class="float-left relative">
+       <project-min ng-init="directive.setBaseHeight(controller.baseHeight)"
+                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')" class="float-left relative">
        </project-min>
     </div>
 </div>

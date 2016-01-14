@@ -166,6 +166,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
           if (images.item(images.length -1).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
         }, 1000, true)
+        scopeType.$watch("projects", calculeHeight())
       }
       resize()
       elem.addEventListener("resize", maybeChangeHeight)
