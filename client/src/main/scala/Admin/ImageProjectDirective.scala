@@ -163,7 +163,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
           val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
           parentWidth = element.getBoundingClientRect().width - 5
           images = element.getElementsByTagName("img")
-          if (elem.getElementsByTagName("img").item(0).asInstanceOf[Image].complete)  calculeHeight()
+          if (images.item(images.length -1).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
         }, 1000, true)
       }
