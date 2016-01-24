@@ -93,8 +93,9 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   def getParentWidth: Double = {
     val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = window.innerWidth
-    if (newParentWidth <= (windowWidth - 15)) newParentWidth
-    else windowWidth -15
+    //if (newParentWidth <= (windowWidth - 15)) newParentWidth
+    //else
+    windowWidth -15
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {
@@ -165,7 +166,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
           images = element.getElementsByTagName("img")
           if (images.item(images.length -1).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
-        }, 1000, true)
+        }, 1500, true)
         scopeType.$watch("projects", calculeHeight())
       }
       resize()
