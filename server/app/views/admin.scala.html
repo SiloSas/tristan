@@ -62,7 +62,7 @@
                     <div  class="float-left grid width100p">
                         <div class="image-project float-left width100p" >
                            <span ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')"
-                           class="text-center float-left relative">
+                           class="text-center float-left relative image-project">
                                <project-min class="float-left relative image-project">
                                </project-min>
                             <span class="absolute left0" ng-hide="$index == 0 && $index == filteredProjects.length -1">

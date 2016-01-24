@@ -129,7 +129,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   var timer1 = setTimeout(600)(calculeHeight())
   @JSExport
   def setBaseHeight(double: Double): Unit = {
-    parentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    parentWidth = getParentWidth
     baseHeight = double
     height = double
     timer1 = setTimeout(600)(calculeHeight())
@@ -150,7 +150,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   var timer2 = setTimeout(600)(calculeHeight())
   var maybeChangeHeight = (event: Event) => {
     clearTimeout(timer2)
-    val elemWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    val elemWidth = getParentWidth
     if(elemWidth != parentWidth) {
       parentWidth = elemWidth
       timer2 = setTimeout(600)(calculeHeight())
@@ -162,7 +162,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
       def resize(): Unit = {
         timeout(() => {
           val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
-          parentWidth = element.getBoundingClientRect().width - 5
+          parentWidth = getParentWidth
           images = element.getElementsByTagName("img")
           if (images.item(images.length -1).asInstanceOf[Image].complete)  calculeHeight()
           else resize()
