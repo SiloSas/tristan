@@ -46,7 +46,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
               checkWidth = checkWidth + rowElem.getBoundingClientRect().width
             }
             if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-              resize(0.2, checkWidth)
+              resize(0.1, checkWidth)
             }
             rowElements = new js.Array[Html]()
             elementsWidth = 0.0
@@ -61,7 +61,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
             checkWidth = checkWidth + rowElem.getBoundingClientRect().width
           }
           if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-           resize(0.2, checkWidth)
+           resize(0.1, checkWidth)
           }
 
           elementsWidth = 0.0
@@ -77,7 +77,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
               checkWidth = checkWidth + rowElem.getBoundingClientRect().width
             }
             if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-              resize(0.2, checkWidth)
+              resize(0.1, checkWidth)
             }
             rowElements = new js.Array[Html]()
             elementsWidth = 0.0
@@ -93,8 +93,8 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   def getParentWidth: Double = {
     val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = window.innerWidth
-    if (newParentWidth <= windowWidth) newParentWidth
-    else windowWidth
+    if (newParentWidth <= (windowWidth - 15)) newParentWidth
+    else windowWidth -15
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {

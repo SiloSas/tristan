@@ -28,21 +28,13 @@
             Curriculum Vitae
         </i>
       </span>
-<span class="tooltip-trigger" hide-sm>
+<span class="tooltip-trigger">
     <a class="md-fab md-mini md-primary md-button"
-       ng-click="showMail = !showMail">
+       ng-class="{'md-hue-2': controller.contact}"
+       ng-click="controller.contact = !controller.contact">
         <i class="fa fa-envelope"></i>
     </a>
-    <b class="tooltip-custom animated block" ng-show="showMail">tristan-delgado&#64;hotmail.fr</b>
-    <i class="tooltip-custom animated" ng-show="!showMail">
-        tristan-delgado&#64;hotmail.fr
+    <i class="tooltip-custom animated">
+        Contact
     </i>
-</span>
-<span hide-gt-sm>
-    <a class="md-fab md-mini md-primary md-button" ng-click="showMail = !showMail">
-        <i class="fa fa-envelope"></i>
-    </a>
-    <b  ng-show="showMail" class="column">
-        tristan-delgado&#64;hotmail.fr
-    </b>
 </span>
