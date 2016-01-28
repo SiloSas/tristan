@@ -6,7 +6,7 @@ import javax.imageio.ImageIO
 import javax.inject.Inject
 
 import administration.Authenticated
-import database.Height
+import database.{Contact, Height}
 import play.Play
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.json.JsObject
@@ -39,6 +39,17 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     projectMethods.findTechnologies.map { technologies =>
       println(technologies)
       Ok(write(technologies))
+    }
+  }
+  def findContact() = Action.async {
+    projectMethods.findContact.map { contact =>
+      Ok(write(contact))
+    }
+  }
+
+  def updateContact(contact: String) = Authenticated.async {
+    projectMethods.updateContact(Contact(contact)).map { resp =>
+      Ok(write(resp))
     }
   }
 

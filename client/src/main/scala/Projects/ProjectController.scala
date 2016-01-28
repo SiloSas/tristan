@@ -1,11 +1,12 @@
 package Projects
 
 
-import com.greencatsoft.angularjs.core.{RootScope, Timeout, Window}
+import com.greencatsoft.angularjs.core.{SceService, RootScope, Timeout, Window}
 import com.greencatsoft.angularjs.{AbstractController, injectable}
 import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 import scala.util.{Failure, Success}
@@ -13,7 +14,7 @@ import scala.util.{Failure, Success}
 @JSExportAll
 @injectable("projectController")
 class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectService: ProjectService,
-                        rootScope: RootScope, window: Window)
+                        rootScope: RootScope, window: Window, sce: SceService)
   extends AbstractController[ProjectScope](projectScope) {
 
 
@@ -23,7 +24,12 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 
   var inProgress = true
   var showCv = false
+  var showContact = false
   var slider = false
+  var contact: js.Any = Nil
+  projectService.getContact() map { foundContact =>
+    contact = sce.trustAsHtml(foundContact)
+  }
 
   var baseHeight = 300.0
   projectService.findBaseHeight().onComplete {
@@ -140,8 +146,9 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     if (event.keyCode == 39) nextIndex()
     if (event.keyCode == 27) {
       timeout( () => {
-        if (showCv) {
+        if (showCv || showContact) {
           showCv = false
+          showContact = false
         } else {
           slider = false
         }

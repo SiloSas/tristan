@@ -4,7 +4,7 @@ import java.util.UUID
 
 import Admin.MutableProject
 import com.greencatsoft.angularjs._
-import com.greencatsoft.angularjs.core.{HttpConfig, HttpService}
+import com.greencatsoft.angularjs.core.{SceService, HttpConfig, HttpService}
 import org.scalajs.dom.console
 import org.scalajs.dom.raw.{File, FormData}
 import upickle.default._
@@ -22,6 +22,26 @@ case class Height(height: Double)
 class ProjectService(http: HttpService) extends Service {
   require(http != null, "Missing argument 'http'.")
 
+
+  @JSExport
+  def getContact(): Future[js.Any] = /*flatten*/ {
+    // Append a timestamp to prevent some old browsers from caching the result.
+    http.get[js.Any]("/contact")
+      .map { p =>
+        console.log(p)
+        JSON.stringify(p)
+        p.toString.replaceFirst("\"", "").dropRight(1)
+      }
+  }
+  @JSExport
+  def updateContact(contact: String): Future[String] = /*flatten*/ {
+    // Append a timestamp to prevent some old browsers from caching the result.
+    http.put[js.Any]("/contact?contact=" + contact)
+      .map { p =>
+        console.log(p)
+        p.toString
+      }
+  }
 
   @JSExport
   def findAll(): Future[Seq[Project]] = /*flatten*/ {

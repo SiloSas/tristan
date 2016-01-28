@@ -4,7 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET	    /rooms						@Room.RoomController.findAll
+GET     /contact                    @Projects.ProjectsController.findContact
+PUT     /contact                    @Projects.ProjectsController.updateContact(contact: String)
 GET     /technologies               @Projects.ProjectsController.findTechnologies
 GET     /baseHeight                 @Projects.ProjectsController.findBaseHeight
 GET	    /projects					@Projects.ProjectsController.findAll

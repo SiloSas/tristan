@@ -205,6 +205,27 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
       }
   }
 
+  def updateContact(contact: String): Unit = {
+      projectService.updateContact(contact) onComplete {
+        case Success(resp) =>
+          timeout( () => {
+            adminScope.status = "validate"
+          }, 0, true)
+        case Failure(t: Throwable) =>
+          adminScope.status = "error"
+          console.log(throw t)
+      }
+  }
+
+  var contact: js.Any = Nil
+  var changeContact = false
+  def getContact() = {
+    projectService.getContact() onComplete {
+      case Success(foundContact) =>
+        timeout( () => contact = foundContact)
+    }
+  }
+
   def addNewImage(): Unit = {
     console.log(adminScope.newImage)
     projectService.postImage(adminScope.newImage) onComplete {

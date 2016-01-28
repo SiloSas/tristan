@@ -9,6 +9,7 @@ import shared.Room
 import MyPostgresDriver.api._
 
 case class Height(height: Double)
+case class Contact(contact: String)
 trait MyDBTableDefinitions {
 
   def optionStringToSet(maybeString: Option[String]): Array[String] = maybeString match {
@@ -72,6 +73,13 @@ trait MyDBTableDefinitions {
     def * = height <> (Height.apply, Height.unapply)
   }
   lazy val baseheight = TableQuery[BaseHeight]
+
+  class Contacts(tag: Tag) extends Table[Contact](tag, "contacts") {
+    def contact = column[String]("contact")
+
+    def * = contact <> (Contact.apply, Contact.unapply)
+  }
+  lazy val contacts = TableQuery[Contacts]
 
   class Users(tag: Tag) extends Table[User](tag, "users") {
     def id = column[Int]("userid", O.PrimaryKey)

@@ -17,10 +17,13 @@
                 <div>
                     <div class="column md-whiteframe-z1" ng-repeat="project in projects">
                         <h5>{{project.name}}</h5>
-                        <md-button class="md-fab md-mini float-right md-primary" ng-click="controller.setProject(project)"><i class="fa fa-pencil"></i></md-button>
+                        <md-button class="md-fab md-mini float-right md-primary" ng-click="controller.setProject(project); controller.changeContact = false">
+                            <i class="fa fa-pencil"></i></md-button>
                         <md-button class="md-fab md-mini float-right md-warn" ng-click="controller.delete(project.id)"><i class="fa fa-trash"></i></md-button>
                     </div>
-                    <md-button ng-click="controller.setNewProject()" class="md-primary md-raised">Ajouter un projet</md-button>
+                    <md-button ng-click="controller.setNewProject(); controller.changeContact = false" class="md-primary md-raised">Ajouter un projet</md-button>
+                    <md-divider class="padding10"></md-divider>
+                        <div class="column md-whiteframe-z1" ng-click="controller.getContact(); controller.changeContact = true"> Contact</div>
                     <md-divider class="padding10"></md-divider>
                     <b>Change C.V (name the file cv.png)</b>
                     <md-input-container class="column">
@@ -44,8 +47,23 @@
                 </div>
             </md-toolbar>
             <md-content layout-fill class="mainContainer">
+                <div ng-show="controller.changeContact">
+                    <div
+                    text-angular="text-angular"
+                    ta-disabled='disabled'
+                    name="contact"
+                    class="column large-12"
+                    ng-model="controller.contact"></div>
+                </div>
+                <md-button ng-click="controller.updateContact(controller.contact)">Valider</md-button>
+                <div class="float-left">
+                    <b ng-if="status != 'false'">{{status}}</b>
+                    <md-progress-circular md-mode="indeterminate" ng-show="status == 'inProgress'"></md-progress-circular>
+                    <i class="fa fa-check" ng-show="status == 'validate'"></i>
+                    <i class="fa fa-times" ng-show="status == 'error'"></i>
+                </div>
                 <div
-                    ng-if="!newProject"
+                    ng-if="!newProject && !controller.changeContact"
                 class="column large-12 paddingTop0 paddingLeft0 paddingRight0 marginBottom50" style="min-height: 100%"
                 layout="row" layout-wrap layout-align="center start" layout-xs="column">
                     <md-input-container class="column large-10 float-left">
@@ -82,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <form class="column" ng-if="newProject" ng-submit="controller.updateProjects()">
+                <form class="column" ng-if="newProject && !controller.changeContact" ng-submit="controller.updateProjects()">
                     <md-input-container class="column large-12">
                         <label>Name</label>
                         <input ng-model="newProject.name"/>

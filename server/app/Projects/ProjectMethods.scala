@@ -3,12 +3,11 @@ package Projects
 import javax.inject.Inject
 import Shared.{Technology, Project}
 import database.MyPostgresDriver.api._
-import database.{MyDBTableDefinitions, MyPostgresDriver}
+import database.{Contact, MyDBTableDefinitions, MyPostgresDriver, Height}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
 import scala.language.postfixOps
-import database.Height
 
 
 class ProjectMethods @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
@@ -32,6 +31,9 @@ class ProjectMethods @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   }
   
   def findTechnologies: Future[Seq[Technology]] = db.run(technologies.result) map (_.toSeq)
+
+  def findContact: Future[String] = db.run(contacts.result) map (_.head.contact)
+  def updateContact(contact: Contact): Future[Int] = db.run(contacts.update(contact))
 
   def delete(id: String): Future[Int] = db.run(projects.filter(_.id === id).delete)
 

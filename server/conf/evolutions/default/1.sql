@@ -92,6 +92,11 @@ INSERT INTO technologies(technologies) VALUES
 CREATE TABLE baseheight (
   height                        NUMERIC
 );
+CREATE TABLE contacts (
+  contact                        VARCHAR
+);
+INSERT INTO contacts(contact) VALUES
+  ('<h1>Contacts</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at ullamcorper dolor. Donec id hendrerit sapien. Cras id orci suscipit, euismod nisi a, tincidunt mauris. Morbi finibus ligula efficitur, blandit diam nec, lobortis odio. Vivamus sagittis felis quis augue rutrum sollicitudin. Proin blandit placerat velit, eget accumsan lorem auctor non. </p>');
 INSERT INTO baseheight(height) VALUES
  (400.0);
 
@@ -107,4 +112,5 @@ DROP TABLE IF EXISTS rooms;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS technologies;
 DROP TABLE IF EXISTS baseheight;
+DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS users;

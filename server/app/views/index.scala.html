@@ -10,13 +10,13 @@
           <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
         </a>
       <md-input-container>
-        <label>Filters</label>
+        <label>Filtres</label>
         <md-select ng-model="filter">
           <md-option ng-repeat="tag in tags" value="{{tag}}" ng-click="controller.filter(tag)">
             {{tag}}
           </md-option>
           <md-option  value="NoFilter" ng-click="controller.removeFilter()">
-            NoFilter
+            Supprimer les filtres
           </md-option>
         </md-select>
       </md-input-container>
@@ -63,14 +63,10 @@
     <div hide-gt-sm class="paddingBottom50 column" ng-if="$root.showMenu"></div>
   </div>
   <div class="absolute column large-12 paddingTop50 md-whiteframe-z5 zIndex6 text-center left0 height100p"
-  style=" background: rgba(82, 96, 171, 0.38);  overflow: auto"  ng-if="controller.contact">
-    <div class="absolute top0 left0 right0 bottom0 zIndex1" ng-click="controller.contact = false"></div>
+  style=" background: rgba(82, 96, 171, 0.38);  overflow: auto"  ng-if="controller.showContact">
+    <div class="absolute top0 left0 right0 bottom0 zIndex1" ng-click="controller.showContact = false"></div>
     <span  class="column large-12 text-center textColorWhite paddingBottom50 marginBottom50 zIndex2" >
-      <h1>Contacts</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at ullamcorper dolor. Donec id hendrerit
-        sapien. Cras id orci suscipit, euismod nisi a, tincidunt mauris. Morbi finibus ligula efficitur, blandit diam nec,
-        lobortis odio. Vivamus sagittis felis quis augue rutrum sollicitudin. Proin blandit placerat velit, eget accumsan
-        lorem auctor non. </p>
+      <div ng-bind-html="controller.contact"></div>
     </span>
     <div hide-gt-sm class="paddingBottom50 column" ng-if="$root.showMenu"></div>
   </div>

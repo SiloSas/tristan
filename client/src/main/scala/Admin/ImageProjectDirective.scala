@@ -2,7 +2,7 @@ package Admin
 
 
 import com.greencatsoft.angularjs._
-import com.greencatsoft.angularjs.core.Timeout
+import com.greencatsoft.angularjs.core.{Window, Timeout}
 import org.scalajs.dom.console
 import org.scalajs.dom.document
 import org.scalajs.dom.window
@@ -15,14 +15,17 @@ import scala.scalajs.js.Array
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.timers._
 
+
+
 @injectable("imageProject")
-class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
+class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends ClassDirective {
   var parentWidth = 0.0
   var elementsWidth = 0.0
   var height = 450.0
   var baseHeight = 450.0
   var rowElements = new Array[Html]()
   var images = document.getElementsByTagName("img")
+  val ratio: Double = js.eval("window.devicePixelRatio").toString.toDouble
 
 
   def calculeHeight(): Unit = {
@@ -33,7 +36,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
     for (i <- 0 to (length - 1)) {
       val elem = images.item(i).asInstanceOf[Html]
       elem.style.height = baseHeight + "px"
-      val totalWidth = elem.getBoundingClientRect().width + elementsWidth
+      val totalWidth = elem.getBoundingClientRect().width * ratio + elementsWidth
       totalWidth match {
         case under if under <= parentWidth - (parentWidth * 20 / 100) =>
           elementsWidth = totalWidth
@@ -43,10 +46,10 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
             var checkWidth = 0.0
             rowElements.foreach{ rowElem =>
               rowElem.style.height = height + "px"
-              checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+              checkWidth = checkWidth + rowElem.getBoundingClientRect().width * ratio
             }
             if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-              resize(0.1, checkWidth)
+              resize(0, checkWidth)
             }
             rowElements = new js.Array[Html]()
             elementsWidth = 0.0
@@ -58,10 +61,10 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
           var checkWidth = 0.0
           rowElements.foreach{ rowElem =>
             rowElem.style.height = height + "px"
-            checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+            checkWidth = checkWidth + rowElem.getBoundingClientRect().width * ratio
           }
           if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-           resize(0.1, checkWidth)
+           resize(0, checkWidth)
           }
 
           elementsWidth = 0.0
@@ -74,28 +77,29 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
             var checkWidth = 0.0
             rowElements.foreach{ rowElem =>
               rowElem.style.height = height + "px"
-              checkWidth = checkWidth + rowElem.getBoundingClientRect().width
+              checkWidth = checkWidth + rowElem.getBoundingClientRect().width * ratio
             }
             if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
-              resize(0.1, checkWidth)
+              resize(0, checkWidth)
             }
             rowElements = new js.Array[Html]()
             elementsWidth = 0.0
           } else {
             rowElements = new js.Array[Html]()
             rowElements.push(elem)
-            elementsWidth = elem.getBoundingClientRect().width
+            elementsWidth = elem.getBoundingClientRect().width * ratio
           }
       }
     }
   }
 
   def getParentWidth: Double = {
-    val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
-    val windowWidth = window.innerWidth
+    //val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
+    val windowWidth = angularWindow.innerWidth
     //if (newParentWidth <= (windowWidth - 15)) newParentWidth
-    //else
-    windowWidth -15
+    //else * window.devicePixelRatio
+    console.log(ratio)
+    Math.round(document.body.clientWidth * ratio -15)
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {
@@ -112,9 +116,8 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
       rowElem.style.height = height + "px"
       checkWidth = checkWidth + rowElem.getBoundingClientRect().width
     }
-    console.log(checkWidth)
     if(checkWidth > parentWidth) {
-      resize(i + 0.2, checkWidth)
+      resize(i + 1, checkWidth)
     }
   }
 
@@ -137,7 +140,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
   var timer = setTimeout(600)(calculeHeight())
   val changeHeight = (event: Event) => {
     clearTimeout(timer)
-    if (window.innerWidth > 960) {
+    if (angularWindow.innerWidth > 960) {
       timeout( () => {
         parentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
         timer = setTimeout(600)(calculeHeight())
@@ -146,7 +149,7 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
     }
   }
 
-  window.addEventListener("resize", changeHeight)
+  angularWindow.addEventListener("resize", changeHeight)
   var timer2 = setTimeout(600)(calculeHeight())
   var maybeChangeHeight = (event: Event) => {
     clearTimeout(timer2)
@@ -161,11 +164,20 @@ class ImageProjectDirective(timeout: Timeout) extends ClassDirective {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
       def resize(): Unit = {
         timeout(() => {
+          /* if (!theImage.get(0).complete) {
+        return false;
+    }
+    else if (theImage.height() === 0) {
+        return false;
+    }
+
+    return true;*/
           val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
           parentWidth = getParentWidth
           images = element.getElementsByTagName("img")
-          if (images.item(images.length -1).asInstanceOf[Image].complete)  calculeHeight()
-          else resize()
+          if (images.item(images.length -1).asInstanceOf[Image].height == 0) resize()
+          else if (!images.item(images.length -1).asInstanceOf[Image].complete)  resize()
+          else calculeHeight()
         }, 1500, true)
         scopeType.$watch("projects", calculeHeight())
       }
