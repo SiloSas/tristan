@@ -25,7 +25,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   var baseHeight = 450.0
   var rowElements = new Array[Html]()
   var images = document.getElementsByTagName("img")
-  val ratio: Double = js.eval("window.devicePixelRatio").toString.toDouble
+  val ratio: Double = 1.0 /*js.eval("window.devicePixelRatio").toString.toDouble*/
 
 
   def calculeHeight(): Unit = {
