@@ -48,7 +48,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
               rowElem.style.height = height + "px"
               checkWidth = checkWidth + rowElem.getBoundingClientRect().width * ratio
             }
-            if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
+            if (checkWidth >= parentWidth || checkWidth < parentWidth - 3) {
               resize(0, checkWidth)
             }
             rowElements = new js.Array[Html]()
@@ -63,7 +63,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
             rowElem.style.height = height + "px"
             checkWidth = checkWidth + rowElem.getBoundingClientRect().width * ratio
           }
-          if (checkWidth > parentWidth || checkWidth < parentWidth - 2) {
+          if (checkWidth >= parentWidth || checkWidth < parentWidth - 3) {
            resize(0, checkWidth)
           }
 
@@ -99,7 +99,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
     //if (newParentWidth <= (windowWidth - 15)) newParentWidth
     //else * window.devicePixelRatio
     console.log(ratio)
-    Math.round(document.body.clientWidth * ratio -15)
+    Math.round(document.body.clientWidth * ratio -16)
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {
