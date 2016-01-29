@@ -42,7 +42,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
           elementsWidth = totalWidth
           rowElements.push(elem)
           if(i == length -1) {
-            height = elem.getBoundingClientRect().height * (parentWidth  / elementsWidth)
+            height = math.round(elem.getBoundingClientRect().height * (parentWidth  / elementsWidth))
             var checkWidth = 0.0
             rowElements.foreach{ rowElem =>
               rowElem.style.height = height + "px"
@@ -57,7 +57,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
         case complete if complete >= parentWidth - (parentWidth * 20 / 100) && complete <= parentWidth + (parentWidth * 20 / 100) =>
           elementsWidth = totalWidth
           rowElements.push(elem)
-          height = baseHeight * (parentWidth / elementsWidth)
+          height = math.round(baseHeight * (parentWidth / elementsWidth))
           var checkWidth = 0.0
           rowElements.foreach{ rowElem =>
             rowElem.style.height = height + "px"
@@ -70,7 +70,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
           elementsWidth = 0.0
           rowElements = new js.Array[Html]()
         case _ =>
-          height = baseHeight * (parentWidth / elementsWidth)
+          height = math.round(baseHeight * (parentWidth / elementsWidth))
           rowElements.foreach(_.style.height = height + "px")
           if(i == length -1) {
             height = baseHeight * (parentWidth / elementsWidth)
@@ -108,7 +108,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
     //console.log(checkWidth)
     console.log(parentWidth)
     //console.log(height)
-    height = height * ((parentWidth - i) / checkWidth)
+    height = math.round(height * ((parentWidth - i) / checkWidth))
 //    console.log(height)
 //    console.log(height * parentWidth / checkWidth)
     checkWidth = 0.0
