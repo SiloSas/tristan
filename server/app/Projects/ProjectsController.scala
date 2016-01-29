@@ -63,29 +63,13 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
-  def uploadImage = Authenticated(parse.multipartFormData) { request =>
-    request.body.file("picture").map { image =>
-      image.contentType match {
-        case Some(fileExtension)  =>
-
-          println(image)
-          val filename = image.filename
-          image.ref.moveTo(new File(Play.application().path().getPath + "/../../../public/images/" + filename), replace = true)
-
-          Ok("images/" +filename)
-
-        case _ =>
-          Unauthorized("Wrong content type")
-      }
-    }.getOrElse { BadRequest }
-  }
-
   def getImage(fileName: String) = Action {
-    val imageFile = new File(Play.application().path().getPath + "/../../../public/images/" + fileName)
-    val image = ImageIO.read(imageFile)
+    val imageFile = new File(Play.application().path().getPath + "/public/images/" + fileName)
     if (imageFile.length > 0) {
+      val image = ImageIO.read(imageFile)
 
       val resourceType = fileName.substring(fileName.length()-3)
+      println(imageFile + resourceType)
       val baos = new ByteArrayOutputStream()
       ImageIO.write(image, resourceType, baos)
 
@@ -94,6 +78,23 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     } else {
       NotFound(fileName)
     }
+  }
+
+  def uploadImage = Authenticated(parse.multipartFormData) { request =>
+    request.body.file("picture").map { image =>
+      image.contentType match {
+        case Some(fileExtension)  =>
+
+          println(image)
+          val filename = image.filename
+          image.ref.moveTo(new File(Play.application().path().getPath + "/public/images/" + filename), replace = true)
+
+          Ok("images/" +filename)
+
+        case _ =>
+          Unauthorized("Wrong content type")
+      }
+    }.getOrElse { BadRequest }
   }
 
   def process(updater: Shared.Project => Future[Int]) = Authenticated.async(parse.json) { request =>

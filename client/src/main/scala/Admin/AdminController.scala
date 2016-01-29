@@ -235,7 +235,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
   }
 
   def refactorTech(technology: String): String = {
-    val a = technology.substring(technology.lastIndexOf("/") + 1).replace(".svg", "")
+    val a = technology.substring(technology.lastIndexOf("/") + 1).replace(technology.substring(technology.length()-4), "")
     a
   }
   

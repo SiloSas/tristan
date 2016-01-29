@@ -1,4 +1,4 @@
-<img ng-src="{{project.image}}" ng-init="$parent.directive.recalculHeight()" style="height: 400px"/>
+<img ng-src="{{project.image}}" class="mainImage" ng-init="$parent.directive.recalculHeight()" style="height: 400px"/>
 <figure
         class="height100p width100p margin0 top0 left0 absolute effect-zoe pointer"
         style="overflow: hidden"
@@ -11,7 +11,7 @@
                 <a ng-repeat="technologie in project.technologies | limitTo: 2" class="float-right tooltip-trigger ">
                     <md-button style="cursor: auto!important;" class="md-fab md-mini md-icon-button md-primary "
                                aria-label="{{controller.refactorTech(technologie)}}">
-                        <md-icon md-svg-src="{{technologie}}"></md-icon>
+                        <img class="padding10" ng-src="{{technologie}}"/>
                     </md-button>
                     <i class="tooltip-custom animated ">
                         {{controller.refactorTech(technologie)}}
@@ -22,7 +22,7 @@
                 <a ng-repeat="technologie in project.technologies" ng-if="$index > 1" class="float-right tooltip-trigger ">
                     <md-button style="cursor: auto!important;" class="md-fab md-mini md-icon-button md-primary "
                                aria-label="{{controller.refactorTech(technologie)}}">
-                        <md-icon md-svg-src="{{technologie}}"></md-icon>
+                        <img class="padding10" ng-src="{{technologie}}"/>
                     </md-button>
                     <i class="tooltip-custom animated ">
                         {{controller.refactorTech(technologie)}}

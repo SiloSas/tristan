@@ -158,7 +158,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   }
 
   def refactorTech(technology: String): String = {
-    val a = technology.substring(technology.lastIndexOf("/") + 1).replace(".svg", "")
+    val a = technology.substring(technology.lastIndexOf("/") + 1).replace(technology.substring(technology.length()-4), "")
     a
   }
 

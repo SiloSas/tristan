@@ -24,7 +24,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   var height = 450.0
   var baseHeight = 450.0
   var rowElements = new Array[Html]()
-  var images = document.getElementsByTagName("img")
+  var images = document.getElementsByClassName("mainImage")
   val ratio: Double = 1.0 /*js.eval("window.devicePixelRatio").toString.toDouble*/
 
 
@@ -164,17 +164,9 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
       def resize(): Unit = {
         timeout(() => {
-          /* if (!theImage.get(0).complete) {
-        return false;
-    }
-    else if (theImage.height() === 0) {
-        return false;
-    }
-
-    return true;*/
           val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
           parentWidth = getParentWidth
-          images = element.getElementsByTagName("img")
+          images = element.getElementsByClassName("mainImage")
           if (images.item(images.length -1).asInstanceOf[Image].height == 0) resize()
           else if (!images.item(images.length -1).asInstanceOf[Image].complete)  resize()
           else calculeHeight()
