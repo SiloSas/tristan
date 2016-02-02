@@ -167,9 +167,17 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
           val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
           parentWidth = getParentWidth
           images = element.getElementsByClassName("mainImage")
-          if (images.item(images.length -1).asInstanceOf[Image].height < 30) timeout(() => resize(), 50)
-          else if (!images.item(images.length -1).asInstanceOf[Image].complete)  timeout(() => resize(), 50)
-          else calculeHeight()
+          var allImagesReady = true
+          def isAllReady(i: Int) {
+            val image = images.item(i).asInstanceOf[Image]
+            if (image.height > 30 && image.complete) {
+              if (i < images.length) isAllReady(i+1)
+              else calculeHeight()
+            } else {
+              allImagesReady = false
+              timeout(() => resize(), 50)
+            }
+          }
         }, 1500, true)
         scopeType.$watch("projects", calculeHeight())
       }
