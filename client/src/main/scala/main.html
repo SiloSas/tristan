@@ -1,7 +1,7 @@
 
 <md-progress-circular md-mode="indeterminate" ng-show="controller.inProgress" style="margin-left: auto; margin-right: auto;"></md-progress-circular>
 <div id="preloader">
-    <img ng-repeat="project in projects" ng-src="{{project.image}}" width="1" height="1" />
+    <img ng-repeat="project in projects | orderBy: 'columnNumber'" ng-src="{{project.image}}" width="1" height="1" />
 </div>
 <div ng-if="!controller.slider && !controller.inProgress"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"

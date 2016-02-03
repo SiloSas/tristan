@@ -61,7 +61,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
               def isAllReady(i: Int) {
                 val image = images.item(i).asInstanceOf[Image]
                 if (image.complete) {
-                  if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
+                  if (i < images.length -1 && i < 9) timeout(() => isAllReady(i+1), 10)
                   else {
                     console.log("ready")
                     timeout(() => inProgress = false)
