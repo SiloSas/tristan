@@ -9,7 +9,7 @@ PUT     /contact                    @Projects.ProjectsController.updateContact(c
 GET     /technologies               @Projects.ProjectsController.findTechnologies
 GET     /baseHeight                 @Projects.ProjectsController.findBaseHeight
 GET	    /projects					@Projects.ProjectsController.findAll
-GET     /images/:fileName/:maxWidth @Projects.ProjectsController.getImage(fileName: String, maxWidth: Int)
+GET     /images/:fileName           @Projects.ProjectsController.getImage(fileName: String, maxWidth: Int?= 950)
 PUT     /projects/:id				@Projects.ProjectsController.update(id: String)
 PUT     /baseHeight/:newHeight		@Projects.ProjectsController.updateBaseHeight(newHeight: Double)
 POST    /projects				    @Projects.ProjectsController.add

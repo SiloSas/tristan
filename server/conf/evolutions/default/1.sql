@@ -88,6 +88,24 @@ INSERT INTO technologies(technologies) VALUES
 ('assets/images/photoshop.png');
 INSERT INTO technologies(technologies) VALUES
 ('assets/images/3dsmax.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/Lightroom.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/Nuke.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/SubstanceDesigner.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/substancePainter.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/udk.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/unreal.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/crayon.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/marvelousDesigner.png');
+INSERT INTO technologies(technologies) VALUES
+('assets/images/photo.png');
 
 CREATE TABLE baseheight (
   height                        NUMERIC
