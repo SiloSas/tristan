@@ -172,7 +172,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
             } else {
               console.log("not ready")
               allImagesReady = false
-              timeout(() => resize(), 50)
+              timeout(() => resize(), 250)
             }
           }
           isAllReady(0)
