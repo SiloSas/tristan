@@ -3,10 +3,11 @@
 <div ng-if="!controller.slider"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
-    <div class="image-project float-left text-center width100p" >
+    <div class="image-project float-left text-center width100p" ng-init="limit = 10">
        <project-min ng-init="directive.setBaseHeight(controller.baseHeight)"
-                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')" class="float-left relative image-project">
+                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: limit) " class="float-left relative image-project">
        </project-min>
+        <md-button class="md-primary md-raised" ng-click="limit = limit+10" ng-show="limit < projects.length">voir plus</md-button>
     </div>
 </div>
 <div ng-if="controller.slider" class="height100p width100p float-left">
