@@ -24296,13 +24296,34 @@ body, html {
   width: 4.5em;
 }
 
-/* line 34, ../scss/main.scss */
+@media screen {
+  /* line 35, ../scss/main.scss */
+  div#preloader {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+  }
+
+  /* line 40, ../scss/main.scss */
+  div#preloader img {
+    display: block;
+  }
+}
+@media print {
+  /* line 45, ../scss/main.scss */
+  div#preloader,
+  div#preloader img {
+    visibility: hidden;
+    display: none;
+  }
+}
+/* line 52, ../scss/main.scss */
 .slider {
   background: #E8DDCB;
   text-align: center;
 }
 
-/* line 39, ../scss/main.scss */
+/* line 57, ../scss/main.scss */
 .tag {
   font-size: 12px;
   border-radius: 10px;
@@ -24313,25 +24334,25 @@ body, html {
   font-weight: bold;
 }
 
-/* line 48, ../scss/main.scss */
+/* line 66, ../scss/main.scss */
 .chevron.right:before {
   left: -1.9em;
   transform: rotate(45deg);
 }
 
-/* line 53, ../scss/main.scss */
+/* line 71, ../scss/main.scss */
 .chevron.bottom:before {
   top: 0;
   transform: rotate(135deg);
 }
 
-/* line 58, ../scss/main.scss */
+/* line 76, ../scss/main.scss */
 .chevron.left:before {
   left: 0.95em;
   transform: rotate(-135deg);
 }
 
-/* line 62, ../scss/main.scss */
+/* line 80, ../scss/main.scss */
 .tooltip-custom {
   display: none;
   animation: fadeIn 1s;
@@ -24350,18 +24371,18 @@ body, html {
   color: white;
 }
 
-/* line 78, ../scss/main.scss */
+/* line 96, ../scss/main.scss */
 .tooltip-trigger:hover > .tooltip-custom {
   display: block;
 }
 
 @media only screen and (max-width: 750px) {
-  /* line 83, ../scss/main.scss */
+  /* line 101, ../scss/main.scss */
   .tooltip-trigger:hover > .tooltip-custom {
     display: none;
   }
 
-  /* line 86, ../scss/main.scss */
+  /* line 104, ../scss/main.scss */
   .imageSlider {
     vertical-align: top !important;
   }

@@ -31,6 +31,24 @@ body, html {
   width: 4.5em;
 }
 
+@media screen {
+  div#preloader {
+    position: absolute;
+    left: -9999px;
+    top:  -9999px;
+  }
+  div#preloader img {
+    display: block;
+  }
+}
+@media print {
+  div#preloader,
+  div#preloader img {
+    visibility: hidden;
+    display: none;
+  }
+}
+
 .slider {
   background: #E8DDCB;
   text-align: center;
