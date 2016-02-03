@@ -29,52 +29,52 @@ CREATE TABLE projects (
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-47d0-b55c-593c91cb32ae', 'last night', 
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 
-  'assets/images/lastNight.jpg', 'environement', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/lastNight.jpg', 'environement', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-08-24 14:00:00', true, 716, 403, 0);
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-47d0-j55c-593c91cb32ae', 'sous l''objectif',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/sousObjectif.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/sousObjectif.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-07-24 14:00:00', true, 798, 449, 0);
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-47d0-j55c-593c91cb37ae', 'Portrait',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/portrait.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/portrait.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-05-24 14:00:00', FALSE , 476, 769, 0);
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-4pd0-j55c-593c91cp37ae', 'avalon',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/avalon.jpg', 'environement', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/avalon.jpg', 'environement', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-08-14 14:00:00', TRUE , 798, 449, 0);
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-4psf-j55c-593c91cp37ae', 'chameleon',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/chameleon.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/chameleon.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-09-12 14:00:00', FALSE , 537, 403, 0);
 
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-4psf-j5ds-593c91cp37ae', 'Landscape',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/landscape.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/landscape.png', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-08-17 14:00:00', TRUE, 1680, 624, 0);
 
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-4qdf-j5ds-593c91cp37ae', 'Ant',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/ant.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/ant.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-10-17 14:00:00', FALSE , 1025, 769, 0);
 
 
 INSERT INTO projects(id, name, description, image, tags, technologies, date, isLandscape, maxWidth, maxHeight, columnNumber) VALUES
   ('a4aea509-1002-4qdf-j5ds-593c88cp37ae', 'Head',
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  'assets/images/head.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
+  'images/head.jpg', 'characters', 'assets/images/3dsmax.png, assets/images/zbrush.png, assets/images/maya.png, assets/images/photoshop.png',
   date '2012-10-19 14:00:00', FALSE , 1025, 769, 0);
 
 CREATE TABLE technologies (

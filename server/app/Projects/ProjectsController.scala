@@ -6,6 +6,8 @@ import javax.imageio.ImageIO
 import javax.inject.Inject
 
 import administration.Authenticated
+import com.sksamuel.scrimage.Image
+import com.sksamuel.scrimage.ScaleMethod.Bicubic
 import database.{Contact, Height}
 import play.Play
 import play.api.db.slick.DatabaseConfigProvider
@@ -63,17 +65,19 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
-  def getImage(fileName: String) = Action {
+  def getImage(fileName: String, maxWidth: Int) = Action {
     val imageFile = new File(Play.application().path().getPath + "/public/images/" + fileName)
     if (imageFile.length > 0) {
+      val in = Image.fromFile(imageFile)
+      val scale = if (in.width > maxWidth) maxWidth.toDouble/in.width.toDouble else 1.0
+      val out = in.scale(scale, Bicubic).bytes
       val image = ImageIO.read(imageFile)
-
       val resourceType = fileName.substring(fileName.length()-3)
       println(imageFile + resourceType)
       val baos = new ByteArrayOutputStream()
       ImageIO.write(image, resourceType, baos)
 
-      Ok(baos.toByteArray).as("image/" + resourceType)
+      Ok(out).as("image/" + resourceType)
       //resource type such as image+png, image+jpg
     } else {
       NotFound(fileName)

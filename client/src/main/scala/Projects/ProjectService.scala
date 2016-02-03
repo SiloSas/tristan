@@ -15,6 +15,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.{JSON, Object}
 import scala.util.{Failure, Success, Try}
+import org.scalajs.dom.window
 
 case class Height(height: Double)
 
@@ -51,7 +52,15 @@ class ProjectService(http: HttpService) extends Service {
         console.log(p)
         JSON.stringify(p)
       }
-      .map { read[Seq[Project]] }
+      .map { string =>
+        val projects = read[Seq[Project]](string)
+        projects map { project =>
+          val ratio: Double = js.eval("window.devicePixelRatio").toString.toDouble
+          val checkedRatio = if (ratio > 0) ratio else 1.0
+          val maxWidth = if (project.maxWidth > window.innerWidth*checkedRatio) window.innerWidth*checkedRatio else project.maxWidth
+          project.copy(image = project.image + "/" + maxWidth.toInt)
+        }
+      }
   }
 
   @JSExport

@@ -34,6 +34,9 @@ lazy val server = (project in file("server")).settings(
     "org.postgresql" % "postgresql" % "9.4-1205-jdbc42",
     "com.github.tototoshi" %% "slick-joda-mapper" % "2.0.0",
     "org.mindrot" % "jbcrypt" % "0.3m",
+    "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
+    "com.sksamuel.scrimage" %% "scrimage-io-extra" % "2.1.0",
+    "com.sksamuel.scrimage" %% "scrimage-filters" % "2.1.0",
     specs2 % Test
   )
 ).enablePlugins(PlayScala).
