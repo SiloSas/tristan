@@ -31,8 +31,6 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   def calculeHeight(): Unit = {
     var i = 0
     val length = images.length
-    console.log(length)
-    console.log(images)
     for (i <- 0 to (length - 1)) {
       val elem = images.item(i).asInstanceOf[Html]
       elem.style.height = baseHeight + "px"
@@ -96,17 +94,12 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   def getParentWidth: Double = {
     //val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = angularWindow.innerWidth
-    //if (newParentWidth <= (windowWidth - 15)) newParentWidth
-    //else * window.devicePixelRatio
-    console.log(ratio)
     Math.round(document.body.clientWidth * ratio -15)
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {
     var checkWidth = checkWidthBase
     parentWidth = getParentWidth
-    //console.log(checkWidth)
-    console.log(parentWidth)
     //console.log(height)
     height = height * ((parentWidth - i) / checkWidth)
 //    console.log(height)
@@ -170,18 +163,24 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
           var allImagesReady = true
           def isAllReady(i: Int) {
             val image = images.item(i).asInstanceOf[Image]
-            if (image.height > 30 && image.complete && image.getBoundingClientRect().height > 30) {
-              if (i < images.length) timeout(() => isAllReady(i+1), 10)
-              else calculeHeight()
+            if (image.height > 30 && image.complete && image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10) {
+              if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
+              else {
+                console.log("ready")
+                calculeHeight()
+              }
             } else {
+              console.log("not ready")
               allImagesReady = false
               timeout(() => resize(), 50)
             }
           }
+          isAllReady(0)
         }, 1500, true)
-        scopeType.$watch("projects", calculeHeight())
       }
       resize()
+      console.log("start resize")
+      scopeType.$watch("projects", resize())
       elem.addEventListener("resize", maybeChangeHeight)
     }
   }
