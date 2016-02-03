@@ -4,6 +4,7 @@ package Projects
 import com.greencatsoft.angularjs.core.{SceService, RootScope, Timeout, Window}
 import com.greencatsoft.angularjs.{AbstractController, injectable}
 import org.scalajs.dom._
+import org.scalajs.dom.html._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -52,7 +53,28 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
         timeout(() => {
           projects = projectsFound
           projectScope.projects = projects.map(setMaxSize).toJSArray
-          inProgress = false
+          val preloader = document.getElementById("preloader")
+          def waitForPreload(): Unit = {
+            val images = preloader.getElementsByTagName("img")
+            if (images.length < projects.length) timeout( () => waitForPreload(), 150)
+            else {
+              def isAllReady(i: Int) {
+                val image = images.item(i).asInstanceOf[Image]
+                if (image.complete) {
+                  if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
+                  else {
+                    console.log("ready")
+                    timeout(() => inProgress = false)
+                  }
+                } else {
+                  console.log("not ready")
+                  timeout(() => waitForPreload(), 250)
+                }
+              }
+              isAllReady(0)
+            }
+          }
+          waitForPreload
           setTagsScope
         }, 0, true)
       case Failure(t: Throwable) =>

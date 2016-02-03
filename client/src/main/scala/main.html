@@ -3,7 +3,7 @@
 <div id="preloader">
     <img ng-repeat="project in projects" ng-src="{{project.image}}" width="1" height="1" />
 </div>
-<div ng-if="!controller.slider"
+<div ng-if="!controller.slider && !controller.inProgress"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div class="image-project float-left text-center width100p" ng-init="limit = 10">
