@@ -71,11 +71,11 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
       val in = Image.fromFile(imageFile)
       val scale = if (in.width > maxWidth) maxWidth.toDouble/in.width.toDouble else 1.0
       val out = in.scale(scale, Bicubic).bytes
-      val image = ImageIO.read(imageFile)
+     /* val image = ImageIO.read(imageFile)*/
       val resourceType = fileName.substring(fileName.length()-3)
       println(imageFile + resourceType)
-      val baos = new ByteArrayOutputStream()
-      ImageIO.write(image, resourceType, baos)
+      /*val baos = new ByteArrayOutputStream()
+      ImageIO.write(image, resourceType, baos)*/
 
       Future(Ok(out).as("image/" + resourceType))
       //resource type such as image+png, image+jpg

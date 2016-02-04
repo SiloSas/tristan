@@ -57,12 +57,13 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
           val preloader = document.getElementById("preloader")
           def waitForPreload(): Unit = {
             val images = preloader.getElementsByTagName("img")
-            if (images.length < limit) timeout( () => waitForPreload(), 150)
+            val max = if (limit < projects.length) limit else projects.length -1
+            if (images.length < max) timeout( () => waitForPreload(), 150)
             else {
               def isAllReady(i: Int) {
                 val image = images.item(i).asInstanceOf[Image]
                 if (image.complete) {
-                  if (i < images.length -1 && i < limit) timeout(() => isAllReady(i+1), 100)
+                  if (i < images.length -1 && i < max) timeout(() => isAllReady(i+1), 100)
                   else {
                     console.log("ready")
                     timeout(() => inProgress = false)
