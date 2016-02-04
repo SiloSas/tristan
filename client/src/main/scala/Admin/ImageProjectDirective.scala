@@ -94,7 +94,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   def getParentWidth: Double = {
     val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = angularWindow.innerWidth
-    Math.round(newParentWidth)
+    Math.round(newParentWidth - 1)
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {

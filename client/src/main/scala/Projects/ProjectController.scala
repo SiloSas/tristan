@@ -108,7 +108,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       case Success(projectsFound) =>
         timeout(() => {
           projects = projectsFound
-          projectScope.projects = projects.map(setMaxSize).toJSArray
+          timeout(() => projectScope.projects = projects.map(setMaxSize).toJSArray)
 
           waitForPreload()
           setTagsScope
