@@ -1,17 +1,17 @@
 
 <md-progress-circular md-mode="indeterminate" ng-show="controller.inProgress" style="margin-left: auto; margin-right: auto;"></md-progress-circular>
 <div id="preloader">
-    <img ng-repeat="project in projects | orderBy: 'columnNumber'" ng-src="{{project.image}}" width="1" height="1" />
+    <img ng-repeat="project in projects | orderBy: 'columnNumber' | limitTo: controller.limit +10" ng-src="{{project.image}}" width="1" height="1" />
 </div>
 <div ng-if="!controller.slider && !controller.inProgress"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
-    <div class="image-project float-left text-center width100p" ng-init="limit = 10">
+    <div class="image-project float-left text-center width100p">
        <project-min ng-init="directive.setBaseHeight(controller.baseHeight)"
-                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: limit) " class="float-left relative image-project">
+                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: controller.limit) " class="float-left relative image-project">
        </project-min>
         <div class="column large-12">
-            <md-button class="md-primary md-raised" ng-click="limit = limit+10" ng-show="limit < projects.length">voir plus</md-button>
+            <md-button class="md-primary md-raised" ng-click="controller.limit = controller.limit+10" ng-show="controller.limit < projects.length">voir plus</md-button>
         </div>
     </div>
 </div>

@@ -27,6 +27,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   var showCv = false
   var showContact = false
   var slider = false
+  var limit = 2
   var contact: js.Any = Nil
   projectService.getContact() map { foundContact =>
     contact = sce.trustAsHtml(foundContact)
@@ -56,12 +57,12 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
           val preloader = document.getElementById("preloader")
           def waitForPreload(): Unit = {
             val images = preloader.getElementsByTagName("img")
-            if (images.length < projects.length) timeout( () => waitForPreload(), 150)
+            if (images.length < limit) timeout( () => waitForPreload(), 150)
             else {
               def isAllReady(i: Int) {
                 val image = images.item(i).asInstanceOf[Image]
                 if (image.complete) {
-                  if (i < images.length -1 && i < 4) timeout(() => isAllReady(i+1), 10)
+                  if (i < images.length -1 && i < limit) timeout(() => isAllReady(i+1), 100)
                   else {
                     console.log("ready")
                     timeout(() => inProgress = false)
