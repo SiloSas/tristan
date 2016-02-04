@@ -27,7 +27,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   var showCv = false
   var showContact = false
   var slider = false
-  var limit = 2
+  var limit = 10
   var contact: js.Any = Nil
   projectService.getContact() map { foundContact =>
     contact = sce.trustAsHtml(foundContact)
