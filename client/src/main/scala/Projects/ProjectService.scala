@@ -58,7 +58,7 @@ class ProjectService(http: HttpService) extends Service {
           val ratio: Double = js.eval("window.devicePixelRatio").toString.toDouble
           val checkedRatio = if (ratio > 0) ratio else 1.0
           val maxWidth = if (project.maxWidth > window.innerWidth*checkedRatio) window.innerWidth*checkedRatio else project.maxWidth
-          val indexToTake = if (project.image.indexOf("?maxWidth=") > -1) project.image.indexOf("?maxWidth=") - 10 else project.image.length
+          val indexToTake = if (project.image.indexOf("?maxWidth=") > -1) project.image.indexOf("?maxWidth=") else project.image.length
           project.copy(image = project.image.take(indexToTake) + "?maxWidth=" + maxWidth.toInt)
         }
       }
