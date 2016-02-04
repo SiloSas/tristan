@@ -176,7 +176,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
             }
           }
           isAllReady(0)
-        }, 1500, true)
+        }, 150, true)
       }
       resize()
       console.log("start resize")
