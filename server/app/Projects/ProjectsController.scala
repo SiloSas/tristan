@@ -65,7 +65,7 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
     }
   }
 
-  def getImage(fileName: String, maxWidth: Int) = Action {
+  def getImage(fileName: String, maxWidth: Int) = Action.async {
     val imageFile = new File(Play.application().path().getPath + "/public/images/" + fileName)
     if (imageFile.length > 0) {
       val in = Image.fromFile(imageFile)
@@ -77,10 +77,10 @@ class ProjectsController @Inject()(protected val dbConfigProvider: DatabaseConfi
       val baos = new ByteArrayOutputStream()
       ImageIO.write(image, resourceType, baos)
 
-      Ok(out).as("image/" + resourceType)
+      Future(Ok(out).as("image/" + resourceType))
       //resource type such as image+png, image+jpg
     } else {
-      NotFound(fileName)
+      Future(NotFound(fileName))
     }
   }
 
