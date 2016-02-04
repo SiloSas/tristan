@@ -61,7 +61,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
               def isAllReady(i: Int) {
                 val image = images.item(i).asInstanceOf[Image]
                 if (image.complete) {
-                  if (i < images.length -1 && i < 9) timeout(() => isAllReady(i+1), 10)
+                  if (i < images.length -1 && i < 4) timeout(() => isAllReady(i+1), 10)
                   else {
                     console.log("ready")
                     timeout(() => inProgress = false)
@@ -74,7 +74,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
               isAllReady(0)
             }
           }
-          waitForPreload
+          waitForPreload()
           setTagsScope
         }, 0, true)
       case Failure(t: Throwable) =>
