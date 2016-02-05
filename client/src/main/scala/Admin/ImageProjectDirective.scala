@@ -94,7 +94,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
   def getParentWidth: Double = {
     val newParentWidth = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html].getBoundingClientRect().width
     val windowWidth = angularWindow.innerWidth
-    Math.round(newParentWidth - 1)
+    Math.round(newParentWidth - 4)
   }
 
   def resize(i:Double, checkWidthBase: Double): Unit = {
@@ -152,35 +152,36 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
       timer2 = setTimeout(600)(calculeHeight())
     }
   }
+  def resize(): Unit = {
+    timeout(() => {
+      val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
+      parentWidth = getParentWidth
+      images = element.getElementsByClassName("mainImage")
+      var allImagesReady = true
+      def isAllReady(i: Int) {
+        val image = images.item(i).asInstanceOf[Image]
+        if (image.complete || (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10)) {
+          if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
+          else {
+            console.log("ready")
+            calculeHeight()
+          }
+        } else {
+          console.log("not ready")
+          allImagesReady = false
+          timeout(() => resize(), 250)
+        }
+      }
+      isAllReady(0)
+    }, 150, true)
+  }
 
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-      def resize(): Unit = {
-        timeout(() => {
-          val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
-          parentWidth = getParentWidth
-          images = element.getElementsByClassName("mainImage")
-          var allImagesReady = true
-          def isAllReady(i: Int) {
-            val image = images.item(i).asInstanceOf[Image]
-            if (image.complete || (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10)) {
-              if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
-              else {
-                console.log("ready")
-                calculeHeight()
-              }
-            } else {
-              console.log("not ready")
-              allImagesReady = false
-              timeout(() => resize(), 250)
-            }
-          }
-          isAllReady(0)
-        }, 150, true)
-      }
       resize()
       console.log("start resize")
       scopeType.$watch("projects", resize())
+      scopeType.$watch("controller.limit", resize())
       elem.addEventListener("resize", maybeChangeHeight)
     }
   }
