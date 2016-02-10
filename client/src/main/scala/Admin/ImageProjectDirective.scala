@@ -152,9 +152,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
       timer2 = setTimeout(600)(calculeHeight())
     }
   }
-  var isWaitingForResize = false
   def resize(): Unit = {
-    isWaitingForResize = true
     timeout(() => {
       val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
       parentWidth = getParentWidth
@@ -162,11 +160,10 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
       var allImagesReady = true
       def isAllReady(i: Int) {
         val image = images.item(i).asInstanceOf[Image]
-        if (image.complete || (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10)) {
+        if (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10) {
           if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
           else {
             console.log("ready")
-            isWaitingForResize = false
             calculeHeight()
           }
         } else {
@@ -179,14 +176,14 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
     }, 300, true)
   }
 
-  rootScope.$watch("projects", resize())
-  rootScope.$watch("controller.limit", resize())
-  resize()
-  console.log("start resize")
+
   window.addEventListener("resize", maybeChangeHeight)
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-        if(!isWaitingForResize) resize()
+      rootScope.$watch("projects", resize())
+      rootScope.$watch("controller.limit", resize())
+      resize()
+      console.log("start resize")
     }
   }
 }
