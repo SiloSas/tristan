@@ -2,7 +2,7 @@ package Admin
 
 
 import com.greencatsoft.angularjs._
-import com.greencatsoft.angularjs.core.{Window, Timeout}
+import com.greencatsoft.angularjs.core.{RootScope, Window, Timeout}
 import org.scalajs.dom.console
 import org.scalajs.dom.document
 import org.scalajs.dom.window
@@ -18,7 +18,7 @@ import scala.scalajs.js.timers._
 
 
 @injectable("imageProject")
-class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends ClassDirective {
+class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: RootScope) extends ClassDirective {
   var parentWidth = 0.0
   var elementsWidth = 0.0
   var height = 450.0
@@ -152,7 +152,9 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
       timer2 = setTimeout(600)(calculeHeight())
     }
   }
+  var isWaitingForResize = false
   def resize(): Unit = {
+    isWaitingForResize = true
     timeout(() => {
       val element = document.getElementsByClassName("image-project").item(0).asInstanceOf[Html]
       parentWidth = getParentWidth
@@ -164,6 +166,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
           if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
           else {
             console.log("ready")
+            isWaitingForResize = false
             calculeHeight()
           }
         } else {
@@ -176,13 +179,14 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window) extends Cla
     }, 300, true)
   }
 
+  rootScope.$watch("projects", resize())
+  rootScope.$watch("controller.limit", resize())
+  resize()
+  console.log("start resize")
+  window.addEventListener("resize", maybeChangeHeight)
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-      resize()
-      console.log("start resize")
-      scopeType.$watch("projects", resize())
-      scopeType.$watch("controller.limit", resize())
-      elem.addEventListener("resize", maybeChangeHeight)
+        if(!isWaitingForResize) resize()
     }
   }
 }
