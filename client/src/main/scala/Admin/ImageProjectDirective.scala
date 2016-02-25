@@ -89,7 +89,6 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
           }
       }
     }
-    calculeHeight()
   }
 
   def getParentWidth: Double = {
