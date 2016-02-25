@@ -24270,17 +24270,18 @@ body, html {
   height: 100%;
   position: relative;
   overflow: hidden;
+  overflow-y: hidden !important;
   width: 100%;
   background: #E8DDCB;
 }
 
-/* line 14, ../scss/main.scss */
+/* line 15, ../scss/main.scss */
 .mainContainer {
   background: #E8DDCB;
   overflow-x: visible !important;
 }
 
-/* line 19, ../scss/main.scss */
+/* line 20, ../scss/main.scss */
 .chevron::before {
   vertical-align: middle;
   border-style: solid;
@@ -24297,33 +24298,33 @@ body, html {
 }
 
 @media screen {
-  /* line 35, ../scss/main.scss */
+  /* line 36, ../scss/main.scss */
   div#preloader {
     position: absolute;
     left: -9999px;
     top: -9999px;
   }
 
-  /* line 40, ../scss/main.scss */
+  /* line 41, ../scss/main.scss */
   div#preloader img {
     display: block;
   }
 }
 @media print {
-  /* line 45, ../scss/main.scss */
+  /* line 46, ../scss/main.scss */
   div#preloader,
   div#preloader img {
     visibility: hidden;
     display: none;
   }
 }
-/* line 52, ../scss/main.scss */
+/* line 53, ../scss/main.scss */
 .slider {
   background: #E8DDCB;
   text-align: center;
 }
 
-/* line 57, ../scss/main.scss */
+/* line 58, ../scss/main.scss */
 .tag {
   font-size: 12px;
   border-radius: 10px;
@@ -24334,25 +24335,25 @@ body, html {
   font-weight: bold;
 }
 
-/* line 66, ../scss/main.scss */
+/* line 67, ../scss/main.scss */
 .chevron.right:before {
   left: -1.9em;
   transform: rotate(45deg);
 }
 
-/* line 71, ../scss/main.scss */
+/* line 72, ../scss/main.scss */
 .chevron.bottom:before {
   top: 0;
   transform: rotate(135deg);
 }
 
-/* line 76, ../scss/main.scss */
+/* line 77, ../scss/main.scss */
 .chevron.left:before {
   left: 0.95em;
   transform: rotate(-135deg);
 }
 
-/* line 80, ../scss/main.scss */
+/* line 81, ../scss/main.scss */
 .tooltip-custom {
   display: none;
   animation: fadeIn 1s;
@@ -24371,18 +24372,18 @@ body, html {
   color: white;
 }
 
-/* line 96, ../scss/main.scss */
+/* line 97, ../scss/main.scss */
 .tooltip-trigger:hover > .tooltip-custom {
   display: block;
 }
 
 @media only screen and (max-width: 750px) {
-  /* line 101, ../scss/main.scss */
+  /* line 102, ../scss/main.scss */
   .tooltip-trigger:hover > .tooltip-custom {
     display: none;
   }
 
-  /* line 104, ../scss/main.scss */
+  /* line 105, ../scss/main.scss */
   .imageSlider {
     vertical-align: top !important;
   }
