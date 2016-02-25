@@ -14,7 +14,7 @@ import scala.scalajs.js
 import scala.scalajs.js.Array
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.timers._
-
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 @injectable("imageProject")
@@ -182,8 +182,10 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
       rootScope.$watch("projects", resize())
       rootScope.$watch("controller.limit", resize())
-      resize()
-      console.log("start resize")
+      timeout(() => console.log("start resize"), 100) map { a =>
+        resize()
+      }
+
     }
   }
 }
