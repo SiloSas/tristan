@@ -118,7 +118,9 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
   @JSExport
   def recalculHeight(): Unit = {
     timeout( () => {
-      calculeHeight()
+      if (angularWindow.innerWidth > 700) {
+        calculeHeight()
+      }
     }, 10)
   }
 
@@ -142,7 +144,9 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
     }
   }
 
-  angularWindow.addEventListener("resize", changeHeight)
+  if (angularWindow.innerWidth > 700) {
+    angularWindow.addEventListener("resize", changeHeight)
+  }
   var timer2 = setTimeout(600)(calculeHeight())
   var maybeChangeHeight = (event: Event) => {
     clearTimeout(timer2)
@@ -169,7 +173,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
         } else {
           console.log("not ready")
           allImagesReady = false
-          timeout(() => resize(), 250)
+          timeout(() => resize(), 400)
         }
       }
       isAllReady(0)
@@ -180,12 +184,12 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
   window.addEventListener("resize", maybeChangeHeight)
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
-      rootScope.$watch("projects", resize())
-      rootScope.$watch("controller.limit", resize())
-      timeout(() => console.log("start resize"), 100) map { a =>
+      if (angularWindow.innerWidth > 700) {
+        rootScope.$watch("controller.limit", resize())
         resize()
+      } else {
+        elem.style.width = "100%"
       }
-
     }
   }
 }
