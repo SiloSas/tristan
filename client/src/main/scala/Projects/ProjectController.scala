@@ -10,7 +10,6 @@ import org.scalajs.dom.{Event, console, document}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
-import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
 
 @JSExportAll
@@ -77,7 +76,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 //            console.log("ready")
             timeout(() => {
               inProgress = false
-              timeout(() => {
+              /*timeout(() => {
                 scrollContainer = document.getElementsByTagName("md-content").item(0).asInstanceOf[Html]
                 var timer2 = setTimeout(50)(loadMoreProjects())
                 val waitForLoadMoreProjects = (event: Event) => {
@@ -85,7 +84,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
                   if (limit < projects.length -1) timer2 = setTimeout(50)(loadMoreProjects())
                 }
                 scrollContainer.onscroll = waitForLoadMoreProjects
-              }, 0)
+              }, 0)*/
             })
           }
         } else {
