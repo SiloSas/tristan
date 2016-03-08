@@ -9,9 +9,11 @@
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div class="image-project float-left text-center width100p">
        <project-min ng-init="directive.setBaseHeight(controller.baseHeight)"
-                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: controller.limit) " class="float-left relative image-project">
+                    ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: controller.limit) "
+                    class="float-left relative image-project">
        </project-min>
     </div>
+    <md-button md-hide-gt-md ng-show="projects.length > controller.limit" ng-click="controller.limit = controller.limit + 10"></md-button>
 </div>
 <div ng-if="controller.slider" class="height100p width100p float-left">
     <div class="absolute width100p">

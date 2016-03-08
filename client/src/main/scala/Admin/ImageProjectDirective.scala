@@ -2,19 +2,15 @@ package Admin
 
 
 import com.greencatsoft.angularjs._
-import com.greencatsoft.angularjs.core.{RootScope, Window, Timeout}
-import org.scalajs.dom.console
-import org.scalajs.dom.document
-import org.scalajs.dom.window
-import org.scalajs.dom.Element
-import org.scalajs.dom.html.{Image, Html}
+import com.greencatsoft.angularjs.core.{RootScope, Timeout, Window}
+import org.scalajs.dom.html.{Html, Image}
 import org.scalajs.dom.raw.Event
+import org.scalajs.dom.{Element, console, document}
 
 import scala.scalajs.js
 import scala.scalajs.js.Array
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.timers._
-import scala.concurrent.ExecutionContext.Implicits.global
 
 
 @injectable("imageProject")
@@ -29,6 +25,8 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
 
 
   def calculeHeight(): Unit = {
+
+    console.log("jhjhhj")
     var i = 0
     val length = images.length
     for (i <- 0 to (length - 1)) {
@@ -124,15 +122,15 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
     }, 10)
   }
 
-  var timer1 = setTimeout(600)(calculeHeight())
+//  var timer1 = setTimeout(600)(calculeHeight())
   @JSExport
   def setBaseHeight(double: Double): Unit = {
     parentWidth = getParentWidth
     baseHeight = double
     height = double
-    timer1 = setTimeout(600)(calculeHeight())
+//    timer1 = setTimeout(600)(calculeHeight())
   }
-  var timer = setTimeout(600)(calculeHeight())
+  var timer = setTimeout(600)()
   val changeHeight = (event: Event) => {
     clearTimeout(timer)
     if (angularWindow.innerWidth > 960) {
@@ -145,9 +143,9 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
   }
 
   if (angularWindow.innerWidth > 700) {
-    angularWindow.addEventListener("resize", changeHeight)
+    angularWindow.addEventListener("resize", maybeChangeHeight)
   }
-  var timer2 = setTimeout(600)(calculeHeight())
+  var timer2 = setTimeout(600)()
   var maybeChangeHeight = (event: Event) => {
     clearTimeout(timer2)
     val elemWidth = getParentWidth
@@ -171,7 +169,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
             calculeHeight()
           }
         } else {
-          console.log("not ready")
+          console.log("not readyyyyy")
           allImagesReady = false
           timeout(() => resize(), 400)
         }
@@ -180,8 +178,6 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
     }, 300, true)
   }
 
-
-  window.addEventListener("resize", maybeChangeHeight)
   override def link(scopeType: ScopeType, elements: Seq[Element], attributes: Attributes): Unit = {
     elements.map(_.asInstanceOf[Html]).foreach { elem =>
       if (angularWindow.innerWidth > 700) {

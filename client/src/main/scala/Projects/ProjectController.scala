@@ -1,20 +1,17 @@
 package Projects
 
 
-import com.greencatsoft.angularjs.core.{SceService, RootScope, Timeout, Window}
+import com.greencatsoft.angularjs.core.{RootScope, SceService, Timeout, Window}
 import com.greencatsoft.angularjs.{AbstractController, injectable}
-import org.scalajs.dom.document
-import org.scalajs.dom.console
-import org.scalajs.dom.Event
 import org.scalajs.dom.html._
 import org.scalajs.dom.raw.KeyboardEvent
+import org.scalajs.dom.{Event, console, document}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs.js
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 import scala.scalajs.js.annotation.{JSExport, JSExportAll}
-import scala.util.{Failure, Success}
 import scala.scalajs.js.timers._
+import scala.util.{Failure, Success}
 
 @JSExportAll
 @injectable("projectController")
@@ -32,12 +29,11 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   var showContact = false
   var slider = false
   var limit = 10
-  var contact: js.Any = Nil
   var preloader = document.getElementById("preloader")
   var scrollContainer = document.getElementsByTagName("md-content").item(0).asInstanceOf[Html]
 
   projectService.getContact() map { foundContact =>
-    contact = sce.trustAsHtml(foundContact)
+    projectScope.contact = sce.trustAsHtml(foundContact)
   }
 
   var baseHeight = 300.0
@@ -60,7 +56,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
 
   def loadMoreProjects(): Unit = {
     val images = document.getElementsByTagName("project-min")
-    console.log("oyoyoy")
     val lastImageTop = if (images.length > 0)
       images.item(images.length - 1).asInstanceOf[Html].getBoundingClientRect().top else 0
     console.log(lastImageTop)
@@ -71,15 +66,15 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   def waitForPreload(): Unit = {
     preloader = document.getElementById("preloader")
     val images = preloader.getElementsByTagName("img")
-    val max = if (limit < projects.length) limit else projects.length -1
+    val max = if (limit < projects.length -1) limit else projects.length -1
     if (images.length < max) timeout( () => waitForPreload(), 150)
     else {
       def isAllReady(i: Int) {
         val image = images.item(i).asInstanceOf[Image]
         if (image.complete) {
-          if (i < images.length -1 && i < max) timeout(() => isAllReady(i+1), 100)
+          if (i < images.length -1 && i < max) timeout(() => isAllReady(i+1), 20)
           else {
-            console.log("ready")
+//            console.log("ready")
             timeout(() => {
               inProgress = false
               timeout(() => {
@@ -87,10 +82,10 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
                 var timer2 = setTimeout(50)(loadMoreProjects())
                 val waitForLoadMoreProjects = (event: Event) => {
                   clearTimeout(timer2)
-                  if (limit < projects.length) timer2 = setTimeout(50)(loadMoreProjects())
+                  if (limit < projects.length -1) timer2 = setTimeout(50)(loadMoreProjects())
                 }
                 scrollContainer.onscroll = waitForLoadMoreProjects
-              }, 100)
+              }, 0)
             })
           }
         } else {
