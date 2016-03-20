@@ -79,7 +79,7 @@
                     </div>
                     <div  class="float-left grid width100p">
                         <div class="image-project float-left width100p" >
-                           <span ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber')"
+                           <span ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: controller.limit)"
                            class="text-center float-left relative image-project">
                                <project-min class="float-left relative image-project">
                                </project-min>
@@ -98,6 +98,9 @@
                                 project.columnNumber = project.columnNumber +1; $parent.directive.recalculHeight()"
                                 aria-label="position" id="projectPosition"><i class="fa fa-plus"></i></md-button></span></span>
                         </div>
+                        <md-button ng-show="projects.length > controller.limit"
+                        class="md-raised md-primary"
+                        ng-click="controller.limit = controller.limit + 10; directive.recalculHeight()">Voir plus</md-button>
                     </div>
                 </div>
                 <form class="column" ng-if="newProject && !controller.changeContact" ng-submit="controller.updateProjects()">

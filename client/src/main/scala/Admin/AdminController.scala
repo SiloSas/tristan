@@ -23,7 +23,7 @@ class AdminController(adminScope: AdminScope, timeout: Timeout, projectService: 
   adminScope.technologies = Seq.empty[String].toJSArray
   var maxWidth = 0.0
   var maxHeight = 0.0
-
+  var limit=10
   var baseHeight = 300.0
   projectService.findBaseHeight().onComplete {
     case Success(heightSeq) =>
