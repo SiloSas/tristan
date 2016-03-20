@@ -5,7 +5,7 @@ import com.greencatsoft.angularjs._
 import com.greencatsoft.angularjs.core.{RootScope, Timeout, Window}
 import org.scalajs.dom.html.{Html, Image}
 import org.scalajs.dom.raw.Event
-import org.scalajs.dom.{Element, console, document}
+import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
 import scala.scalajs.js.Array
@@ -25,8 +25,6 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
 
 
   def calculeHeight(): Unit = {
-
-    console.log("jhjhhj")
     var i = 0
     val length = images.length
     for (i <- 0 to (length - 1)) {
@@ -160,16 +158,17 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
       parentWidth = getParentWidth
       images = element.getElementsByClassName("mainImage")
       var allImagesReady = true
+      calculeHeight()
       def isAllReady(i: Int) {
         val image = images.item(i).asInstanceOf[Image]
         if (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10) {
           if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
           else {
-            console.log("ready")
+//            console.log("ready")
             calculeHeight()
           }
         } else {
-          console.log("not readyyyyy")
+//          console.log("not readyyyyy")
           allImagesReady = false
           timeout(() => resize(), 400)
         }

@@ -1,6 +1,6 @@
 
 <md-progress-circular md-mode="indeterminate" ng-show="controller.inProgress" style="margin-left: auto; margin-right: auto;"></md-progress-circular>
-<h2 ng-show="controller.inProgress" class="text-center width100p">Les images sont en cours de chargement...</h2>
+<h2 ng-show="controller.inProgress" class="text-center width100p">Les images sont en cours de chargement, cela peut prendre quelques secondes...</h2>
 <div id="preloader">
     <img ng-repeat="project in projects | orderBy: 'columnNumber' | limitTo: controller.limit +10" ng-src="{{project.image}}" width="1" height="1" />
 </div>
@@ -13,7 +13,9 @@
                     class="float-left relative image-project">
        </project-min>
     </div>
-    <md-button ng-show="projects.length > controller.limit" ng-click="controller.limit = controller.limit + 10">Voir plus</md-button>
+    <md-button ng-show="projects.length > controller.limit"
+               class="md-raised md-primary"
+               ng-click="controller.limit = controller.limit + 10; directive.recalculHeight()">Voir plus</md-button>
 </div>
 <div ng-if="controller.slider" class="height100p width100p float-left">
     <div class="absolute width100p">

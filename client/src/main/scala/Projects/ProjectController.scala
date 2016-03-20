@@ -23,6 +23,9 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   projectScope.tags = Seq.empty[String].toJSArray
   projectScope.index = 0
 
+  document.getElementById("container").asInstanceOf[Html].tabIndex = 1
+  document.getElementById("container").asInstanceOf[Html].focus()
+
   var inProgress = true
   var showCv = false
   var showContact = false
@@ -206,7 +209,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
         }
       }, 0, true)
     }
-
   }
 
   def refactorTech(technology: String): String = {

@@ -70,6 +70,8 @@
     </span>
     <div hide-gt-sm class="paddingBottom50 column" ng-if="$root.showMenu"></div>
   </div>
-  <md-content class="height100p zIndex1 mainContainer width100p" style="height: 100%" data-ng-view=""></md-content>
+  <md-content class="height100p zIndex1 mainContainer width100p" id="container" style="height: 100%" >
+    <div class="height100p width100p float-left"  data-ng-view=""></div>
+  </md-content>
 </div>
 }
