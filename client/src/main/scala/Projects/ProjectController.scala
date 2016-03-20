@@ -209,6 +209,8 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
         }
       }, 0, true)
     }
+    document.getElementById("container").asInstanceOf[Html].tabIndex = 1
+    document.getElementById("container").asInstanceOf[Html].focus()
   }
 
   def refactorTech(technology: String): String = {
