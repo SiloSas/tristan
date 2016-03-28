@@ -161,7 +161,7 @@ class ImageProjectDirective(timeout: Timeout, angularWindow: Window, rootScope: 
       calculeHeight()
       def isAllReady(i: Int) {
         val image = images.item(i).asInstanceOf[Image]
-        if (image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10) {
+        if (image.complete && image.getBoundingClientRect().height > 30 && image.getBoundingClientRect().width > 10) {
           if (i < images.length -1) timeout(() => isAllReady(i+1), 10)
           else {
 //            console.log("ready")

@@ -1,16 +1,16 @@
 package Admin
 
-import java.util.UUID
 import Projects.{Project, ProjectService}
 import com.greencatsoft.angularjs.core.Timeout
-import com.greencatsoft.angularjs.{Filter, Angular, AbstractController, injectable}
+import com.greencatsoft.angularjs.{AbstractController, injectable}
+import org.scalajs.dom._
 import org.scalajs.dom.html.Image
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
-import org.scalajs.dom._
-import scala.scalajs.js.{Object, Date}
-import scala.scalajs.js.annotation.{JSExport, JSExportAll}
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
+import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.{Date, Object}
 import scala.util.{Failure, Success}
 
 @JSExportAll
