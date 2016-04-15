@@ -2,7 +2,7 @@
 
 @main("Portfolio Tristan Delgado") {
 <div ng-controller="projectController" class="height100p" ng-cloak>
-  <md-toolbar md-scroll-shrink ng-if="true && !$root.full">
+  <md-toolbar class="width100p relative">
     <div class="md-toolbar-tools">
       <h1 class="textColorWhite">Tristan Delgado</h1>
       <ng-include src="'/assets/templates/mainMenu.html'" class="hidden-for-small" style="display: flex" hide-sm></ng-include>
@@ -10,13 +10,13 @@
           <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
         </a>
       <md-input-container>
-        <label>Filtres</label>
+        <label>Filters</label>
         <md-select ng-model="filter">
           <md-option ng-repeat="tag in tags" value="{{tag}}" ng-click="controller.filter(tag)">
             {{tag}}
           </md-option>
           <md-option  value="NoFilter" ng-click="controller.removeFilter()">
-            Supprimer les filtres
+            remove filters
           </md-option>
         </md-select>
       </md-input-container>

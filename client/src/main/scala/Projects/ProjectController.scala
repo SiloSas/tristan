@@ -5,7 +5,7 @@ import com.greencatsoft.angularjs.core.{RootScope, SceService, Timeout, Window}
 import com.greencatsoft.angularjs.{AbstractController, injectable}
 import org.scalajs.dom.html._
 import org.scalajs.dom.raw.KeyboardEvent
-import org.scalajs.dom.{Event, console, document}
+import org.scalajs.dom.{console, document}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
@@ -23,7 +23,7 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   projectScope.tags = Seq.empty[String].toJSArray
   projectScope.index = 0
 
-  document.getElementById("container").asInstanceOf[Html].tabIndex = 1
+//  document.getElementById("container").asInstanceOf[Html].tabIndex = 1
   document.getElementById("container").asInstanceOf[Html].focus()
 
   var inProgress = true
@@ -53,9 +53,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       console.log("error get height")
   }
 
-
-
-
   def loadMoreProjects(): Unit = {
     val images = document.getElementsByTagName("project-min")
     val lastImageTop = if (images.length > 0)
@@ -65,49 +62,13 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
     if (scrollContainer.scrollTop >= lastImageTop - 10 && lastImageTop != 0) timeout(() => limit = limit + 10)
   }
 
-  def waitForPreload(): Unit = {
-    preloader = document.getElementById("preloader")
-    val images = preloader.getElementsByTagName("img")
-    val max = if (limit < projects.length -1) limit else projects.length -1
-    if (images.length < max) timeout( () => waitForPreload(), 150)
-    else {
-      def isAllReady(i: Int) {
-        val image = images.item(i).asInstanceOf[Image]
-        if (image.complete || image.height > 0) {
-          if (i < images.length -1 && i < max) timeout(() => isAllReady(i+1), 20)
-          else {
-//            console.log("ready")
-            timeout(() => {
-              inProgress = false
-              /*timeout(() => {
-                scrollContainer = document.getElementsByTagName("md-content").item(0).asInstanceOf[Html]
-                var timer2 = setTimeout(50)(loadMoreProjects())
-                val waitForLoadMoreProjects = (event: Event) => {
-                  clearTimeout(timer2)
-                  if (limit < projects.length -1) timer2 = setTimeout(50)(loadMoreProjects())
-                }
-                scrollContainer.onscroll = waitForLoadMoreProjects
-              }, 0)*/
-            })
-          }
-        } else {
-          console.log("not ready")
-          timeout(() => waitForPreload(), 250)
-        }
-      }
-      isAllReady(0)
-    }
-  }
-
-
   def getProjects: Unit = {
     projectService.findAll().onComplete {
       case Success(projectsFound) =>
         timeout(() => {
           projects = projectsFound
-          timeout(() => projectScope.projects = projects.map(setMaxSize).toJSArray)
-
-          waitForPreload()
+          projectScope.projects = projects.toJSArray
+          inProgress = false
           setTagsScope
         }, 0, true)
       case Failure(t: Throwable) =>
@@ -122,32 +83,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
       }
     }
   }
-
-
-
-  def setMaxSize(project: Project): Project = {
-    val windowMaxwidth = window.innerWidth
-    val windowMaxHeight = window.innerHeight
-    val menuHeight = 100
-    var newProject = project.copy()
-    if (project.maxWidth > windowMaxwidth ) {
-      console.log(windowMaxHeight)
-      val newMaxHeight = project.maxHeight * (windowMaxwidth/project.maxWidth.toDouble)
-      newProject = project.copy(maxHeight = newMaxHeight.toInt, maxWidth = windowMaxwidth)
-    }
-    if (newProject.maxHeight > windowMaxHeight ) {
-      val newMaxWidth = newProject.maxWidth * ((windowMaxHeight-menuHeight)/newProject.maxHeight.toDouble)
-      console.log(windowMaxHeight)
-      newProject = newProject.copy(maxHeight = windowMaxHeight-menuHeight, maxWidth = newMaxWidth.toInt, isLandscape = false)
-    }
-    newProject
-  }
-
-  def resizeImages = (event: Event) => {
-    projectScope.projects = projectScope.projects.map(setMaxSize)
-  }
-
-  window.addEventListener("resize", resizeImages)
 
   @JSExport
   def prevIndex(): Unit = {
@@ -184,14 +119,14 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
   @JSExport
   def filter(tag: String): Unit = {
     timeout( () => {
-      projectScope.projects = projects.filter(_.tags.indexOf(tag) > -1).map(setMaxSize).toJSArray
+      projectScope.projects = projects.filter(_.tags.indexOf(tag) > -1).toJSArray
       projectScope.index = 0
     })
   }
   @JSExport
   def removeFilter(): Unit = {
     timeout( () => {
-      projectScope.projects = projects.map(setMaxSize).toJSArray
+      projectScope.projects = projects.toJSArray
     })
   }
 
@@ -209,8 +144,6 @@ class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectSer
         }
       }, 0, true)
     }
-    document.getElementById("container").asInstanceOf[Html].tabIndex = 1
-    document.getElementById("container").asInstanceOf[Html].focus()
   }
 
   def refactorTech(technology: String): String = {

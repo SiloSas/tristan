@@ -356,7 +356,7 @@ figure.effect-zoe:hover p.icon-links a:first-child {
 
 @media (max-width: 960px)  {
   project-min, project-min > img {
-    width: 100%;
+    width: 100%!important;
     height: auto!important;
   }
 }

@@ -9,6 +9,8 @@
      layout="row" layout-wrap layout-align="center start" layout-xs="column">
     <div class="image-project float-left text-center width100p">
        <project-min ng-init="directive.setBaseHeight(controller.baseHeight)"
+                    naturalHeight="{{project.maxHeight}}"
+                    naturalWidth="{{project.maxWidth}}"
                     ng-repeat="project in orderedProjects = (projects | orderBy: 'columnNumber' | limitTo: controller.limit) "
                     class="float-left relative image-project">
        </project-min>
@@ -50,13 +52,13 @@
    </div>
     <span class="text-center absolute left0 right0 bottom0 paddingBottom20 marginBottom50 width100p float-left"
           style="line-height: normal; background-color: rgba(0, 0, 0, 0.17);" ng-show="!$root.full">
-        <b class="width100p"><i class="fa fa-plus padding10 textColorWhite float-right" ng-click="showPresentation = !showPresentation"></i>
+        <b class="width100p"><i class="fa fa-minus padding10 textColorWhite float-right" ng-click="showPresentation = !showPresentation"></i>
        <b class="textColorWhite">{{projects[index].name}}</b></b>
-       <div ng-show="showPresentation">
+       <div ng-show="!showPresentation">
             <span ng-repeat="technologie in projects[index].technologies" class="tooltip-trigger animated fadeIn">
-                <md-button class="md-fab md-mini md-icon-button md-primary " style="cursor: auto!important;"
+                <md-button style="cursor: auto!important;" class="md-fab md-mini md-icon-button md-primary "
                            aria-label="{{controller.refactorTech(technologie)}}">
-                    <md-icon md-svg-src="{{technologie}}"></md-icon>
+                    <img class="padding10" ng-src="{{technologie}}"/>
                 </md-button>
                 <a style="cursor: auto!important;">{{controller.refactorTech(technologie)}}</a>
             </span>

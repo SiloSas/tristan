@@ -24260,7 +24260,7 @@ figure.effect-zoe:hover p.icon-links a:first-child {
 @media (max-width: 960px) {
   /* line 358, ../../../client/src/main/scala/Projects/project.scss */
   project-min, project-min > img {
-    width: 100%;
+    width: 100% !important;
     height: auto !important;
   }
 }
