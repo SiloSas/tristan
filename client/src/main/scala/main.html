@@ -1,9 +1,9 @@
 
 <md-progress-circular md-mode="indeterminate" ng-show="controller.inProgress" style="margin-left: auto; margin-right: auto;"></md-progress-circular>
 <h2 ng-show="controller.inProgress" class="text-center width100p">Les images sont en cours de chargement, cela peut prendre quelques secondes...</h2>
-<div id="preloader">
+<!--<div id="preloader">
     <img ng-repeat="project in projects | orderBy: 'columnNumber' | limitTo: controller.limit +10" ng-src="{{project.image}}" width="1" height="1" />
-</div>
+</div>-->
 <div ng-if="!controller.slider && !controller.inProgress"
     class="column large-12 paddingTop0 paddingLeft0 paddingRight0 paddingBottom50 marginBottom50"
      layout="row" layout-wrap layout-align="center start" layout-xs="column">

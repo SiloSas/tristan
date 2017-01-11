@@ -1,7 +1,7 @@
 package Projects
 
 
-import com.greencatsoft.angularjs.core.{RootScope, SceService, Timeout, Window}
+import com.greencatsoft.angularjs.core._
 import com.greencatsoft.angularjs.{AbstractController, injectable}
 import org.scalajs.dom.html._
 import org.scalajs.dom.raw.KeyboardEvent
@@ -15,7 +15,7 @@ import scala.util.{Failure, Success}
 @JSExportAll
 @injectable("projectController")
 class ProjectController(projectScope: ProjectScope, timeout: Timeout, projectService: ProjectService,
-                        rootScope: RootScope, window: Window, sce: SceService)
+                        rootScope: RootScope, window: Window, sce: SceService, httpService: HttpService)
   extends AbstractController[ProjectScope](projectScope) {
 
 
